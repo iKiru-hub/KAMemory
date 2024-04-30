@@ -40,4 +40,33 @@ X --- PFC --> behaviour
 The PFC is just a controller in this case, but it is not the focus.
 
 
+---
+
+General goal: 
+*what is a good strategy to memorize and retrieve experiences?*
+
+
+## Project 1 : *memory encoding of CA1 representations*
+*goal*: how to memorized experiences
+*focus*: rich CA1 representations 
+
+1. formation of content-rich representations of experiences in CA1
+2. parallel formation of index representations in CA3
+3. study of the interaction between these two representations
+4. retrival of the CA1's content-rich representations from cue-activation of CA3
+
+
+## Project 2 : *memory encoding strategies*
+*goal*: what is a good strategy to memorize experiences
+*focus*: stragegies
+
+1. definition of a reasonable benchmark
+2. formation of a simple representation in CA1
+3. xompetition between different strategies
+
+*possible ways*: RL, evolution, grid search
+
+
+
+
 
