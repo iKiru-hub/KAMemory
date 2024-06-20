@@ -67,6 +67,13 @@ General goal:
 *possible ways*: RL, evolution, grid search
 
 
+## meeting 30.4.24
 
+HPC model: EC, DG, CA3, CA1
+plasticity: BTSP, STPD
+
+objective:
+- conjuntion of memory and representation, depending on how you learn you will have different representations
+- rich memory content: moving from the simple I-O to a more episodic-like representation
 
 

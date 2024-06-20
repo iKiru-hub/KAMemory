@@ -1,5 +1,9 @@
 # KAMemory
-our collaboration :)
+
+#### Goal
+---
+Q1: *how can EC readout remain stable while BTSP is occurring on CA3-CA1 synapses?*
+
 
 
 
