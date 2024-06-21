@@ -91,27 +91,36 @@ def plot_stimuli(samples: np.ndarray):
         Input patterns
     """
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 5))
+    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(10, 5))
     ax.imshow(samples, aspect="auto", vmin=0, vmax=1, cmap="gray_r")
     ax.set_xlabel("size")
     ax.set_ylabel("samples")
-    ax.set_yticks(range(samples.shape[0]))
-    ax.set_yticklabels(range(1, 1+samples.shape[0]))
+    if len(samples) < 20:
+        ax.set_yticks(range(samples.shape[0]))
+        ax.set_yticklabels(range(1, 1+samples.shape[0]))
     ax.set_title("Input patterns")
+
+    ax2.imshow(samples.sum(axis=0).reshape(1, -1),
+               aspect="auto", cmap="gray_r")
+    ax2.set_xlabel("size")
+    ax2.set_title("Average input pattern")
     plt.show()
 
 
 if __name__ == "__main__":
 
     # generate the input patterns
-    N = 100
-    size = 50
+    N = 500
+    size = 100
 
-    heads = 3
-    variance = 0.05
+    # sampling a sensory experience from
+    # an episode
+    heads = 2
+    variance = 0.01  # noise within-episodes
 
-    higher_heads = heads 
-    higher_variance = 0.075
+    # sampling an episode from the true world model
+    higher_heads = heads
+    higher_variance = 0.3  # noise among-episodes
 
     samples = stimulus_generator(N, size, heads, variance,
                                  higher_heads=higher_heads,

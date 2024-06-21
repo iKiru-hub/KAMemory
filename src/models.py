@@ -63,7 +63,6 @@ class Autoencoder(nn.Module):
         return x
 
 
-
 def train_autoencoder(data: np.ndarray, model: object,
                       epochs: int=20, batch_size: int=64,
                       learning_rate: float=1e-3):
@@ -190,32 +189,67 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5):
 
     plt.show()
 
+    return reconstructed_data
+
 
 
 if __name__ == "__main__":
 
     # Generate some random data
-    N = 100
-    size = 50
+    N = 200
+    input_size = 50
 
     heads = 3
-    variance = 0.05
-    higher_heads = heads 
-    higher_variance = 0.075
+    variance = 0.01
+    higher_heads = heads
+    higher_variance = 0.05
 
-    samples = utils.stimulus_generator(N, size, heads, variance,
-                                 higher_heads=higher_heads,
-                                 higher_variance=higher_variance,
-                                 plot=False)
+    samples = utils.stimulus_generator(
+        N, input_size, heads, variance,
+        higher_heads=higher_heads,
+        higher_variance=higher_variance,
+        plot=False)
+
+    """
+    TODO:
+    - train-test split
+    """
 
     # make model
-    model = Autoencoder(input_size=size, encoding_dim=10)
+    model = Autoencoder(input_size=input_size,
+                        encoding_dim=input_size)
+
+    print(model)
 
     # train model
-    epochs = 2e3
-    model = train_autoencoder(samples, model, epochs=int(epochs),
-                              batch_size=5, learning_rate=1e-3)
+    epochs = 2_000
+    model = train_autoencoder(samples,
+                              model,
+                              epochs=int(epochs),
+                              batch_size=5,
+                              learning_rate=1e-3)
 
-    # reconstruct data
-    reconstruct_data(samples, num=5, model=model)
+
+    # reconstruct data -- new data
+    samples = utils.stimulus_generator(
+        1000, input_size,
+        heads, variance,
+        higher_heads=higher_heads,
+        higher_variance=higher_variance,
+        plot=False)
+
+    x_rec = reconstruct_data(samples, num=10, model=model)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+
+    ax1.imshow(samples.sum(axis=0).reshape(1, -1),
+               aspect="auto", cmap="gray_r")
+    ax1.set_title("Original higher distribution")
+
+    ax2.imshow(x_rec.sum(axis=0).reshape(1, -1),
+               aspect="auto", cmap="gray_r")
+    ax2.set_title("Reconstructed higher distribution")
+
+    plt.show()
+
 
