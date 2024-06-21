@@ -36,7 +36,6 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
         Input patterns
     """
 
-
     # generate the position of the heads drawing from a distribution defined
     # by higher_heads and higher_variance
     if higher_heads is not None and higher_variance is not None:
@@ -102,18 +101,20 @@ def plot_stimuli(samples: np.ndarray):
     plt.show()
 
 
-
 if __name__ == "__main__":
 
     # generate the input patterns
-    N = 30
-    size = 30
+    N = 100
+    size = 50
+
     heads = 3
-    variance = 0.1
-    higher_heads = None
+    variance = 0.05
+
+    higher_heads = heads 
     higher_variance = 0.075
+
     samples = stimulus_generator(N, size, heads, variance,
                                  higher_heads=higher_heads,
                                  higher_variance=higher_variance,
                                  plot=True)
-    
+
