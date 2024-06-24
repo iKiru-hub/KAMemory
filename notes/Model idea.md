@@ -5,12 +5,7 @@
 
 ![[architecture.excalidraw.png]]
 
-Initially, all connections are random. Further, 
-\begin{equation}
-W_{\text{EC}_{\text{in}}\to \text{CA3}}
-\end{equation}
-
-$W_{\text{EC}_{\text{in}}\to \text{CA3}}$ and $W_{\text{EC}_{\text{out}}}$ remain frozen for the entire time.
+Initially, all connections are random. Further, $W_{\text{EC}_{\text{in}}\to \text{CA3}}$ and $W_{\text{EC}_{\text{out}}}$ remain frozen for the entire time.
 
 ## Objective
 ---
