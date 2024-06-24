@@ -63,7 +63,6 @@ class Autoencoder(nn.Module):
         return x
 
 
-
 def train_autoencoder(data: np.ndarray, model: object,
                       epochs: int=20, batch_size: int=64,
                       learning_rate: float=1e-3):
