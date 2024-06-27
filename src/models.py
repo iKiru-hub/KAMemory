@@ -46,7 +46,7 @@ class Autoencoder(nn.Module):
             # nn.ReLU(True),
         )
 
-    def forward(self, x: torch.Tensor):
+    def forward(self, x: torch.Tensor, ca1: bool=False):
 
         """
         Forward pass
@@ -55,6 +55,8 @@ class Autoencoder(nn.Module):
         ----------
         x: torch.Tensor
             input data
+        ca1: bool
+            return the data from CA1. Default is False
 
         Returns
         -------
@@ -62,8 +64,11 @@ class Autoencoder(nn.Module):
             reconstructed data
         """
 
-        x = self.encoder(x)
-        x = self.decoder(x)
+        z = self.encoder(x)
+        x = self.decoder(z)
+
+        if ca1:
+            return x, z
 
         return x
 
@@ -129,7 +134,7 @@ class MTL(nn.Module):
 
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}, dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo})"
 
-    def forward(self, x_ei: torch.Tensor):
+    def forward(self, x_ei: torch.Tensor, ca1: bool=False):
 
         """
         Forward pass
@@ -138,6 +143,8 @@ class MTL(nn.Module):
         ----------
         x_ei: torch.Tensor
             input data
+        ca1: bool
+            return the data from CA1. Default is False
 
         Returns
         -------
@@ -165,6 +172,9 @@ class MTL(nn.Module):
         # Forward pass through CA1 to entorhinal cortex output
         # x_eo = torch.matmul(x_ca1, self.W_ca1_eo)
         x_eo = self.W_ca1_eo @ x_ca1
+
+        if ca1:
+            return x_eo, x_ca1
 
         return x_eo
 

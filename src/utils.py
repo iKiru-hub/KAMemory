@@ -225,6 +225,7 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
 
     # Reconstruct data
     reconstructed_data = []
+    latent_data = []
     loss = 0.
     with torch.no_grad():
 
@@ -233,8 +234,9 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
             inputs = batch[0] if not column else batch[0].reshape(-1, 1)
 
             # Forward pass
-            outputs = model(inputs)
+            outputs, latent = model(inputs, ca1=True)
             reconstructed_data.append(outputs.numpy().flatten())
+            latent_data.append(latent.numpy().flatten())
 
             # evaluate the output
             loss += criterion(outputs, inputs)
@@ -266,7 +268,7 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
         if show:
             plt.show()
 
-    return reconstructed_data
+    return reconstructed_data, latent_data
 
 
 def testing(data: np.ndarray, model: object,
