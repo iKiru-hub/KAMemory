@@ -17,8 +17,8 @@ if __name__ == "__main__":
     dim_eo = dim_ei
 
     # data settings
-    nb_samples = 500
-    num_reconstructions = nb_samples
+    nb_samples = 300
+    num_reconstructions = 1
 
     # distribution 1
     heads = 3
@@ -70,6 +70,13 @@ if __name__ == "__main__":
         training_samples = distrib_2
         test_samples = test_distrib_2
 
+    # dataset for btsp
+    num_btsp_samples = 2
+    num_reconstructions = 1
+    training_sample_btsp = training_samples[np.random.choice(range(training_samples.shape[0]),
+                                                             num_btsp_samples, replace=False)]
+
+
     logger("<<< Data generated >>>")
 
     """ autoencoder training """
@@ -79,7 +86,7 @@ if __name__ == "__main__":
     logger(f"%Autoencoder: {autoencoder}")
 
     # train autoencoder
-    epochs = 1e3
+    epochs = 200
     loss_ae, autoencoder = utils.train_autoencoder(
                     training_data=training_samples,
                     test_data=test_samples,
@@ -89,8 +96,8 @@ if __name__ == "__main__":
     logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
 
     # reconstruct data
-    out_ae, latent_ae = utils.reconstruct_data(data=training_samples,
-                                    num=num_reconstructions,
+    out_ae, latent_ae = utils.reconstruct_data(data=training_sample_btsp,
+                                    num=num_btsp_samples,
                                     model=autoencoder,
                                     show=False, 
                                     plot=False)
@@ -117,10 +124,10 @@ if __name__ == "__main__":
     # train model
     epochs = 1
     for _ in range(epochs):
-        loss_mtl, model = utils.testing(data=training_samples,
+        loss_mtl, model = utils.testing(data=training_sample_btsp,
                                         model=model,
                                         column=True)
-        loss_mtl_rnd, model_rnd = utils.testing(data=training_samples,
+        loss_mtl_rnd, model_rnd = utils.testing(data=training_sample_btsp,
                                                 model=model_rnd,
                                                 column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
@@ -128,15 +135,17 @@ if __name__ == "__main__":
 
     # reconstruct data
     model.pause_lr()
-    out_mtl, latent_mtl = utils.reconstruct_data(data=training_samples,
-                                     num=num_reconstructions,
+    out_mtl, latent_mtl = utils.reconstruct_data(
+        data=training_sample_btsp,
+                                     num=num_btsp_samples,
                                      model=model,
                                      column=True,
                                      plot=False)
 
     model_rnd.pause_lr()
-    out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(data=training_samples,
-                                     num=num_reconstructions,
+    out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(
+        data=training_sample_btsp,
+                                     num=num_btsp_samples,
                                      model=model_rnd,
                                      column=True,
                                      plot=False)
@@ -147,7 +156,8 @@ if __name__ == "__main__":
 
     is_squash = False
     utils.plot_squashed_data(
-        data=training_samples[:num_reconstructions].reshape(num_reconstructions, -1),
+        # data=training_samples[:num_reconstructions].reshape(num_reconstructions, -1),
+        data=training_sample_btsp,
                              ax=ax1,
                              title="Original", squash=is_squash)
     utils.plot_squashed_data(data=out_ae, ax=ax2,
@@ -157,7 +167,7 @@ if __name__ == "__main__":
     utils.plot_squashed_data(data=out_mtl_rnd, ax=ax4,
                              title="MTL (random)", squash=is_squash)
 
-    fig.suptitle("Data reconstruction")
+    fig.suptitle("Data reconstruction | all data vs first input")
     plt.show()
 
 

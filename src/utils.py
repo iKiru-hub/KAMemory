@@ -16,7 +16,7 @@ from tqdm import tqdm
 
 def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
                        higher_heads: int=None, higher_variance: float=None,
-                       plot: bool=False) -> np.ndarray:
+                       plot: bool=False, use_uniform: bool=True) -> np.ndarray:
 
     """
     This function generates random input patterns with a certain
@@ -60,8 +60,11 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
         # generate the positions of the heads
         mu = np.zeros((N, heads))
         for i in range(N):
-            for k, (hh, hv) in enumerate(zip(high_mu, high_variance)):
-                mu[i, k] = np.random.normal(hh, hv)
+            if use_uniform:
+                mu[i, :] = np.random.choice(range(size), replace=False, size=heads)
+            else:
+                for k, (hh, hv) in enumerate(zip(high_mu, high_variance)):
+                    np.random.normal(hh, hv)
         variance = np.array([variance]*heads) * size
 
         # tile for the number of samples
@@ -88,6 +91,7 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
         plot_stimuli(samples=samples)
 
     return samples
+
 
 def plot_stimuli(samples: np.ndarray):
 
@@ -413,7 +417,7 @@ def plot_squashed_data(data: np.ndarray, title: str="",
 
     ax.imshow(data, aspect="auto", cmap="gray_r")
     ax.set_ylabel(title)
-    ax.set_yticks([])
+    ax.set_yticks(range(len(data)))
     ax.set_xticks([])
 
     if ax is None:
@@ -425,14 +429,14 @@ def plot_squashed_data(data: np.ndarray, title: str="",
 if __name__ == "__main__":
 
     # generate the input patterns
-    N = 100
+    N = 10
     size = 50
 
     heads = 3
     variance = 0.05
 
-    higher_heads = heads 
-    higher_variance = 0.075
+    higher_heads = heads
+    higher_variance = 0.4
 
     samples = stimulus_generator(N, size, heads, variance,
                                  higher_heads=higher_heads,

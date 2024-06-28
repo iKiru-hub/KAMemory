@@ -130,6 +130,9 @@ class MTL(nn.Module):
         self.W_ca3_ca1 = nn.Parameter(torch.randn(self._dim_ca1, dim_ca3))
         self.W_ca1_eo = nn.Parameter(W_ca1_eo)
 
+        self._ca1 = None
+        self._ca3 = None
+
     def __repr__(self):
 
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}, dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo})"
@@ -167,11 +170,15 @@ class MTL(nn.Module):
         # update ca3 -> ca1 connectivity via BTSP
         # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
         W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
-        self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
+        # self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
+        self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
 
         # Forward pass through CA1 to entorhinal cortex output
         # x_eo = torch.matmul(x_ca1, self.W_ca1_eo)
         x_eo = self.W_ca1_eo @ x_ca1
+
+        self._ca1 = x_ca1
+        self._ca3 = x_ca3
 
         if ca1:
             return x_eo, x_ca1

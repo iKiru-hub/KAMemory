@@ -26,12 +26,16 @@ $$
 \begin{align}
 x_{\text{CA3}} &= W_{\text{EC}_{\text{in}}\to\text{CA3}} \cdot x\\ 
 x_{\text{CA1}} &= W_{\text{CA3}\to\text{CA1}} \cdot x_{\text{CA3}}\\
-&= W_{\text{EC}_{\text{in}}\to\text{CA3}} \cdot \left(W_{\text{CA3}\to\text{CA1}} \cdot x\right)
+&=W_{\text{CA3}\to\text{CA1}} \cdot\left(W_{\text{EC}_{\text{in}}\to\text{CA3}}\cdot x\right)
 \end{align} 
 $$ 
 an instructive signal is computed in CA1:  $$ IS = W_{\text{EC}_{\text{in}}\to\text{CA1}}\cdot x $$
 the weight update quantity of the CA3$-$CA1 layer is calculated as the outer produce of the first and last signal (assumed both to be column vectors): $$ \Delta W_{\text{CA3}\to\text{CA1}} = x_{\text{CA3}} \cdot IS^{T} $$ 
-the actual update is then implemented through a learning rate $\eta$ : $$ W_{\text{CA3}\to\text{CA1}}\leftarrow \eta\,W_{\text{CA3}\to\text{CA1}} $$ 
+the actual update is then implemented through a learning rate $\beta$ : 
+$$ 
+W_{\text{CA3}\to\text{CA1}}\leftarrow (1-\beta)W_{\text{CA3}\to\text{CA1}} +\beta\,W_{\text{CA3}\to\text{CA1}} 
+$$
+
 then, the final output is defined as: 
 $$
 y=W_{\text{CA1}\to\text{EC}_\text{out}}\cdot x_{\text{CA1}}
