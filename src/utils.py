@@ -415,7 +415,7 @@ def plot_squashed_data(data: np.ndarray, title: str="",
     if ax is None:
         fig, ax = plt.subplots(1, 1, figsize=(10, 5))
 
-    ax.imshow(data, aspect="auto", cmap="gray_r")
+    ax.imshow(data, aspect="auto", cmap="gray_r", vmin=0, vmax=1)
     ax.set_ylabel(title)
     ax.set_yticks(range(len(data)))
     ax.set_xticks([])
@@ -433,10 +433,10 @@ if __name__ == "__main__":
     size = 50
 
     heads = 3
-    variance = 0.05
+    variance = 0.01
 
     higher_heads = heads
-    higher_variance = 0.4
+    higher_variance = 0.5
 
     samples = stimulus_generator(N, size, heads, variance,
                                  higher_heads=higher_heads,

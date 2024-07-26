@@ -71,7 +71,7 @@ if __name__ == "__main__":
         test_samples = test_distrib_2
 
     # dataset for btsp
-    num_btsp_samples = 2
+    num_btsp_samples = 1
     num_reconstructions = 1
     training_sample_btsp = training_samples[np.random.choice(range(training_samples.shape[0]),
                                                              num_btsp_samples, replace=False)]
@@ -127,7 +127,8 @@ if __name__ == "__main__":
         loss_mtl, model = utils.testing(data=training_sample_btsp,
                                         model=model,
                                         column=True)
-        loss_mtl_rnd, model_rnd = utils.testing(data=training_sample_btsp,
+        loss_mtl_rnd, model_rnd = utils.testing(
+                                        data=training_sample_btsp,
                                                 model=model_rnd,
                                                 column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
@@ -163,7 +164,7 @@ if __name__ == "__main__":
     utils.plot_squashed_data(data=out_ae, ax=ax2,
                              title="Autoencoder", squash=is_squash)
     utils.plot_squashed_data(data=out_mtl, ax=ax3,
-                             title="MTL", squash=bool(1))
+                             title="MTL", squash=is_squash)
     utils.plot_squashed_data(data=out_mtl_rnd, ax=ax4,
                              title="MTL (random)", squash=is_squash)
 

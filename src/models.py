@@ -92,6 +92,9 @@ class Autoencoder(nn.Module):
 """ Main model """
 
 
+Kis = 4
+
+
 class MTL(nn.Module):
 
     def __init__(self, W_ei_ca1: torch.Tensor, W_ca1_eo: torch.Tensor,
@@ -128,6 +131,9 @@ class MTL(nn.Module):
         self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3, self._dim_ei))
         self.W_ei_ca1 = nn.Parameter(W_ei_ca1)
         self.W_ca3_ca1 = nn.Parameter(torch.randn(self._dim_ca1, dim_ca3))
+        # self.W_ca3_ca1 = nn.Parameter(nn.Linear(self._dim_ca1, dim_ca3,
+        #                            bias=False).weight.clone().detach())
+
         self.W_ca1_eo = nn.Parameter(W_ca1_eo)
 
         self._ca1 = None
@@ -167,12 +173,30 @@ class MTL(nn.Module):
         # IS = torch.matmul(x_ei, self.W_ei_ca1)
         IS = self.W_ei_ca1 @ x_ei
 
+        # ----- # top k values
+        betas = torch.zeros_like(IS.flatten())
+        betas[torch.topk(IS.flatten(), Kis).indices] = 1.
+
+        # betas = IS | but select the first -k IS
+        # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
+        # betas = betas.reshape(IS.shape)
+        betas = IS
+        tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
+
+        # self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
+        self.W_ca3_ca1 = nn.Parameter(x_ca3 @ betas.reshape(1, -1))
+        # self.W_ca3_ca1 = nn.Parameter(tiled_ca3 @ betas.T)
+        # -----
+
+
         # update ca3 -> ca1 connectivity via BTSP
         # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
-        W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
         # self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
-        self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
 
+        # W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
+        # self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
+
+        # ---
         # Forward pass through CA1 to entorhinal cortex output
         # x_eo = torch.matmul(x_ca1, self.W_ca1_eo)
         x_eo = self.W_ca1_eo @ x_ca1

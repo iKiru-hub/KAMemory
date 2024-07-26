@@ -34,6 +34,10 @@ dim_eo = dim_ei
 nb_samples = 300
 num_reconstructions = 1
 
+
+# %%
+# Data generation
+
 # distribution 1
 heads = 3
 variance = 0.05
@@ -96,7 +100,7 @@ logger("<<< Data generated >>>")
 
 # %%
 
-""" autoencoder training """
+""" AUTOENCODER training """
 
 autoencoder = Autoencoder(input_dim=dim_ei,
                           encoding_dim=dim_ca1)
@@ -119,7 +123,10 @@ out_ae, latent_ae = utils.reconstruct_data(data=training_sample_btsp,
                                 show=False, 
                                 plot=False)
 
-""" mtl training """
+
+# %%
+
+""" MTL declaration """
 
 # get weights from the autoencoder
 W_ei_ca1, W_ca1_eo = autoencoder.get_weights()
@@ -141,7 +148,8 @@ logger(f"%MTL: {model}")
 
 # %%
 
-# train model
+""" MODEL training """
+
 epochs = 1
 for _ in range(epochs):
     loss_mtl, model = utils.testing(data=training_sample_btsp,
@@ -156,7 +164,7 @@ for _ in range(epochs):
 # reconstruct data
 model.pause_lr()
 out_mtl, latent_mtl = utils.reconstruct_data(
-    data=training_sample_btsp,
+                                 data=training_sample_btsp,
                                  num=num_btsp_samples,
                                  model=model,
                                  column=True,
@@ -164,7 +172,7 @@ out_mtl, latent_mtl = utils.reconstruct_data(
 
 model_rnd.pause_lr()
 out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(
-    data=training_sample_btsp,
+                                 data=training_sample_btsp,
                                  num=num_btsp_samples,
                                  model=model_rnd,
                                  column=True,
@@ -172,12 +180,16 @@ out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(
 
 
 # %%
-sample = torch.Tensor(training_sample_btsp[0].reshape(-1, 1),
-                      ).float()
+sample = torch.tensor(training_sample_btsp[0].reshape(-1, 1),
+                      requires_grad=False).float()
 print(sample.shape)
 out = model(sample)
 # print(out)
 
+
+# %% [markdown]
+# -------------------------
+# TESTING & VISUALIZATION
 
 
 # %%
@@ -196,7 +208,6 @@ if not isinstance(training_sample_btsp,
 
 else:
     dataloader = data
-
 
 column = True
 
@@ -220,8 +231,23 @@ with torch.no_grad():
 if idx_sample == 0:
     outs1 = [model._ca3, model._ca1]
 
+    fig1, (ax11, ax12) = plt.subplots(2, 1, figsize=(20, 10))
+    ax11.imshow(outs1[0].reshape(1, -1), aspect="auto", cmap="Greys_r")
+    ax11.set_title("pattern 1 | CA3")
+
+    ax12.imshow(outs1[1].reshape(1, -1), aspect="auto", cmap="Greys_r")
+    ax12.set_title("pattern 1 | CA1")
+
 elif idx_sample == 1:
     outs2 = [model._ca3, model._ca1]
+
+    fig1, (ax21, ax22) = plt.subplots(2, 1, figsize=(20, 10))
+    ax21.imshow(outs2[0].reshape(1, -1), aspect="auto", cmap="Greys_r")
+    ax21.set_title("pattern 2 | CA3")
+
+    ax22.imshow(outs2[1].reshape(1, -1), aspect="auto", cmap="Greys_r")
+    ax22.set_title("pattern 2 | CA1")
+
 
 # %%
 

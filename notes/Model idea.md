@@ -30,10 +30,10 @@ x_{\text{CA1}} &= W_{\text{CA3}\to\text{CA1}} \cdot x_{\text{CA3}}\\
 \end{align} 
 $$ 
 an instructive signal is computed in CA1:  $$ IS = W_{\text{EC}_{\text{in}}\to\text{CA1}}\cdot x $$
-the weight update quantity of the CA3$-$CA1 layer is calculated as the outer produce of the first and last signal (assumed both to be column vectors): $$ \Delta W_{\text{CA3}\to\text{CA1}} = x_{\text{CA3}} \cdot IS^{T} $$ 
+the weight update quantity of the CA3$-$CA1 layer is calculated as the outer product of the first and last signal (assumed both to be column vectors): $$ \Delta W_{\text{CA3}\to\text{CA1}} = x_{\text{CA3}} \cdot IS^{T} $$ 
 the actual update is then implemented through a learning rate $\beta$ : 
 $$ 
-W_{\text{CA3}\to\text{CA1}}\leftarrow (1-\beta)W_{\text{CA3}\to\text{CA1}} +\beta\,W_{\text{CA3}\to\text{CA1}} 
+W_{\text{CA3}\to\text{CA1}}\leftarrow (1-\beta)W_{\text{CA3}\to\text{CA1}} +\beta\,\Delta W_{\text{CA}\to\text{CA1}} 
 $$
 
 then, the final output is defined as: 
@@ -46,5 +46,5 @@ In order to prevent unbounded grow of the synapses of re-experienced stimuli, th
 $$
 IS = 1 - \cos\left(W_{\text{EC}_{\text{in}}\to{\text{CA1}}}\cdot x, x_{\text{CA3}}\right)
 $$
-with this tweak, the hope is that the reached the [objective](#Objective).
+with this tweak, the hope is that it reaches the [objective](#Objective).
 
