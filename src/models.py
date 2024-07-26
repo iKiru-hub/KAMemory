@@ -92,7 +92,7 @@ class Autoencoder(nn.Module):
 """ Main model """
 
 
-Kis = 4
+Kis = 50
 
 
 class MTL(nn.Module):
@@ -174,20 +174,19 @@ class MTL(nn.Module):
         IS = self.W_ei_ca1 @ x_ei
 
         # ----- # top k values
-        betas = torch.zeros_like(IS.flatten())
+        betas = torch.zeros_like(IS)
         betas[torch.topk(IS.flatten(), Kis).indices] = 1.
+
+        # betas = betas.reshape(IS.shape)
+        tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
+        self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
 
         # betas = IS | but select the first -k IS
         # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
-        # betas = betas.reshape(IS.shape)
-        betas = IS
-        tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
-
-        # self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
-        self.W_ca3_ca1 = nn.Parameter(x_ca3 @ betas.reshape(1, -1))
+        # betas = IS
+        # self.W_ca3_ca1 = nn.Parameter(x_ca3 @ betas.reshape(1, -1))
         # self.W_ca3_ca1 = nn.Parameter(tiled_ca3 @ betas.T)
         # -----
-
 
         # update ca3 -> ca1 connectivity via BTSP
         # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
