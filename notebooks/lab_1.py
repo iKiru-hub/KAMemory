@@ -18,6 +18,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from torch.utils.data import DataLoader, TensorDataset
+from torch import nn
 
 
 # %%
@@ -31,17 +32,17 @@ dim_ca1 = 50
 dim_eo = dim_ei
 
 # data settings
-nb_samples = 300
+nb_samples = 200
 num_reconstructions = 1
 
 
 # %%
-# Data generation
+""" Data generation """
 
-# distribution 1
+# --- DISTRIBUTION 1 ---
 heads = 3
 variance = 0.05
-higher_heads = heads 
+higher_heads = heads
 higher_variance = 0.075
 
 # make samples
@@ -56,7 +57,7 @@ test_distrib_1 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
                              higher_variance=higher_variance,
                              plot=False)
 
-# distribution 2
+# --- DISTRIBUTION 2 ---
 heads = 2
 variance = 0.05
 higher_heads = heads 
@@ -74,6 +75,7 @@ test_distrib_2 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
                              higher_variance=higher_variance,
                              plot=False)
 
+# ----------------------
 # make one data dataset
 if bool(1):
     training_samples = np.concatenate((distrib_2, distrib_1), axis=0)
@@ -89,14 +91,13 @@ else:
     test_samples = test_distrib_2
 
 # dataset for btsp
-num_btsp_samples = 2
+num_btsp_samples = 1
 num_reconstructions = 1
-training_sample_btsp = training_samples[np.random.choice(range(training_samples.shape[0]),
-                                                         num_btsp_samples, replace=False)]
-
+training_sample_btsp = training_samples[np.random.choice(
+                        range(training_samples.shape[0]),
+                        num_btsp_samples, replace=False)]
 
 logger("<<< Data generated >>>")
-
 
 # %%
 
@@ -107,7 +108,7 @@ autoencoder = Autoencoder(input_dim=dim_ei,
 logger(f"%Autoencoder: {autoencoder}")
 
 # train autoencoder
-epochs = 200
+epochs = 100
 loss_ae, autoencoder = utils.train_autoencoder(
                 training_data=training_samples,
                 test_data=test_samples,
@@ -122,6 +123,166 @@ out_ae, latent_ae = utils.reconstruct_data(data=training_sample_btsp,
                                 model=autoencoder,
                                 show=False, 
                                 plot=False)
+
+
+# %% [markdown]
+# -------------------------
+# CLOSE-UP ON MTL MODEL
+
+
+# %%
+# --- MODEL DEFINITION
+
+Kis = 10
+
+# imported weights
+w_ei_ca1, w_ca1_eo = autoencoder.get_weights()
+
+
+# input stimulus
+x_ei = torch.tensor(training_sample_btsp[0].reshape(-1, 1).astype(np.float32))
+
+out_ae = autoencoder(x_ei.reshape(1, -1)).detach().numpy().reshape(1, -1)
+
+# %%
+
+# random weights
+w_ei_ca3 = nn.Parameter(torch.randn(dim_ca3, dim_ei) / dim_ca3**0.7)
+w_ca3_ca1 = nn.Parameter(torch.zeros(dim_ca1, dim_ca3))
+
+# --- MODEL TRAINING
+
+# Forward pass through EI to CA3 to CA1
+x_ca3 = w_ei_ca3 @ x_ei
+IS = w_ei_ca1 @ x_ei
+
+# --- modify the instructive signal
+is_ = IS.detach().numpy().flatten().copy()
+clipped = np.where(np.abs(is_) > 0.4,
+             is_, 0).reshape(-1, 1).astype(np.float32)
+             # 1, 0).reshape(-1, 1).astype(np.float32)
+IS = torch.tensor(clipped)
+
+# ----- rule 1
+# betas = torch.zeros_like(IS)
+# betas[torch.topk(IS.flatten(), Kis).indices] = 1.
+
+# # betas = betas.reshape(IS.shape)
+# tiled_ca3 = x_ca3.flatten().repeat(dim_ca1, 1)
+# w_ca3_ca1 = nn.Parameter((1 - betas) * w_ca3_ca1 + betas * tiled_ca3)
+
+# ----- rule 2
+w_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
+w_ca3_ca1 = nn.Parameter(w_ca3_ca1_prime)
+
+# -- TEST
+x_eo = w_ca1_eo @ (w_ca3_ca1 @ (w_ei_ca3 @ x_ei))
+
+out = x_eo.detach().numpy().reshape(1, -1)
+
+
+# --- PLOT
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(15, 5),
+                               sharex=True)
+
+#
+ax1.imshow(x_ei.numpy().reshape(1, -1), aspect="auto",
+           cmap="Greys", vmin=0, vmax=1)
+ax1.set_ylabel("Input data")
+ax1.set_xticks([])
+ax1.set_yticks([])
+
+ax2.imshow(out_ae, aspect="auto", cmap="Greys",
+           vmin=0, vmax=1)
+ax2.set_ylabel("Autoencoder")
+ax2.set_xticks([])
+ax2.set_yticks([])
+
+ax3.imshow(out, aspect="auto", cmap="Greys",
+           vmin=0, vmax=1)
+ax3.set_ylabel("MTL")
+ax3.set_xticks([])
+ax3.set_yticks([])
+
+plt.show()
+
+# %%
+
+plt.hist(is_.flatten(), bins=10, alpha=0.4)
+plt.hist(clipped.flatten(), bins=10, alpha=0.4)
+plt.show()
+
+# %%
+plt.hist(IS.flatten(), label="$IS$", alpha=0.4, density=True)
+plt.hist(x_ca3.detach().flatten(), label="$x_{CA3}$", alpha=0.4, density=True)
+plt.legend()
+plt.title("Contributions for $W_{CA3, CA1}$")
+plt.show()
+
+# %%
+plt.subplot(221)
+# plt.axis("off")
+plt.imshow(w_ei_ca1.detach().numpy(), aspect="auto", cmap="RdYlGn",
+           vmin=-1., vmax=1.)
+plt.title("$W_{EI, CA1}$")
+
+plt.subplot(222)
+plt.imshow(x_ca3.detach().numpy().T, aspect="auto",
+           cmap="RdYlGn", vmin=-1., vmax=1.)
+plt.yticks([])
+plt.title("$x_{CA3}$")
+
+plt.subplot(223)
+plt.imshow(IS, aspect="auto",
+           cmap="RdYlGn", vmin=-1., vmax=1.)
+plt.xticks([])
+plt.title("$IS$")
+
+plt.subplot(224)
+# plt.imshow(weica1, aspect="auto", cmap="RdYlGn",
+#            vmin=-1., vmax=1.)
+plt.imshow(w_ca3_ca1.detach().numpy(), aspect="auto", cmap="RdYlGn",
+           vmin=-1., vmax=1.)
+plt.title("$W_{CA3, CA1}$")
+# plt.colorbar()
+plt.show()
+
+# %%
+x_ca1 = w_ca3_ca1 @ x_ca3
+plt.subplot(211)
+plt.imshow(x_ca1.detach().numpy().T, aspect="auto",
+              cmap="RdYlGn", vmin=-1., vmax=1.)
+plt.title("$x_{CA1}$")
+plt.yticks([])
+plt.xticks([])
+
+plt.subplot(212)
+plt.imshow(IS.detach().numpy().T, aspect="auto",
+              cmap="RdYlGn", vmin=-1., vmax=1.)
+plt.title("$IS$")
+plt.yticks([])
+plt.xticks([])
+plt.show()
+
+
+# %%
+# --- eigen-decomposition
+
+# EI -> CA1
+evals_ei_ca1, evect_ei_ca1  = np.linalg.eig(w_ei_ca1.detach().numpy())
+
+# CA3 -> CA1
+weica1 = w_ca3_ca1.detach().numpy() @ w_ei_ca3.detach().numpy()
+# evals_ca3_ca1, evect_ca3_ca1  = np.linalg.eig(w_ca3_ca1.detach().numpy())
+evals_ca3_ca1, evect_ca3_ca1  = np.linalg.eig(weica1)
+
+# plot
+plt.scatter(evals_ei_ca1.real, evals_ei_ca1.imag, label="$EI$->", s=2)
+plt.scatter(evals_ca3_ca1.real, evals_ca3_ca1.imag, label="$CA3$->", s=2)
+plt.legend()
+plt.xlabel("$Re$")
+plt.ylabel("$Im$")
+plt.show()
 
 
 # %%
@@ -193,7 +354,7 @@ out = model(sample)
 
 
 # %%
-idx_sample = 1
+idx_sample = 0
 
 data = training_sample_btsp[idx_sample].reshape(1, -1)
 
@@ -239,6 +400,7 @@ if idx_sample == 0:
     ax12.set_title("pattern 1 | CA1")
 
 elif idx_sample == 1:
+
     outs2 = [model._ca3, model._ca1]
 
     fig1, (ax21, ax22) = plt.subplots(2, 1, figsize=(20, 10))
@@ -248,39 +410,14 @@ elif idx_sample == 1:
     ax22.imshow(outs2[1].reshape(1, -1), aspect="auto", cmap="Greys_r")
     ax22.set_title("pattern 2 | CA1")
 
-
-# %%
-
-
-fig1, (ax11, ax12) = plt.subplots(2, 1, figsize=(20, 10))
-ax11.imshow(outs1[0].reshape(1, -1), aspect="auto", cmap="Greys_r")
-ax11.set_title("pattern 1 | CA3")
-
-ax12.imshow(outs1[1].reshape(1, -1), aspect="auto", cmap="Greys_r")
-ax12.set_title("pattern 1 | CA1")
-
-
-# %%
-
-
-fig1, (ax21, ax22) = plt.subplots(2, 1, figsize=(20, 10))
-ax21.imshow(outs2[0].reshape(1, -1), aspect="auto", cmap="Greys_r")
-ax21.set_title("pattern 2 | CA3")
-
-ax22.imshow(outs2[1].reshape(1, -1), aspect="auto", cmap="Greys_r")
-ax22.set_title("pattern 2 | CA1")
-
 plt.show()
 
 # %%
-
-
-
 out2 = model._ca3
 out2
 
 fig2, ax2 = plt.subplots()
-ax2.imshow(out1.reshape(1, -1), aspect="auto", cmap="Greys_r")
+ax2.imshow(out2.reshape(1, -1), aspect="auto", cmap="Greys_r")
 ax2.set_title("pattern 2")
 
 

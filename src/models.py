@@ -128,9 +128,11 @@ class MTL(nn.Module):
         self._lr_orig = lr
 
         # Initialize weight matrices for each layer
-        self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3, self._dim_ei))
+        self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
+                                                 self._dim_ei) / dim_ca3)
         self.W_ei_ca1 = nn.Parameter(W_ei_ca1)
-        self.W_ca3_ca1 = nn.Parameter(torch.randn(self._dim_ca1, dim_ca3))
+        # self.W_ca3_ca1 = nn.Parameter(torch.randn(self._dim_ca1, dim_ca3))
+        self.W_ca3_ca1 = nn.Parameter(torch.zeros(self._dim_ca1, dim_ca3))
         # self.W_ca3_ca1 = nn.Parameter(nn.Linear(self._dim_ca1, dim_ca3,
         #                            bias=False).weight.clone().detach())
 
@@ -174,12 +176,12 @@ class MTL(nn.Module):
         IS = self.W_ei_ca1 @ x_ei
 
         # ----- # top k values
-        betas = torch.zeros_like(IS)
-        betas[torch.topk(IS.flatten(), Kis).indices] = 1.
+        # betas = torch.zeros_like(IS)
+        # betas[torch.topk(IS.flatten(), Kis).indices] = 1.
 
-        # betas = betas.reshape(IS.shape)
-        tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
-        self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
+        # # betas = betas.reshape(IS.shape)
+        # tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
+        # self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
 
         # betas = IS | but select the first -k IS
         # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
@@ -192,8 +194,8 @@ class MTL(nn.Module):
         # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
         # self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
 
-        # W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
-        # self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
+        W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
+        self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
 
         # ---
         # Forward pass through CA1 to entorhinal cortex output

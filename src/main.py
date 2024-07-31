@@ -73,8 +73,9 @@ if __name__ == "__main__":
     # dataset for btsp
     num_btsp_samples = 1
     num_reconstructions = 1
-    training_sample_btsp = training_samples[np.random.choice(range(training_samples.shape[0]),
-                                                             num_btsp_samples, replace=False)]
+    training_sample_btsp = training_samples[np.random.choice(
+                            range(training_samples.shape[0]),
+                            num_btsp_samples, replace=False)]
 
 
     logger("<<< Data generated >>>")
@@ -86,7 +87,7 @@ if __name__ == "__main__":
     logger(f"%Autoencoder: {autoencoder}")
 
     # train autoencoder
-    epochs = 200
+    epochs = 100
     loss_ae, autoencoder = utils.train_autoencoder(
                     training_data=training_samples,
                     test_data=test_samples,
