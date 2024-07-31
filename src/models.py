@@ -1,7 +1,5 @@
 import torch
 from torch import nn
-from torch import nn, optim
-from torch.utils.data import DataLoader, TensorDataset
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,10 +8,14 @@ from tqdm import tqdm
 import utils
 
 
+logger = utils.setup_logger(__name__)
+
+
+""" Autoencoder """
 
 class Autoencoder(nn.Module):
 
-    def __init__(self, input_size: int=10, encoding_dim=10):
+    def __init__(self, input_dim: int=10, encoding_dim=10):
 
         # make docstrings
         """
@@ -21,7 +23,7 @@ class Autoencoder(nn.Module):
 
         Parameters
         ----------
-        input_size: int
+        input_dim: int
             the size of the input data
         encoding_dim: int
             the size of the encoded data
@@ -29,19 +31,22 @@ class Autoencoder(nn.Module):
 
         super(Autoencoder, self).__init__()
 
+        self._input_dim = input_dim
+        self._encoding_dim = encoding_dim
+
         # Encoder
         self.encoder = nn.Sequential(
-            nn.Linear(input_size, encoding_dim),
+            nn.Linear(input_dim, encoding_dim),
             # nn.ReLU(True),
         )
 
         # Decoder
         self.decoder = nn.Sequential(
-            nn.Linear(encoding_dim, input_size),
+            nn.Linear(encoding_dim, input_dim),
             # nn.ReLU(True),
         )
 
-    def forward(self, x: torch.Tensor):
+    def forward(self, x: torch.Tensor, ca1: bool=False):
 
         """
         Forward pass
@@ -50,6 +55,8 @@ class Autoencoder(nn.Module):
         ----------
         x: torch.Tensor
             input data
+        ca1: bool
+            return the data from CA1. Default is False
 
         Returns
         -------
@@ -57,199 +64,212 @@ class Autoencoder(nn.Module):
             reconstructed data
         """
 
-        x = self.encoder(x)
-        x = self.decoder(x)
+        z = self.encoder(x)
+        x = self.decoder(z)
+
+        if ca1:
+            return x, z
 
         return x
 
+    def get_weights(self):
 
-def train_autoencoder(data: np.ndarray, model: object,
-                      epochs: int=20, batch_size: int=64,
-                      learning_rate: float=1e-3):
+        """
+        Get the weights of the autoencoder model
 
-    """
-    Train the autoencoder model
+        Returns
+        -------
+        tuple
+            the weights of the encoder and decoder
+        """
 
-    Parameters
-    ----------
-    data: np.ndarray
-        input data
-    model: nn.Module
-        the autoencoder model
-    epochs: int
-        the number of epochs
-    batch_size: int
-        the batch size
-    learning_rate: float
-        the learning rate
-    """
+        ei_ca1 = self.encoder[0].weight.data.reshape(self._encoding_dim, self._input_dim)
+        ca1_eo = self.decoder[0].weight.data.reshape(self._input_dim, self._encoding_dim)
 
-    # Convert numpy array to torch tensor
-    data_tensor = torch.tensor(data, dtype=torch.float32)
-
-    # Create a dataset and data loader
-    dataset = TensorDataset(data_tensor)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-
-    # Loss function and optimizer
-    criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-
-    # Set the model to training mode
-    model.train()
-
-    # Training loop
-    epoch = 0
-    epoch_log = 100
-    for epoch in (pbar := tqdm(range(epochs), desc = f"{epoch}")):
-        total_loss = 0
-        for batch in dataloader:
-            inputs = batch[0]
-
-            # Forward pass
-            outputs = model(inputs)
-            loss = criterion(outputs, inputs)
-
-            # Backward and optimize
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-
-            total_loss += loss.item()
-
-        if (epoch+1) % epoch_log == 0:
-            pbar.set_description(f"Epoch [{epoch+1}], Loss: {total_loss / len(dataloader):.4f}")
-
-    return model
+        return ei_ca1, ca1_eo
 
 
-def reconstruct_data(data: np.ndarray, model: object, num: int=5):
+""" Main model """
 
-    """
-    Reconstruct data using the autoencoder model
 
-    Parameters
-    ----------
-    data: np.ndarray
-        input data
-    num: int
-        the number of samples to reconstruct
-    model: nn.Module
-        the autoencoder model
+Kis = 50
 
-    Returns
-    -------
-    np.ndarray
-        reconstructed data
-    """
 
-    # Convert numpy array to torch tensor
-    data_tensor = torch.tensor(data[:num],
-                               dtype=torch.float32)
+class MTL(nn.Module):
 
-    # Create a dataset and data loader
-    dataset = TensorDataset(data_tensor)
-    dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+    def __init__(self, W_ei_ca1: torch.Tensor, W_ca1_eo: torch.Tensor,
+                 dim_ca3: int, lr: float):
 
-    # Set the model to evaluation mode
-    model.eval()
+        # make docstrings
+        """
+        Multi-target learning model with BTSP learning rule
 
-    # Reconstruct data
-    reconstructed_data = []
-    with torch.no_grad():
+        Parameters
+        ----------
+        W_ei_ca1: torch.Tensor
+            the weight matrix from entorhinal cortex to CA1
+        W_ca1_eo: torch.Tensor
+            the weight matrix from CA1 to entorhinal cortex output
+        dim_ca3: int
+            the size of the CA3 layer
+        lr: float
+            the learning rate
+        """
 
-        for batch in tqdm(dataloader):
+        super(MTL, self).__init__()
 
-            inputs = batch[0]
+        # infer dimensions of EC input and output and CA1
+        self._dim_ei = W_ei_ca1.shape[1]
+        self._dim_eo = W_ca1_eo.shape[0]
+        self._dim_ca1 = W_ca1_eo.shape[1]
 
-            # Forward pass
-            outputs = model(inputs)
-            reconstructed_data.append(outputs.numpy().flatten())
+        #network parameters
+        self._lr = lr
+        self._lr_orig = lr
 
-    # Convert list to numpy array
-    reconstructed_data = np.array(reconstructed_data)
+        # Initialize weight matrices for each layer
+        self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
+                                                 self._dim_ei) / dim_ca3)
+        self.W_ei_ca1 = nn.Parameter(W_ei_ca1)
+        # self.W_ca3_ca1 = nn.Parameter(torch.randn(self._dim_ca1, dim_ca3))
+        self.W_ca3_ca1 = nn.Parameter(torch.zeros(self._dim_ca1, dim_ca3))
+        # self.W_ca3_ca1 = nn.Parameter(nn.Linear(self._dim_ca1, dim_ca3,
+        #                            bias=False).weight.clone().detach())
 
-    # difference between original and reconstructed data
-    diff_data = (data[:num] - reconstructed_data)
+        self.W_ca1_eo = nn.Parameter(W_ca1_eo)
 
-    # plot
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
+        self._ca1 = None
+        self._ca3 = None
 
-    ax1.imshow(data_tensor, aspect="auto", vmin=0, vmax=1, cmap="gray_r")
-    ax1.set_title("Original data")
-    ax1.set_axis_off()
+    def __repr__(self):
 
-    ax2.imshow(reconstructed_data, aspect="auto", vmin=0, vmax=1, cmap="gray_r")
-    ax2.set_title("Reconstructed data")
-    ax2.set_axis_off()
+        return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}, dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo})"
 
-    ax3.imshow(diff_data, aspect="auto", cmap="seismic", vmin=-1, vmax=1)
-    ax3.set_title("Difference")
-    ax3.set_axis_off()
+    def forward(self, x_ei: torch.Tensor, ca1: bool=False):
 
-    plt.show()
+        """
+        Forward pass
 
-    return reconstructed_data
+        Parameters
+        ----------
+        x_ei: torch.Tensor
+            input data
+        ca1: bool
+            return the data from CA1. Default is False
 
+        Returns
+        -------
+        torch.Tensor
+            reconstructed data
+        """
+
+        # Forward pass through the entorhinal cortex to CA3
+        # x_ca3 = torch.matmul(x_ei, self.W_ei_ca3)
+        x_ca3 = self.W_ei_ca3 @ x_ei
+
+        # Forward pass through CA3 to CA1
+        # x_ca1 = torch.matmul(x_ca3, self.W_ca3_ca1)
+        x_ca1 = self.W_ca3_ca1 @ x_ca3
+
+        # compute instructive signal
+        # IS = torch.matmul(x_ei, self.W_ei_ca1)
+        IS = self.W_ei_ca1 @ x_ei
+
+        # ----- # top k values
+        # betas = torch.zeros_like(IS)
+        # betas[torch.topk(IS.flatten(), Kis).indices] = 1.
+
+        # # betas = betas.reshape(IS.shape)
+        # tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
+        # self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
+
+        # betas = IS | but select the first -k IS
+        # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
+        # betas = IS
+        # self.W_ca3_ca1 = nn.Parameter(x_ca3 @ betas.reshape(1, -1))
+        # self.W_ca3_ca1 = nn.Parameter(tiled_ca3 @ betas.T)
+        # -----
+
+        # update ca3 -> ca1 connectivity via BTSP
+        # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
+        # self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
+
+        W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
+        self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
+
+        # ---
+        # Forward pass through CA1 to entorhinal cortex output
+        # x_eo = torch.matmul(x_ca1, self.W_ca1_eo)
+        x_eo = self.W_ca1_eo @ x_ca1
+
+        self._ca1 = x_ca1
+        self._ca3 = x_ca3
+
+        if ca1:
+            return x_eo, x_ca1
+
+        return x_eo
+
+    def pause_lr(self):
+
+        """
+        Pause learning rate
+        """
+
+        self._lr = 0.
+
+    def resume_lr(self):
+
+        """
+        Resume learning rate
+        """
+
+        self._lr = self._lr_orig
 
 
 if __name__ == "__main__":
 
-    # Generate some random data
-    N = 200
-    input_size = 50
+    main()
 
-    heads = 3
-    variance = 0.01
-    higher_heads = heads
-    higher_variance = 0.05
+    # dim_ei = 100
+    # dim_ca3 = 200
+    # dim_ca1 = 150
+    # dim_eo = 100
 
-    samples = utils.stimulus_generator(
-        N, input_size, heads, variance,
-        higher_heads=higher_heads,
-        higher_variance=higher_variance,
-        plot=False)
+    # model = MTL(W_ei_ca1=torch.randn(dim_ca1, dim_ei),
+    #             W_ca1_eo=torch.randn(dim_eo, dim_ca1),
+    #             dim_ca3=dim_ca3, lr=0.9)
 
-    """
-    TODO:
-    - train-test split
-    """
+    # input_data = torch.randn(dim_ei, 1)  # Batch size of 1 for simplicity
 
-    # make model
-    model = Autoencoder(input_size=input_size,
-                        encoding_dim=input_size)
+    # with torch.no_grad():
+    #     output_data = model(input_data)
 
-    print(model)
+    # print(input_data.shape)
+    # print(output_data.shape)
 
-    # train model
-    epochs = 2_000
-    model = train_autoencoder(samples,
-                              model,
-                              epochs=int(epochs),
-                              batch_size=5,
-                              learning_rate=1e-3)
+    # # Generate some random data
+    # N = 100
+    # size = 50
 
+    # heads = 3
+    # variance = 0.05
+    # higher_heads = heads 
+    # higher_variance = 0.075
 
-    # reconstruct data -- new data
-    samples = utils.stimulus_generator(
-        1000, input_size,
-        heads, variance,
-        higher_heads=higher_heads,
-        higher_variance=higher_variance,
-        plot=False)
+    # samples = utils.stimulus_generator(N, size, heads, variance,
+    #                              higher_heads=higher_heads,
+    #                              higher_variance=higher_variance,
+    #                              plot=False)
 
-    x_rec = reconstruct_data(samples, num=10, model=model)
+    # # make model
+    # model = Autoencoder(input_dim=size, encoding_dim=10)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+    # # train model
+    # epochs = 2e3
+    # model = train_autoencoder(samples, model, epochs=int(epochs),
+    #                           batch_size=5, learning_rate=1e-3)
 
-    ax1.imshow(samples.sum(axis=0).reshape(1, -1),
-               aspect="auto", cmap="gray_r")
-    ax1.set_title("Original higher distribution")
-
-    ax2.imshow(x_rec.sum(axis=0).reshape(1, -1),
-               aspect="auto", cmap="gray_r")
-    ax2.set_title("Reconstructed higher distribution")
-
-    plt.show()
-
+    # # reconstruct data
+    # reconstruct_data(samples, num=5, model=model)
 
