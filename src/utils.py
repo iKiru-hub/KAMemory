@@ -19,7 +19,7 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
                        plot: bool=False, use_uniform: bool=True) -> np.ndarray:
 
     """
-    This function generates random input patterns with a certain
+    This function generates random z patterns with a certain
     degree of structure
 
     Parameters
@@ -27,23 +27,23 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
     N : int
         Number of samples
     size : int, optional
-        Size of the input patterns, by default 10
+        Size of the z patterns, by default 10
     # generate docstring
         heads : int, optional
         Number of heads, by default 2
     variance : float, optional
-        Variance of the Gaussian used to generate the input patterns, by default 0.1
+        Variance of the Gaussian used to generate the z patterns, by default 0.1
     higher_heads : int, optional
         Higher number of heads, by default None
     higher_variance : float, optional
-        Higher variance of the Gaussian used to generate the input patterns, by default None
+        Higher variance of the Gaussian used to generate the z patterns, by default None
     plot : bool, optional
-        Whether to plot the input patterns, by default False
+        Whether to plot the z patterns, by default False
 
     Returns 
     -------
     samples : np.ndarray
-        Input patterns
+        z patterns
     """
 
     # generate the position of the heads drawing from a distribution defined
@@ -79,7 +79,7 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
         mu = np.tile(mu, (N, 1))
         variance = np.tile(variance, (N, 1))
 
-    # generate the input patterns
+    # generate the z patterns
     samples = np.zeros((N, size))
     for i in range(N):
         for k in range(heads):
@@ -93,15 +93,53 @@ def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
     return samples
 
 
+def sparse_stimulus_generator(N: int, K: int,
+                              size: int=10, plot: bool=False) -> np.ndarray:
+
+    """
+    This function generates random z patterns with a certain
+    degree of sparsity
+
+    Parameters
+    ----------
+    N : int
+        Number of samples
+    K : int
+        Number of active units
+    size : int, optional
+        Size of the z patterns, by default 10
+    plot : bool, optional
+        Whether to plot the z patterns.
+        Default False
+
+    Returns 
+    -------
+    samples : np.ndarray
+        z patterns
+    """
+
+    samples = np.zeros((N, size))
+    for i in range(N):
+        idx = np.random.choice(range(size), replace=False, size=K)
+        samples[i, idx] = 1
+
+    samples = samples.astype(np.float32)
+
+    if plot:
+        plot_stimuli(samples=samples)
+
+    return samples
+
+
 def plot_stimuli(samples: np.ndarray):
 
     """
-    This function plots the input patterns
+    This function plots the z patterns
 
     Parameters
     ----------
     samples : np.ndarray
-        Input patterns
+        z patterns
     """
 
     fig, (ax, ax2) = plt.subplots(2, 1, figsize=(10, 5))
@@ -111,12 +149,12 @@ def plot_stimuli(samples: np.ndarray):
     if len(samples) < 20:
         ax.set_yticks(range(samples.shape[0]))
         ax.set_yticklabels(range(1, 1+samples.shape[0]))
-    ax.set_title("Input patterns")
+    ax.set_title("z patterns")
 
     ax2.imshow(samples.sum(axis=0).reshape(1, -1),
                aspect="auto", cmap="gray_r")
     ax2.set_xlabel("size")
-    ax2.set_title("Average input pattern")
+    ax2.set_title("Average z pattern")
     plt.show()
 
 
@@ -136,9 +174,9 @@ def train_autoencoder(training_data: np.ndarray,
     Parameters
     ----------
     training_data: np.ndarray
-        input training data
+        z training data
     test_data: np.ndarray
-        input test data
+        z test data
     model: nn.Module
         the autoencoder model
     epochs: int
@@ -174,11 +212,11 @@ def train_autoencoder(training_data: np.ndarray,
     for epoch in (pbar := tqdm(range(epochs), desc = f"{epoch}")):
         total_loss = 0
         for batch in dataloader:
-            inputs = batch[0]
+            zs = batch[0]
 
             # Forward pass
-            outputs = model(inputs)
-            loss = criterion(outputs, inputs)
+            outputs = model(zs)
+            loss = criterion(outputs, zs)
 
             # Backward and optimize
             optimizer.zero_grad()
@@ -209,7 +247,7 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
     Parameters
     ----------
     data: np.ndarray
-        input data
+        z data
     num: int
         the number of samples to reconstruct
     model: nn.Module
@@ -241,15 +279,15 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
 
         for batch in tqdm(dataloader):
 
-            inputs = batch[0] if not column else batch[0].reshape(-1, 1)
+            zs = batch[0] if not column else batch[0].reshape(-1, 1)
 
             # Forward pass
-            outputs, latent = model(inputs, ca1=True)
+            outputs, latent = model(zs, ca1=True)
             reconstructed_data.append(outputs.numpy().flatten())
             latent_data.append(latent.numpy().flatten())
 
             # evaluate the output
-            loss += criterion(outputs, inputs)
+            loss += criterion(outputs, zs)
 
     # Convert list to numpy array
     reconstructed_data = np.array(reconstructed_data)
@@ -291,7 +329,7 @@ def testing(data: np.ndarray, model: object,
     Parameters
     ----------
     data: np.ndarray
-        input data
+        z data
     model: nn.Module
         the model
     """
@@ -316,13 +354,13 @@ def testing(data: np.ndarray, model: object,
 
         for batch in dataloader:
 
-            inputs = batch[0] if not column else batch[0].reshape(-1, 1)
+            zs = batch[0] if not column else batch[0].reshape(-1, 1)
 
             # Forward pass
-            outputs = model(inputs)
+            outputs = model(zs)
 
             # evaluate the output
-            loss += criterion(outputs, inputs)
+            loss += criterion(outputs, zs)
 
     model.train()
 
@@ -430,11 +468,68 @@ def plot_squashed_data(data: np.ndarray, title: str="",
         plt.show()
 
 
+class SparsemaxFunction(autograd.Function):
+
+    @staticmethod
+    def forward(ctx, z: torch.Tensor) -> torch.Tensor:
+
+        """
+        Parameters
+        ----------
+        z : torch.Tensor
+            input tensor
+
+        Returns
+        -------
+        torch.Tensor
+            output tensor
+        """
+
+        z = z.clone()
+        dim = -1  # Assuming last dimension for sparsemax
+        sorted_z, _ = torch.sort(z, descending=True, dim=dim)
+        cumsum_sorted = sorted_z.cumsum(dim)
+        k = torch.arange(1, z.size(dim) + 1).to(z.device)
+        support = k * sorted_z > (cumsum_sorted - 1)
+        k_z = torch.sum(support, dim=dim, keepdim=True).float()
+        tau_z = (cumsum_sorted - 1) / k_z
+        output = torch.clamp(z - tau_z, min=0)
+        ctx.save_for_backward(output)
+
+        return output
+
+    @staticmethod
+    def backward(ctx, grad_output: torch.Tensor) -> torch.Tensor:
+
+        """
+        Parameters
+        ----------
+        grad_output : torch.Tensor
+            gradient tensor
+
+        Returns
+        -------
+        torch.Tensor
+            gradient tensor
+        """
+
+        output, = ctx.saved_tensors
+        nonzeros = (output != 0).float()
+        num_nonzeros = nonzeros.sum(dim=-1, keepdim=True)
+        sum_grad = (grad_output * nonzeros).sum(dim=-1, keepdim=True)
+        grad_z = nonzeros * (grad_output - sum_grad / num_nonzeros)
+        return grad_z
+
+
+class Sparsemax(nn.Module):
+
+    def forward(self, z: torch.Tensor) -> torch.Tensor:
+        return SparsemaxFunction.apply(z)
 
 
 if __name__ == "__main__":
 
-    # generate the input patterns
+    # generate the z patterns
     N = 10
     size = 50
 

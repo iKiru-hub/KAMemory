@@ -140,7 +140,7 @@ w_ei_ca1, w_ca1_eo = autoencoder.get_weights()
 
 
 # input stimulus
-x_ei = torch.tensor(training_sample_btsp[0].reshape(-1, 1).astype(np.float32))
+x_ei = torch.tensor(training_sample_btsp[4].reshape(-1, 1).astype(np.float32))
 
 out_ae = autoencoder(x_ei.reshape(1, -1)).detach().numpy().reshape(1, -1)
 
@@ -158,7 +158,7 @@ IS = w_ei_ca1 @ x_ei
 
 # --- modify the instructive signal
 is_ = IS.detach().numpy().flatten().copy()
-clipped = np.where(np.abs(is_) > 0.4,
+clipped = np.where(np.abs(is_) > 0.1,
              is_, 0).reshape(-1, 1).astype(np.float32)
              # 1, 0).reshape(-1, 1).astype(np.float32)
 IS = torch.tensor(clipped)
@@ -220,6 +220,12 @@ plt.title("Contributions for $W_{CA3, CA1}$")
 plt.show()
 
 # %%
+# x_ca3
+plt.hist(x_ca3.detach().flatten(), bins=10, alpha=0.4)
+plt.show()
+
+
+# %%
 plt.subplot(221)
 # plt.axis("off")
 plt.imshow(w_ei_ca1.detach().numpy(), aspect="auto", cmap="RdYlGn",
@@ -253,8 +259,6 @@ plt.subplot(211)
 plt.imshow(x_ca1.detach().numpy().T, aspect="auto",
               cmap="RdYlGn", vmin=-1., vmax=1.)
 plt.title("$x_{CA1}$")
-plt.yticks([])
-plt.xticks([])
 
 plt.subplot(212)
 plt.imshow(IS.detach().numpy().T, aspect="auto",
