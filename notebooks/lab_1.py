@@ -75,9 +75,16 @@ test_distrib_2 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
                              higher_variance=higher_variance,
                              plot=False)
 
+# --- DISTRIBUTION 3 ---
+distrib_13 = utils.sparse_stimulus_generator(N=nb_samples,
+                                             size=dim_ei,
+                                             size=50,
+                                             K = 5,
+                                             plot=True)
+
 # ----------------------
 # make one data dataset
-if bool(1):
+if bool(0):
     training_samples = np.concatenate((distrib_2, distrib_1), axis=0)
     test_samples = np.concatenate((test_distrib_2, test_distrib_1), axis=0)
 

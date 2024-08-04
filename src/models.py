@@ -15,9 +15,9 @@ logger = utils.setup_logger(__name__)
 
 class Autoencoder(nn.Module):
 
-    def __init__(self, input_dim: int=10, encoding_dim=10):
+    def __init__(self, input_dim: int=10, encoding_dim=10,
+                 activation: str=None):
 
-        # make docstrings
         """
         Simple autoencoder with a single linear layer as encoder and decoder.
 
@@ -27,6 +27,10 @@ class Autoencoder(nn.Module):
             the size of the input data
         encoding_dim: int
             the size of the encoded data
+        activation: str
+            the activation function to use, choices are
+            [None, sparsemax, sigmoid].
+            Default is None
         """
 
         super(Autoencoder, self).__init__()
@@ -45,6 +49,27 @@ class Autoencoder(nn.Module):
             nn.Linear(encoding_dim, input_dim),
             # nn.ReLU(True),
         )
+
+        if activation == "sparsemax":
+            self.encoder.add_module("sparsemax",
+                                    utils.Sparsemax())
+            self.decoder.add_module("sparsemax",
+                                    utils.Sparsemax())
+        elif activation == "sigmoid":
+            self.encoder.add_module("sigmoid",
+                                    nn.Sigmoid())
+            self.decoder.add_module("sigmoid",
+                                    nn.Sigmoid())
+        elif actiovation == "soft":
+            self.encoder.add_module("soft",
+                                    utils.SoftSigmoid())
+            self.decoder.add_module("soft",
+                                    utils.SoftSigmoid())
+        else:
+            self.encoder.add_module("identity",
+                                    utils.Identity())
+            self.decoder.add_module("identity",
+                                    utils.Identity())
 
     def forward(self, x: torch.Tensor, ca1: bool=False):
 
@@ -98,7 +123,7 @@ Kis = 50
 class MTL(nn.Module):
 
     def __init__(self, W_ei_ca1: torch.Tensor, W_ca1_eo: torch.Tensor,
-                 dim_ca3: int, lr: float):
+                 dim_ca3: int, lr: float, activation: str=None):
 
         # make docstrings
         """
@@ -123,9 +148,19 @@ class MTL(nn.Module):
         self._dim_eo = W_ca1_eo.shape[0]
         self._dim_ca1 = W_ca1_eo.shape[1]
 
-        #network parameters
+        # network parameters
         self._lr = lr
         self._lr_orig = lr
+
+        # activation function
+        if activation == "sparsemax":
+            self.activation = utils.Sparsemax()
+        elif activation == "sigmoid":
+            self.activation = nn.Sigmoid()
+        elif activation == "soft":
+            self.activation = utils.SoftSigmoid()
+        else:
+            self.activation = utils.Identity()
 
         # Initialize weight matrices for each layer
         self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
@@ -167,6 +202,9 @@ class MTL(nn.Module):
         # x_ca3 = torch.matmul(x_ei, self.W_ei_ca3)
         x_ca3 = self.W_ei_ca3 @ x_ei
 
+        # activation function
+        x_ca3 = self.activation(x_ca3)
+
         # Forward pass through CA3 to CA1
         # x_ca1 = torch.matmul(x_ca3, self.W_ca3_ca1)
         x_ca1 = self.W_ca3_ca1 @ x_ca3
@@ -174,6 +212,9 @@ class MTL(nn.Module):
         # compute instructive signal
         # IS = torch.matmul(x_ei, self.W_ei_ca1)
         IS = self.W_ei_ca1 @ x_ei
+
+        # activation function
+        IS = self.activation(IS)
 
         # ----- # top k values
         # betas = torch.zeros_like(IS)
@@ -201,6 +242,9 @@ class MTL(nn.Module):
         # Forward pass through CA1 to entorhinal cortex output
         # x_eo = torch.matmul(x_ca1, self.W_ca1_eo)
         x_eo = self.W_ca1_eo @ x_ca1
+
+        # activation function
+        x_eo = self.activation(x_eo)
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3

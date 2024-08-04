@@ -6,6 +6,8 @@ import torch
 from torch.nn import MSELoss
 from torch.optim import Adam
 from torch.utils.data import DataLoader, TensorDataset
+import torch.nn as nn
+import torch.autograd as autograd
 
 import logging, coloredlogs
 from tqdm import tqdm
@@ -513,12 +515,14 @@ class SparsemaxFunction(autograd.Function):
             gradient tensor
         """
 
-        output, = ctx.saved_tensors
-        nonzeros = (output != 0).float()
-        num_nonzeros = nonzeros.sum(dim=-1, keepdim=True)
-        sum_grad = (grad_output * nonzeros).sum(dim=-1, keepdim=True)
-        grad_z = nonzeros * (grad_output - sum_grad / num_nonzeros)
-        return grad_z
+        output, *_ = ctx.saved_tensors
+
+        nonzeros = torch.ne(output, 0)
+        support_size = nonzeros.sum(dim=-1, keepdim=True)
+        v_hat = (grad_output * nonzeros).sum(-1,
+                            keepdim=True) / support_size
+
+        return nonzeros * (grad_output - v_hat)
 
 
 class Sparsemax(nn.Module):
@@ -527,20 +531,156 @@ class Sparsemax(nn.Module):
         return SparsemaxFunction.apply(z)
 
 
+class Identity(nn.Module):
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return x
+
+
+class SoftSigmoidFunction(autograd.Function):
+
+    @staticmethod
+    def forward(ctx, z: torch.Tensor,
+                gamma: float=1., beta: float=1.,
+                alpha: float=0.) -> torch.Tensor:
+
+        """
+        Parameters
+        ----------
+        z : torch.Tensor
+            input tensor
+
+        Returns
+        -------
+        torch.Tensor
+            output tensor
+        """
+
+        ctx.save_for_backward(z)
+
+        print(gamma)
+        exp_z = torch.exp(gamma * z)
+        z_softmax = exp_z / exp_z.sum(dim=-1, keepdim=True)
+
+        z_sigmoid = 1 / (1 + torch.exp(
+            -beta * (z_softmax - alpha)))
+
+        ctx.save_for_backward(z_softmax)
+        ctx.save_for_backward(z_sigmoid)
+
+        ctx.gamma = gamma
+        ctx.beta = beta
+        ctx.alpha = alpha
+
+        return z_sigmoid
+
+    @staticmethod
+    def backward(ctx, grad_output: torch.Tensor) -> torch.Tensor:
+
+        """
+        Parameters
+        ----------
+        grad_output : torch.Tensor
+            gradient tensor
+
+        Returns
+        -------
+        torch.Tensor
+            gradient tensor
+        """
+
+        z, z_softmax, z_sigmoid = ctx.saved_tensors
+
+        # --- calc jacobian [for the softmax] ---
+        s_diag = torch.diag_embed(z_softmax)
+
+        # Calculate the outer product of the softmax vector with itself
+        s_outer = torch.einsum('bi,bj->bij', s, s)
+
+        # Compute the Jacobian matrix
+        jacobian = s_diag - s_outer
+
+        # --- calc grad ---
+        grad = ctx.gamma * ctx.beta * \
+            (z_sigmoid * (1 - z_sigmoid)) * \
+            torch.einsum('bi,bij->bj', grad_output, jacobian)
+
+        return grad
+
+
+class SoftSigmoid(nn.Module):
+
+    def __init__(self, gamma: float=1.,
+                 beta: float=1., alpha: float=0.):
+
+        super(SoftSigmoid, self).__init__()
+
+        self.gamma = gamma
+        self.beta = beta
+        self.alpha = alpha
+
+    def forward(self, z: torch.Tensor) -> torch.Tensor:
+        return SoftSigmoidFunction.apply(z, self.gamma,
+                                         self.beta, self.alpha)
+
+
 if __name__ == "__main__":
 
-    # generate the z patterns
+
+
+    # # generate the z patterns
+    # N = 10
+    # size = 50
+
+    # heads = 3
+    # variance = 0.01
+
+    # higher_heads = heads
+    # higher_variance = 0.5
+
+    # samples = stimulus_generator(N, size, heads, variance,
+    #                              higher_heads=higher_heads,
+    #                              higher_variance=higher_variance,
+    #                              plot=True)
+
+
+    """ test activation function """
+
+    z = torch.randn(6)
+    print(f"z: {z}")
+    z_soft = torch.nn.functional.softmax(z, dim=-1)
+    print(f"z_soft: {z_soft}")
+    # plt.subplot(311)
+    # plt.imshow(z.numpy().reshape(1, -1), aspect="auto", vmin=-2, vmax=2)
+    plt.axhline(0, color="black", alpha=0.2)
+    plt.plot(z.numpy(), label="z", alpha=0.4)
+
+    softsigmoid = SoftSigmoid(gamma=2.,
+                              beta=1.,
+                              alpha=0.5)
+    z_sigmoid = softsigmoid(z)
+
+    print(f"[1] z_sigmoid: {z_sigmoid}")
+    # plt.subplot(312)
+    # plt.imshow(z_sigmoid.numpy().reshape(1, -1), aspect="auto", vmin=-2, vmax=2)
+    plt.plot(z_sigmoid.numpy(), label="1")
+
+    softsigmoid = SoftSigmoid(gamma=2.,
+                              beta=100.,
+                              alpha=0.2)
+    z_sigmoid = softsigmoid(z)
+
+    print(f"[2] z_sigmoid: {z_sigmoid}")
+    # plt.imshow(z_sigmoid.numpy().reshape(1, -1), aspect="auto", vmin=-2, vmax=2)
+    # plt.plot(z_sigmoid.numpy(), label="2")
+
+    # plt.ylim(-2, 2)
+    # plt.legend()
+    # plt.grid()
+    # plt.show()
+
+    # --- test spars stimulus generator ---
     N = 10
-    size = 50
+    data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
 
-    heads = 3
-    variance = 0.01
-
-    higher_heads = heads
-    higher_variance = 0.5
-
-    samples = stimulus_generator(N, size, heads, variance,
-                                 higher_heads=higher_heads,
-                                 higher_variance=higher_variance,
-                                 plot=True)
 

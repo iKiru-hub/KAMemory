@@ -83,7 +83,8 @@ if __name__ == "__main__":
     """ autoencoder training """
 
     autoencoder = Autoencoder(input_dim=dim_ei,
-                              encoding_dim=dim_ca1)
+                              encoding_dim=dim_ca1,
+                              activation='sparsemax')
     logger(f"%Autoencoder: {autoencoder}")
 
     # train autoencoder
