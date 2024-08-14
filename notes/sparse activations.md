@@ -39,8 +39,8 @@ def sparsemax(z: np.ndarray) -> np.ndarray:
     # step 4
     out = np.maximum(z-tau_z, 0)
     return out
-
 ```
+
 **Code output example**
 ```
 z:         [1.764 0.4   0.979 2.241 1.868]
@@ -53,6 +53,7 @@ k_z:       3
 tau_z:     1.624
 out:       [0.14  0.    0.    0.617 0.243]
 ```
+
 
 **Sources**
 https://medium.com/deeplearningmadeeasy/sparsemax-from-paper-to-code-351e9b26647b
@@ -92,6 +93,7 @@ $$
 \end{align}
 $$
 
+---
 It is also possible to compose a *relu* $\mathbf{a}_{3}=\psi(\mathbf{z})=\max(0,\mathbf{z})$, with derivative:
 $$
 \begin{align}
@@ -115,6 +117,39 @@ $$
 
 
 
+```
+z.  :         [1.764 0.4   0.979 2.241 1.868]
 
+# z_soft:     [0.14  0.04    0.    0.617 0.243]
+
+out :         [0.9.   0.   0.   0.99. 0.95]
+```
+
+
+## Sigmoid
+
+**forward**
+$$
+\begin{align}
+\alpha&=\frac{\text{sorted}(z)_{k} +\text{sorted}(z)_{k+1}}{2}\\\\
+z &= \sigma_{\beta,\alpha}(z) \\
+\end{align}
+$$
+
+
+**backward**
+```python
+
+# forw
+def fwd(z):
+	alpha = f(z). # sorting mean..
+	out = sigmoid(z)
+
+#bwd
+def back():
+	grad = back(z, alpha)
+	return grad
+
+```
 
 

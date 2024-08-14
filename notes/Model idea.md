@@ -48,3 +48,12 @@ IS = 1 - \cos\left(W_{\text{EC}_{\text{in}}\to{\text{CA1}}}\cdot x, x_{\text{CA3
 $$
 with this tweak, the hope is that it reaches the [objective](#Objective).
 
+
+
+### Notes 
+---
+**Stimuli** $EC_{in}$
+with a fixed number $K$ of active neurons
+
+**Activation function**
+with a fixed sparsity (#active neurons) $K$

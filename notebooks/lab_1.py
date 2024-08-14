@@ -78,7 +78,6 @@ test_distrib_2 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
 # --- DISTRIBUTION 3 ---
 distrib_13 = utils.sparse_stimulus_generator(N=nb_samples,
                                              size=dim_ei,
-                                             size=50,
                                              K = 5,
                                              plot=True)
 
@@ -104,7 +103,27 @@ training_sample_btsp = training_samples[np.random.choice(
                         range(training_samples.shape[0]),
                         num_btsp_samples, replace=False)]
 
+# %%
+# --- sparse data
+
+N = nb_samples
+K = 5
+training_samples = utils.sparse_stimulus_generator(N=N, K=K, size=dim_ei,
+                                                   plot=False)
+test_samples = utils.sparse_stimulus_generator(N=N, K=K, size=dim_ei,
+                                               plot=False)
+
 logger("<<< Data generated >>>")
+
+
+# %%
+# dataset for btsp
+num_btsp_samples = 1
+num_reconstructions = 1
+training_sample_btsp = training_samples[np.random.choice(
+                        range(training_samples.shape[0]),
+                        num_btsp_samples, replace=False)]
+
 
 # %%
 
@@ -147,7 +166,7 @@ w_ei_ca1, w_ca1_eo = autoencoder.get_weights()
 
 
 # input stimulus
-x_ei = torch.tensor(training_sample_btsp[4].reshape(-1, 1).astype(np.float32))
+x_ei = torch.tensor(training_sample_btsp[0].reshape(-1, 1).astype(np.float32))
 
 out_ae = autoencoder(x_ei.reshape(1, -1)).detach().numpy().reshape(1, -1)
 

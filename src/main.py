@@ -50,14 +50,25 @@ if __name__ == "__main__":
                                  higher_heads=higher_heads,
                                  higher_variance=higher_variance,
                                  plot=False)
+
     test_distrib_2 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
                                  heads=heads, variance=variance,
                                  higher_heads=higher_heads,
                                  higher_variance=higher_variance,
                                  plot=False)
 
+    # ---
+    N = nb_samples
+    K = 5
+    distrib_2 = utils.sparse_stimulus_generator(N=N, K=K,
+                                                size=dim_ei,
+                                                plot=False)
+    test_distrib_2 = utils.sparse_stimulus_generator(N=N, K=K,
+                                                     size=dim_ei,
+                                                     plot=False)
+
     # make one data dataset
-    if bool(1):
+    if bool(0):
         training_samples = np.concatenate((distrib_2, distrib_1), axis=0)
         test_samples = np.concatenate((test_distrib_2, test_distrib_1), axis=0)
 
@@ -82,9 +93,12 @@ if __name__ == "__main__":
 
     """ autoencoder training """
 
+    K_model = 20
     autoencoder = Autoencoder(input_dim=dim_ei,
                               encoding_dim=dim_ca1,
-                              activation='sparsemax')
+                              activation=None,
+                              K=K_model,
+                              beta=20.)
     logger(f"%Autoencoder: {autoencoder}")
 
     # train autoencoder
@@ -115,11 +129,12 @@ if __name__ == "__main__":
     model = MTL(W_ei_ca1=W_ei_ca1,
                 W_ca1_eo=W_ca1_eo,
                 dim_ca3=dim_ca3,
-                lr=1.)
+                lr=1., K=K_model,
+                beta=50)
     model_rnd = MTL(W_ei_ca1=torch.randn(dim_ca1, dim_ei),
                 W_ca1_eo=torch.randn(dim_eo, dim_ca1),
                 dim_ca3=dim_ca3,
-                lr=1.)
+                lr=1., K=K, beta=30)
 
     logger(f"%MTL: {model}")
 
@@ -164,13 +179,15 @@ if __name__ == "__main__":
                              ax=ax1,
                              title="Original", squash=is_squash)
     utils.plot_squashed_data(data=out_ae, ax=ax2,
-                             title="Autoencoder", squash=is_squash)
+                             title="Autoencoder",
+                             squash=is_squash)
+    print(np.around(out_ae, 2))
     utils.plot_squashed_data(data=out_mtl, ax=ax3,
                              title="MTL", squash=is_squash)
     utils.plot_squashed_data(data=out_mtl_rnd, ax=ax4,
                              title="MTL (random)", squash=is_squash)
 
-    fig.suptitle("Data reconstruction | all data vs first input")
+    fig.suptitle(f"Data reconstruction | all data vs first input - {K=} $\\beta=${autoencoder._beta}")
     plt.show()
 
 

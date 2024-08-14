@@ -10,7 +10,7 @@ Q1: *how can EC readout remain stable while BTSP is occurring on CA3-CA1 synapse
 - [ ] **Make the neural spaces homogenous**
 	- [x] sparse inputs
 	- [x] implement *sparsemax*
-	- [ ] $W_{CA3\to CA1}$ (connections) or just $x_{CA3}$  (activation)
+	- [ ] $W_{CA3\to CA1}$ (connections) or just $x_{CA3}$  (activation) \[sparsify CA3 output\]
 	- [x] Autoencoder : look into the sparsemax
 	- [ ] visualize sparsity effect
 

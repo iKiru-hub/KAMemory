@@ -558,7 +558,6 @@ class SoftSigmoidFunction(autograd.Function):
 
         ctx.save_for_backward(z)
 
-        print(gamma)
         exp_z = torch.exp(gamma * z)
         z_softmax = exp_z / exp_z.sum(dim=-1, keepdim=True)
 
@@ -590,6 +589,7 @@ class SoftSigmoidFunction(autograd.Function):
         """
 
         z, z_softmax, z_sigmoid = ctx.saved_tensors
+        print("length: ", len(ctx.saved_tensors))
 
         # --- calc jacobian [for the softmax] ---
         s_diag = torch.diag_embed(z_softmax)
@@ -624,6 +624,26 @@ class SoftSigmoid(nn.Module):
                                          self.beta, self.alpha)
 
 
+def sparsemoid(z: torch.Tensor, K: int,
+               beta: float, flag=False) -> torch.Tensor:
+
+    if K > 0:
+        z_sorted = torch.sort(z, descending=True, dim=1).values
+
+        alpha = z_sorted[:, K-1: K+1]
+        alpha = alpha.mean(axis=1).reshape(-1, 1)
+
+    if flag:
+        print(f"alpha: {alpha.T} {alpha.shape}")
+        print("sorted ", z_sorted.shape, z_sorted)
+
+    # apply
+    z = beta * (z - alpha)
+    return torch.sigmoid(z)
+
+
+
+
 if __name__ == "__main__":
 
 
@@ -646,32 +666,38 @@ if __name__ == "__main__":
 
     """ test activation function """
 
-    z = torch.randn(6)
-    print(f"z: {z}")
-    z_soft = torch.nn.functional.softmax(z, dim=-1)
-    print(f"z_soft: {z_soft}")
+    # z = torch.randn(6)
+    # print(f"z: {z}")
+    # z_soft = torch.nn.functional.softmax(z, dim=-1)
+    # print(f"z_soft: {z_soft}")
+
     # plt.subplot(311)
-    # plt.imshow(z.numpy().reshape(1, -1), aspect="auto", vmin=-2, vmax=2)
-    plt.axhline(0, color="black", alpha=0.2)
-    plt.plot(z.numpy(), label="z", alpha=0.4)
+    # plt.imshow(z.numpy().reshape(1, -1),
+    #            aspect="auto", vmin=-2, vmax=2)
+    # plt.title("input")
+    # plt.axhline(0, color="black", alpha=0.2)
+    # plt.plot(z.numpy(), label="z", alpha=0.4)
 
-    softsigmoid = SoftSigmoid(gamma=2.,
-                              beta=1.,
-                              alpha=0.5)
-    z_sigmoid = softsigmoid(z)
+    # softsigmoid = SoftSigmoid(gamma=2.,
+    #                           beta=1.,
+    #                           alpha=0.5)
+    # z_sigmoid = softsigmoid(z)
 
-    print(f"[1] z_sigmoid: {z_sigmoid}")
+    # print(f"[1] z_sigmoid: {z_sigmoid}")
     # plt.subplot(312)
-    # plt.imshow(z_sigmoid.numpy().reshape(1, -1), aspect="auto", vmin=-2, vmax=2)
-    plt.plot(z_sigmoid.numpy(), label="1")
+    # plt.imshow(z_sigmoid.numpy().reshape(1, -1),
+    #            aspect="auto", vmin=-2, vmax=2)
+    # plt.plot(z_sigmoid.numpy(), label="1")
 
-    softsigmoid = SoftSigmoid(gamma=2.,
-                              beta=100.,
-                              alpha=0.2)
-    z_sigmoid = softsigmoid(z)
+    # softsigmoid = SoftSigmoid(gamma=2.,
+    #                           beta=100.,
+    #                           alpha=0.2)
+    # z_sigmoid = softsigmoid(z)
 
-    print(f"[2] z_sigmoid: {z_sigmoid}")
-    # plt.imshow(z_sigmoid.numpy().reshape(1, -1), aspect="auto", vmin=-2, vmax=2)
+    # print(f"[2] z_sigmoid: {z_sigmoid}")
+    # plt.subplot(313)
+    # plt.imshow(z_sigmoid.numpy().reshape(1, -1),
+    #            aspect="auto", vmin=-2, vmax=2)
     # plt.plot(z_sigmoid.numpy(), label="2")
 
     # plt.ylim(-2, 2)
@@ -680,7 +706,11 @@ if __name__ == "__main__":
     # plt.show()
 
     # --- test spars stimulus generator ---
-    N = 10
+    N = 2
     data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
+
+
+
+
 
 

@@ -16,7 +16,7 @@ logger = utils.setup_logger(__name__)
 class Autoencoder(nn.Module):
 
     def __init__(self, input_dim: int=10, encoding_dim=10,
-                 activation: str=None):
+                 activation: str=None, K: int=10, beta: float=20.):
 
         """
         Simple autoencoder with a single linear layer as encoder and decoder.
@@ -37,6 +37,8 @@ class Autoencoder(nn.Module):
 
         self._input_dim = input_dim
         self._encoding_dim = encoding_dim
+        self._K = K
+        self._beta = beta
 
         # Encoder
         self.encoder = nn.Sequential(
@@ -50,26 +52,21 @@ class Autoencoder(nn.Module):
             # nn.ReLU(True),
         )
 
-        if activation == "sparsemax":
-            self.encoder.add_module("sparsemax",
-                                    utils.Sparsemax())
-            self.decoder.add_module("sparsemax",
-                                    utils.Sparsemax())
-        elif activation == "sigmoid":
-            self.encoder.add_module("sigmoid",
-                                    nn.Sigmoid())
-            self.decoder.add_module("sigmoid",
-                                    nn.Sigmoid())
-        elif actiovation == "soft":
-            self.encoder.add_module("soft",
-                                    utils.SoftSigmoid())
-            self.decoder.add_module("soft",
-                                    utils.SoftSigmoid())
-        else:
-            self.encoder.add_module("identity",
-                                    utils.Identity())
-            self.decoder.add_module("identity",
-                                    utils.Identity())
+        # if activation == "sparsemax":
+        #     self.encoder.add_module("sparsemax",
+        #                             utils.Sparsemax())
+        #     self.decoder.add_module("sparsemax",
+        #                             utils.Sparsemax())
+        # elif activation == "sigmoid":
+        #     self.encoder.add_module("sigmoid",
+        #                             nn.Sigmoid())
+        #     self.decoder.add_module("sigmoid",
+        #                             nn.Sigmoid())
+        # elif activation == "soft":
+        #     self.encoder.add_module("soft",
+        #                             utils.SoftSigmoid())
+        #     self.decoder.add_module("soft",
+        #                             utils.SoftSigmoid())
 
     def forward(self, x: torch.Tensor, ca1: bool=False):
 
@@ -90,7 +87,28 @@ class Autoencoder(nn.Module):
         """
 
         z = self.encoder(x)
+
+        # print(z)
+
+        # --- activation function | 1st 2nd 3rd... [Kth Kth+1] ... last
+        # z_sorted = torch.sort(z, descending=True, dim=1).values
+
+        # alpha = z_sorted[:, self._K:self._K+2]
+        # alpha = alpha.mean(axis=1).reshape(-1, 1)
+
+        # apply
+        # z = self._beta * (z - alpha)
+        # z = self._beta * z
+        z = utils.sparsemoid(z=z, K=self._K,
+                             beta=self._beta)
+
+        # z = torch.sigmoid(z)
+        # ---
+
         x = self.decoder(z)
+        # x = utils.sparsemoid(x, K=self._K,
+        #                      beta=self._beta)
+        x = torch.sigmoid(10*(x-0.1))
 
         if ca1:
             return x, z
@@ -122,7 +140,8 @@ Kis = 50
 
 class MTL(nn.Module):
 
-    def __init__(self, W_ei_ca1: torch.Tensor, W_ca1_eo: torch.Tensor,
+    def __init__(self, W_ei_ca1: torch.Tensor, W_ca1_eo: torch.Tensor, K: int,
+                 beta: float,
                  dim_ca3: int, lr: float, activation: str=None):
 
         # make docstrings
@@ -151,6 +170,8 @@ class MTL(nn.Module):
         # network parameters
         self._lr = lr
         self._lr_orig = lr
+        self._K = K
+        self._beta = beta
 
         # activation function
         if activation == "sparsemax":
@@ -200,29 +221,40 @@ class MTL(nn.Module):
 
         # Forward pass through the entorhinal cortex to CA3
         # x_ca3 = torch.matmul(x_ei, self.W_ei_ca3)
-        x_ca3 = self.W_ei_ca3 @ x_ei
+        x_ca3 = self.W_ei_ca3 @ x_ei # 50, 1
 
         # activation function
-        x_ca3 = self.activation(x_ca3)
+        # x_ca3 = self.activation(x_ca3)
+
+        # --- implement 
 
         # Forward pass through CA3 to CA1
         # x_ca1 = torch.matmul(x_ca3, self.W_ca3_ca1)
-        x_ca1 = self.W_ca3_ca1 @ x_ca3
+        x_ca1 = self.W_ca3_ca1 @ x_ca3 # 50, 1
+
+        print("ei ", np.around(x_ei.T, 2))
+        print("[ca1] ", x_ca1.shape)
+        print("w31 ", np.around(self.W_ca3_ca1, 2))
+
+        # -- x=(5, 50)
+        x_ca1 = utils.sparsemoid(x_ca1.reshape(1, -1), K=self._K, beta=self._beta,
+                                 flag=True).reshape(-1, 1)
 
         # compute instructive signal
-        # IS = torch.matmul(x_ei, self.W_ei_ca1)
         IS = self.W_ei_ca1 @ x_ei
 
+        print(">>> IS ", np.around(IS.T, 2))
+
         # activation function
-        IS = self.activation(IS)
+        IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K,
+                              beta=self._beta).reshape(-1, 1)
 
         # ----- # top k values
-        # betas = torch.zeros_like(IS)
-        # betas[torch.topk(IS.flatten(), Kis).indices] = 1.
+        # betas = torch.zeros_like(IS) betas[torch.topk(IS.flatten(), Kis).indices] = 1.
 
-        # # betas = betas.reshape(IS.shape)
+        # betas = betas.reshape(IS.shape)
         # tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
-        # self.W_ca3_ca1 = nn.Parameter((1 - betas) * self.W_ca3_ca1 + betas * tiled_ca3)
+        self.W_ca3_ca1 = nn.Parameter((1 - IS) * self.W_ca3_ca1 + IS @ x_ca3.T)
 
         # betas = IS | but select the first -k IS
         # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
@@ -235,8 +267,8 @@ class MTL(nn.Module):
         # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
         # self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
 
-        W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
-        self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
+        # W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
+        # self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
 
         # ---
         # Forward pass through CA1 to entorhinal cortex output
@@ -244,7 +276,13 @@ class MTL(nn.Module):
         x_eo = self.W_ca1_eo @ x_ca1
 
         # activation function
-        x_eo = self.activation(x_eo)
+        # x_eo = self.activation(x_eo)
+        # x_eo = utils.sparsemoid(x_eo, K=self._K, beta=self._beta)
+        x_eo = torch.sigmoid(20*(x_eo-0.1))
+
+        print("ca1 ", np.around(x_eo.T, 2))
+        print("out ", np.around(x_eo.T, 2))
+        print("f w31 ", np.around(self.W_ca3_ca1, 2))
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3
