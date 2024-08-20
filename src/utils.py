@@ -11,6 +11,8 @@ import torch.autograd as autograd
 
 import logging, coloredlogs
 from tqdm import tqdm
+import os
+import json
 
 
 
@@ -229,8 +231,8 @@ def train_autoencoder(training_data: np.ndarray,
 
         # test loss
         test_loss, _ = testing(data=test_dataloader,
-                            model=model,
-                            criterion=criterion)
+                               model=model,
+                               criterion=criterion)
 
         if (epoch+1) % epoch_log == 0:
             pbar.set_description(f"Epoch [{epoch+1}], " + \
@@ -349,7 +351,6 @@ def testing(data: np.ndarray, model: object,
 
     # Set the model to evaluation mode
     model.eval()
-
     loss = 0.
 
     with torch.no_grad():
@@ -367,8 +368,6 @@ def testing(data: np.ndarray, model: object,
     model.train()
 
     return loss / len(dataloader), model
-
-
 
 
 """ miscellanous """
@@ -633,13 +632,14 @@ def sparsemoid(z: torch.Tensor, K: int,
         alpha = z_sorted[:, K-1: K+1]
         alpha = alpha.mean(axis=1).reshape(-1, 1)
 
-    if flag:
-        print(f"alpha: {alpha.T} {alpha.shape}")
-        print("sorted ", z_sorted.shape, z_sorted)
+    # if flag:
+    #     print(f"alpha: {alpha.T} {alpha.shape}")
+    #     print("sorted ", z_sorted.shape, z_sorted)
 
     # apply
     z = beta * (z - alpha)
     return torch.sigmoid(z)
+
 
 
 

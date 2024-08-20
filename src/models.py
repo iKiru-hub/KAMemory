@@ -4,11 +4,16 @@ from torch import nn
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import os, json
+from pprint import pprint
 
 import utils
 
 
 logger = utils.setup_logger(__name__)
+
+cache_dir = "cache"
+cache_dir_2 = "src/cache"
 
 
 """ Autoencoder """
@@ -140,9 +145,13 @@ Kis = 50
 
 class MTL(nn.Module):
 
-    def __init__(self, W_ei_ca1: torch.Tensor, W_ca1_eo: torch.Tensor, K: int,
+    def __init__(self, W_ei_ca1: torch.Tensor,
+                 W_ca1_eo: torch.Tensor,
+                 K_lat: int,
+                 K_out: int,
                  beta: float,
-                 dim_ca3: int, lr: float, activation: str=None):
+                 dim_ca3: int,
+                 lr: float, activation: str=None):
 
         # make docstrings
         """
@@ -154,6 +163,12 @@ class MTL(nn.Module):
             the weight matrix from entorhinal cortex to CA1
         W_ca1_eo: torch.Tensor
             the weight matrix from CA1 to entorhinal cortex output
+        K_lat: int
+            the number of top values to select
+        K_out: int
+            the number of top values to select for the output
+        beta: float
+            the beta value for the sparsemoid function
         dim_ca3: int
             the size of the CA3 layer
         lr: float
@@ -170,7 +185,8 @@ class MTL(nn.Module):
         # network parameters
         self._lr = lr
         self._lr_orig = lr
-        self._K = K
+        self._K_lat = K_lat
+        self._K_out = K_out
         self._beta = beta
 
         # activation function
@@ -222,6 +238,9 @@ class MTL(nn.Module):
         # Forward pass through the entorhinal cortex to CA3
         # x_ca3 = torch.matmul(x_ei, self.W_ei_ca3)
         x_ca3 = self.W_ei_ca3 @ x_ei # 50, 1
+        x_ca3 = utils.sparsemoid(x_ca3.reshape(1, -1),
+                                 K=2,
+                                 beta=self._beta).reshape(-1, 1)
 
         # activation function
         # x_ca3 = self.activation(x_ca3)
@@ -232,21 +251,23 @@ class MTL(nn.Module):
         # x_ca1 = torch.matmul(x_ca3, self.W_ca3_ca1)
         x_ca1 = self.W_ca3_ca1 @ x_ca3 # 50, 1
 
-        print("ei ", np.around(x_ei.T, 2))
-        print("[ca1] ", x_ca1.shape)
-        print("w31 ", np.around(self.W_ca3_ca1, 2))
+        # print("ei ", np.around(x_ei.T, 2))
+        # print("[ca1] ", x_ca1.shape)
+        # print("w31 ", np.around(self.W_ca3_ca1, 2))
 
         # -- x=(5, 50)
-        x_ca1 = utils.sparsemoid(x_ca1.reshape(1, -1), K=self._K, beta=self._beta,
-                                 flag=True).reshape(-1, 1)
+        x_ca1 = utils.sparsemoid(x_ca1.reshape(1, -1),
+                                 K=self._K_lat,
+                                 beta=self._beta,
+                                 flag=False).reshape(-1, 1)
 
         # compute instructive signal
         IS = self.W_ei_ca1 @ x_ei
 
-        print(">>> IS ", np.around(IS.T, 2))
+        # print(">>> IS ", np.around(IS.T, 2))
 
         # activation function
-        IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K,
+        IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
                               beta=self._beta).reshape(-1, 1)
 
         # ----- # top k values
@@ -254,7 +275,9 @@ class MTL(nn.Module):
 
         # betas = betas.reshape(IS.shape)
         # tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
-        self.W_ca3_ca1 = nn.Parameter((1 - IS) * self.W_ca3_ca1 + IS @ x_ca3.T)
+        if self._lr > 0:
+            self.W_ca3_ca1 = nn.Parameter((1 - IS) * self.W_ca3_ca1 + \
+                IS @ x_ca3.T)
 
         # betas = IS | but select the first -k IS
         # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
@@ -277,12 +300,14 @@ class MTL(nn.Module):
 
         # activation function
         # x_eo = self.activation(x_eo)
-        # x_eo = utils.sparsemoid(x_eo, K=self._K, beta=self._beta)
-        x_eo = torch.sigmoid(20*(x_eo-0.1))
+        x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
+                                K=self._K_out,
+                                beta=self._beta).reshape(-1, 1)
+        # x_eo = torch.sigmoid(20*(x_eo-0.1))
 
-        print("ca1 ", np.around(x_eo.T, 2))
-        print("out ", np.around(x_eo.T, 2))
-        print("f w31 ", np.around(self.W_ca3_ca1, 2))
+        # print("ca1 ", np.around(x_eo.T, 2))
+        # print("out ", np.around(x_eo.T, 2))
+        # print("f w31 ", np.around(self.W_ca3_ca1, 2))
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3
@@ -307,6 +332,77 @@ class MTL(nn.Module):
         """
 
         self._lr = self._lr_orig
+
+
+""" load AE and info """
+
+
+def load_session(idx: int=None) -> tuple:
+
+    """
+    Load the training information and
+    the autoencoder model from the saved
+    sessions
+
+    Parameters
+    ----------
+    idx : int
+        the index of the session to load.
+        Default is None
+
+    Returns
+    -------
+    info : dict
+        training information
+    model : object
+        autoencoder model
+    """
+
+    global cache_dir
+    global cache_dir_2
+
+    # display the saved sessions
+    try:
+        try:
+            ae_sessions = [f for f in os.listdir(cache_dir) if "ae" in f]
+        except FileNotFoundError:
+            cache_dir = cache_dir_2
+            ae_sessions = [f for f in os.listdir(cache_dir) if "ae" in f]
+    except FileNotFoundError:
+        raise ValueError(f"nor {cache_dir} neither {cache_dir_2} found")
+
+    if len(ae_sessions) == 0:
+        raise ValueError("No saved sessions found")
+
+    logger("Saved sessions:")
+    for i, session in enumerate(ae_sessions):
+        print(f"[{i}] {session}")
+
+    if idx is None:
+        # select the session
+        idx = int(input("Select session\n>>> "))
+    else:
+        logger(f"Pre-selected session: [{idx}]")
+
+    # load the session
+    session = ae_sessions[idx]
+    with open(f"{cache_dir}/{session}/info.json", "r") as f:
+        info = json.load(f)
+
+    # load the model
+    model = Autoencoder(input_dim=info["dim_ei"],
+                        encoding_dim=info["dim_ca1"],
+                        activation=None,
+                        K=info["K_lat"],
+                        beta=info["beta"])
+    model.load_state_dict(torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
+
+    logger("info:")
+    pprint(info)
+
+    return info, model
+
+
 
 
 if __name__ == "__main__":

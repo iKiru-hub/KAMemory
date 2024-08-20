@@ -1,88 +1,90 @@
 import utils
 import torch
-from models import Autoencoder, MTL, logger
+from models import Autoencoder, MTL, logger, load_session
 import numpy as np
+import argparse
 
 import matplotlib.pyplot as plt
 
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser(
+        description='Navigation memory')
+    parser.add_argument('--num', type=int,
+                        help='number of samples',
+                        default=1)
+    parser.add_argument('--load', type=bool,
+                        help='load model',
+                        default=True)
+    parser.add_argument('--idx', type=int,
+                        help='number of samples',
+                        default=0)
+    args = parser.parse_args()
+
     """ settings """
 
-    # architecture sizes
-    dim_ei = 50
-    dim_ca3 = 50 
-    dim_ca1 = 50
-    dim_eo = dim_ei
+    if args.load:
 
-    # data settings
-    nb_samples = 300
-    num_reconstructions = 1
+        info, autoencoder = load_session(idx=args.idx)
 
-    # distribution 1
-    heads = 3
-    variance = 0.05
-    higher_heads = heads 
-    higher_variance = 0.075
+        dim_ei = info["dim_ei"]
+        dim_ca3 = info["dim_ca3"]
+        dim_ca1 = info["dim_ca1"]
+        dim_eo = info["dim_eo"]
 
-    # make samples
-    distrib_1 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
-                                 heads=heads, variance=variance,
-                                 higher_heads=higher_heads,
-                                 higher_variance=higher_variance,
-                                 plot=False)
-    test_distrib_1 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
-                                 heads=heads, variance=variance,
-                                 higher_heads=higher_heads,
-                                 higher_variance=higher_variance,
-                                 plot=False)
+        num_samples = info["num_samples"]
+        num_reconstructions = info["num_reconstructions"]
 
-    # distribution 2
-    heads = 2
-    variance = 0.05
-    higher_heads = heads 
-    higher_variance = 0.075
+        K_lat = info["K_lat"]
+        beta = info["beta"]
+        K = info["K"]
 
-    # make samples
-    distrib_2 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
-                                 heads=heads, variance=variance,
-                                 higher_heads=higher_heads,
-                                 higher_variance=higher_variance,
-                                 plot=False)
+        logger("<<< Loaded session >>>")
 
-    test_distrib_2 = utils.stimulus_generator(N=nb_samples, size=dim_ei,
-                                 heads=heads, variance=variance,
-                                 higher_heads=higher_heads,
-                                 higher_variance=higher_variance,
-                                 plot=False)
+    # make new settings
+    if not args.load:
 
-    # ---
-    N = nb_samples
-    K = 5
-    distrib_2 = utils.sparse_stimulus_generator(N=N, K=K,
-                                                size=dim_ei,
-                                                plot=False)
-    test_distrib_2 = utils.sparse_stimulus_generator(N=N, K=K,
-                                                     size=dim_ei,
-                                                     plot=False)
+        dim_ei = 50
+        dim_ca3 = 50 
+        dim_ca1 = 50
+        dim_eo = dim_ei
 
-    # make one data dataset
-    if bool(0):
-        training_samples = np.concatenate((distrib_2, distrib_1), axis=0)
-        test_samples = np.concatenate((test_distrib_2, test_distrib_1), axis=0)
+        # data settings
+        num_samples = 300
+        num_reconstructions = 1
 
-        # shuffle
-        training_samples = training_samples[torch.randperm(training_samples.shape[0])]
-        test_samples = test_samples[torch.randperm(test_samples.shape[0])]
-        logger.debug("using both distributions")
+        # distribution 1
+        heads = 3
+        variance = 0.05
+        higher_heads = heads
+        higher_variance = 0.075
 
-    else:
-        training_samples = distrib_2
-        test_samples = test_distrib_2
+        # model hyper-parameters
+        K_lat = 15
+        beta = 60
+
+        # autoencoder
+        autoencoder = Autoencoder(input_dim=dim_ei,
+                                  encoding_dim=dim_ca1,
+                                  activation=None,
+                                  K=K_lat,
+                                  beta=beta)
+        logger(f"%Autoencoder: {autoencoder}")
+
+    """ make data """
+
+    training_samples = utils.sparse_stimulus_generator(N=num_samples,
+                                                       K=K,
+                                                       size=dim_ei,
+                                                       plot=False)
+    test_samples = utils.sparse_stimulus_generator(N=num_samples,
+                                                   K=K,
+                                                   size=dim_ei,
+                                                   plot=False)
 
     # dataset for btsp
-    num_btsp_samples = 1
+    num_btsp_samples = args.num
     num_reconstructions = 1
     training_sample_btsp = training_samples[np.random.choice(
                             range(training_samples.shape[0]),
@@ -93,23 +95,16 @@ if __name__ == "__main__":
 
     """ autoencoder training """
 
-    K_model = 20
-    autoencoder = Autoencoder(input_dim=dim_ei,
-                              encoding_dim=dim_ca1,
-                              activation=None,
-                              K=K_model,
-                              beta=20.)
-    logger(f"%Autoencoder: {autoencoder}")
-
     # train autoencoder
-    epochs = 100
-    loss_ae, autoencoder = utils.train_autoencoder(
-                    training_data=training_samples,
-                    test_data=test_samples,
-                    model=autoencoder,
-                    epochs=int(epochs),
-                    batch_size=5, learning_rate=1e-3)
-    logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
+    if not args.load:
+        epochs = 100
+        loss_ae, autoencoder = utils.train_autoencoder(
+                        training_data=training_samples,
+                        test_data=test_samples,
+                        model=autoencoder,
+                        epochs=int(epochs),
+                        batch_size=5, learning_rate=1e-3)
+        logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
 
     # reconstruct data
     out_ae, latent_ae = utils.reconstruct_data(data=training_sample_btsp,
@@ -122,34 +117,26 @@ if __name__ == "__main__":
 
     # get weights from the autoencoder
     W_ei_ca1, W_ca1_eo = autoencoder.get_weights()
-    # W_ei_ca1 = torch.randn(dim_ca1, dim_ei)
-    # W_ca1_eo = torch.randn(dim_eo, dim_ca1)
 
     # make model
     model = MTL(W_ei_ca1=W_ei_ca1,
                 W_ca1_eo=W_ca1_eo,
                 dim_ca3=dim_ca3,
-                lr=1., K=K_model,
-                beta=50)
-    model_rnd = MTL(W_ei_ca1=torch.randn(dim_ca1, dim_ei),
-                W_ca1_eo=torch.randn(dim_eo, dim_ca1),
-                dim_ca3=dim_ca3,
-                lr=1., K=K, beta=30)
+                lr=1.,
+                K_lat=K_lat,
+                K_out=K,
+                beta=beta)
 
     logger(f"%MTL: {model}")
 
-    # train model
+    # train model | testing = training without backprop
     epochs = 1
     for _ in range(epochs):
         loss_mtl, model = utils.testing(data=training_sample_btsp,
                                         model=model,
                                         column=True)
-        loss_mtl_rnd, model_rnd = utils.testing(
-                                        data=training_sample_btsp,
-                                                model=model_rnd,
-                                                column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
-        logger(f"<<< MTL_random trained [{loss_mtl_rnd:.3f}] >>>")
+      
 
     # reconstruct data
     model.pause_lr()
@@ -160,34 +147,60 @@ if __name__ == "__main__":
                                      column=True,
                                      plot=False)
 
-    model_rnd.pause_lr()
-    out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(
-        data=training_sample_btsp,
-                                     num=num_btsp_samples,
-                                     model=model_rnd,
-                                     column=True,
-                                     plot=False)
-
     """ plotting """
 
-    fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(15, 5), sharex=True)
+    # fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(15, 5), sharex=True)
 
+    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
     is_squash = False
+
     utils.plot_squashed_data(
-        # data=training_samples[:num_reconstructions].reshape(num_reconstructions, -1),
         data=training_sample_btsp,
                              ax=ax1,
-                             title="Original", squash=is_squash)
-    utils.plot_squashed_data(data=out_ae, ax=ax2,
+                             title="Patterns", squash=is_squash)
+    utils.plot_squashed_data(data=latent_ae, ax=ax2,
                              title="Autoencoder",
                              squash=is_squash)
-    print(np.around(out_ae, 2))
-    utils.plot_squashed_data(data=out_mtl, ax=ax3,
+    utils.plot_squashed_data(data=latent_mtl, ax=ax3,
                              title="MTL", squash=is_squash)
-    utils.plot_squashed_data(data=out_mtl_rnd, ax=ax4,
-                             title="MTL (random)", squash=is_squash)
 
-    fig.suptitle(f"Data reconstruction | all data vs first input - {K=} $\\beta=${autoencoder._beta}")
+    fig.suptitle(f"Latent layers - $K_l=${K_lat} $\\beta=${autoencoder._beta}")
+
+    #
+    fig2, (ax12, ax22, ax32) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
+    is_squash = False
+
+    utils.plot_squashed_data(
+        data=training_sample_btsp,
+                             ax=ax12,
+                             title="Patterns", squash=is_squash)
+    utils.plot_squashed_data(data=out_ae, ax=ax22,
+                             title="Autoencoder",
+                             squash=is_squash)
+    utils.plot_squashed_data(data=out_mtl, ax=ax32,
+                             title="MTL", squash=is_squash)
+
+    # print("AE: ", np.around(out_ae, 2))
+    # print("MTL: ", np.around(out_mtl, 2))
+
+    fig2.suptitle(f"Data reconstruction | all data vs first input - $K=${K} $\\beta=${autoencoder._beta}")
+
+    #
+    fig3, (ax13) = plt.subplots(1, 1, figsize=(15, 5), sharex=True)
+    # colorbar
+    # cbar = plt.colorbar(
+    #     ax13.imshow(model.W_ca3_ca1.detach().numpy(),
+    #                 cmap="Greys",
+    #                 aspect="auto"))
+
+    cbar = plt.colorbar(
+        ax13.imshow(training_sample_btsp - out_mtl,
+                    cmap="seismic",
+                    aspect="auto"))
+    ax13.set_yticks(range(num_btsp_samples))
+
+    cbar.set_label("Error")
+    ax13.set_title("pattern - mtl")
     plt.show()
 
 
