@@ -15,8 +15,7 @@ dim_ca1 = 50
 dim_eo = dim_ei
 
 # data settings
-num_samples = 300
-num_reconstructions = 1
+num_samples = 15_000
 K = 5
 
 training_samples = utils.sparse_stimulus_generator(N=num_samples,
@@ -43,39 +42,48 @@ autoencoder = Autoencoder(input_dim=dim_ei,
 logger(f"%Autoencoder: {autoencoder}")
 
 # train autoencoder
-epochs = 100
+epochs = 700
 loss_ae, autoencoder = utils.train_autoencoder(
                 training_data=training_samples,
                 test_data=test_samples,
                 model=autoencoder,
                 epochs=int(epochs),
-                batch_size=5, learning_rate=1e-3)
+                batch_size=100, learning_rate=1e-3)
 
 logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
 
+if str(input("Save model? [y/n]: ")).lower() != "y":
+
+    import sys
+    sys.exit(0)
+
 
 """ save """
-
-info = {
-    "dim_ei": dim_ei,
-    "dim_ca3": dim_ca3,
-    "dim_ca1": dim_ca1,
-    "dim_eo": dim_eo,
-    "num_samples": num_samples,
-    "num_reconstructions": num_reconstructions,
-    "K": K,
-    "K_lat": K_lat,
-    "beta": beta,
-    "epochs": epochs,
-    "loss_ae": round(loss_ae, 5),
-}
 
 # make directory
 import os
 import datetime
 import json
 
-dir_name = "cache/ae_" + datetime.datetime.now().strftime("%d_%H%M")
+
+info = {
+    "dim_ei": dim_ei,
+    "dim_ca3": dim_ca3,
+    "dim_ca1": dim_ca1,
+    "dim_eo": dim_eo,
+    "K": K,
+    "K_lat": K_lat,
+    "beta": beta,
+    "num_samples": num_samples,
+    "epochs": epochs,
+    "loss_ae": round(loss_ae, 5),
+    "date": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+}
+
+nb = len([name for name in os.listdir("cache") \
+    if os.path.isdir(f"cache/{name}") and "ae_" in name])
+
+dir_name = f"cache/ae_{nb}"
 
 os.makedirs(dir_name, exist_ok=True)
 

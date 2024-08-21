@@ -461,7 +461,7 @@ def plot_squashed_data(data: np.ndarray, title: str="",
         fig, ax = plt.subplots(1, 1, figsize=(10, 5))
 
     ax.imshow(data, aspect="auto", cmap="gray_r", vmin=0, vmax=1)
-    ax.set_ylabel(title)
+    ax.set_ylabel(title, fontsize=15)
     ax.set_yticks(range(len(data)))
     ax.set_xticks([])
 

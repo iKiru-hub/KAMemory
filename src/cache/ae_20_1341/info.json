@@ -1,0 +1,1 @@
+{"dim_ei": 50, "dim_ca3": 50, "dim_ca1": 50, "dim_eo": 50, "num_samples": 10000, "num_reconstructions": 1, "K": 5, "K_lat": 15, "beta": 60, "epochs": 500, "loss_ae": 0.05726}

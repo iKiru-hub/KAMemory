@@ -14,9 +14,8 @@ if __name__ == "__main__":
     parser.add_argument('--num', type=int,
                         help='number of samples',
                         default=1)
-    parser.add_argument('--load', type=bool,
-                        help='load model',
-                        default=True)
+    parser.add_argument('--load', action='store_true',
+                        help='load session')
     parser.add_argument('--idx', type=int,
                         help='number of samples',
                         default=0)
@@ -34,7 +33,6 @@ if __name__ == "__main__":
         dim_eo = info["dim_eo"]
 
         num_samples = info["num_samples"]
-        num_reconstructions = info["num_reconstructions"]
 
         K_lat = info["K_lat"]
         beta = info["beta"]
@@ -52,15 +50,9 @@ if __name__ == "__main__":
 
         # data settings
         num_samples = 300
-        num_reconstructions = 1
-
-        # distribution 1
-        heads = 3
-        variance = 0.05
-        higher_heads = heads
-        higher_variance = 0.075
 
         # model hyper-parameters
+        K = 5
         K_lat = 15
         beta = 60
 
@@ -85,7 +77,6 @@ if __name__ == "__main__":
 
     # dataset for btsp
     num_btsp_samples = args.num
-    num_reconstructions = 1
     training_sample_btsp = training_samples[np.random.choice(
                             range(training_samples.shape[0]),
                             num_btsp_samples, replace=False)]
@@ -97,13 +88,13 @@ if __name__ == "__main__":
 
     # train autoencoder
     if not args.load:
-        epochs = 100
+        epochs = 400
         loss_ae, autoencoder = utils.train_autoencoder(
                         training_data=training_samples,
                         test_data=test_samples,
                         model=autoencoder,
                         epochs=int(epochs),
-                        batch_size=5, learning_rate=1e-3)
+                        batch_size=10, learning_rate=1e-3)
         logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
 
     # reconstruct data
@@ -132,11 +123,14 @@ if __name__ == "__main__":
     # train model | testing = training without backprop
     epochs = 1
     for _ in range(epochs):
-        loss_mtl, model = utils.testing(data=training_sample_btsp,
+        _, model = utils.testing(data=training_sample_btsp,
+                                        model=model,
+                                        column=True)
+
+        loss_mtl, _ = utils.testing(data=training_sample_btsp,
                                         model=model,
                                         column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
-      
 
     # reconstruct data
     model.pause_lr()
@@ -183,7 +177,8 @@ if __name__ == "__main__":
     # print("AE: ", np.around(out_ae, 2))
     # print("MTL: ", np.around(out_mtl, 2))
 
-    fig2.suptitle(f"Data reconstruction | all data vs first input - $K=${K} $\\beta=${autoencoder._beta}")
+    fig2.suptitle(f"Data reconstruction of {num_btsp_samples} patterns - $K=${K} $\\beta=${autoencoder._beta}",
+                  fontsize=15)
 
     #
     fig3, (ax13) = plt.subplots(1, 1, figsize=(15, 5), sharex=True)

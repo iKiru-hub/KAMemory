@@ -1,0 +1,1 @@
+{"dim_ei": 50, "dim_ca3": 50, "dim_ca1": 50, "dim_eo": 50, "K": 5, "K_lat": 15, "beta": 60, "num_samples": 15000, "epochs": 700, "loss_ae": 0.02903, "date": "20/08/2024 13:56:22"}

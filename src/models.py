@@ -47,13 +47,13 @@ class Autoencoder(nn.Module):
 
         # Encoder
         self.encoder = nn.Sequential(
-            nn.Linear(input_dim, encoding_dim),
+            nn.Linear(input_dim, encoding_dim, bias=True),
             # nn.ReLU(True),
         )
 
         # Decoder
         self.decoder = nn.Sequential(
-            nn.Linear(encoding_dim, input_dim),
+            nn.Linear(encoding_dim, input_dim, bias=True),
             # nn.ReLU(True),
         )
 
@@ -203,10 +203,7 @@ class MTL(nn.Module):
         self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
                                                  self._dim_ei) / dim_ca3)
         self.W_ei_ca1 = nn.Parameter(W_ei_ca1)
-        # self.W_ca3_ca1 = nn.Parameter(torch.randn(self._dim_ca1, dim_ca3))
         self.W_ca3_ca1 = nn.Parameter(torch.zeros(self._dim_ca1, dim_ca3))
-        # self.W_ca3_ca1 = nn.Parameter(nn.Linear(self._dim_ca1, dim_ca3,
-        #                            bias=False).weight.clone().detach())
 
         self.W_ca1_eo = nn.Parameter(W_ca1_eo)
 
@@ -264,50 +261,23 @@ class MTL(nn.Module):
         # compute instructive signal
         IS = self.W_ei_ca1 @ x_ei
 
-        # print(">>> IS ", np.around(IS.T, 2))
-
         # activation function
         IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
                               beta=self._beta).reshape(-1, 1)
 
         # ----- # top k values
-        # betas = torch.zeros_like(IS) betas[torch.topk(IS.flatten(), Kis).indices] = 1.
-
-        # betas = betas.reshape(IS.shape)
-        # tiled_ca3 = x_ca3.flatten().repeat(self._dim_ca1, 1)
+        alpha = 0.01
         if self._lr > 0:
-            self.W_ca3_ca1 = nn.Parameter((1 - IS) * self.W_ca3_ca1 + \
-                IS @ x_ca3.T)
+            self.W_ca3_ca1 = nn.Parameter((1 - IS * alpha) * \
+                self.W_ca3_ca1 + alpha * (IS @ x_ca3.T))
 
-        # betas = IS | but select the first -k IS
-        # betas[torch.topk(IS.flatten(), Kis).indices] = torch.topk(IS.flatten(), Kis).values.flatten()
-        # betas = IS
-        # self.W_ca3_ca1 = nn.Parameter(x_ca3 @ betas.reshape(1, -1))
-        # self.W_ca3_ca1 = nn.Parameter(tiled_ca3 @ betas.T)
-        # -----
-
-        # update ca3 -> ca1 connectivity via BTSP
-        # W_ca3_ca1_prime  = nn.Parameter(torch.einsum('im,in->imn', x_ca3, IS))
-        # self.W_ca3_ca1 = nn.Parameter((1 - self._lr)*self.W_ca3_ca1 + self._lr*W_ca3_ca1_prime)
-
-        # W_ca3_ca1_prime  = nn.Parameter(IS @ x_ca3.T)
-        # self.W_ca3_ca1 += self._lr * W_ca3_ca1_prime
-
-        # ---
         # Forward pass through CA1 to entorhinal cortex output
-        # x_eo = torch.matmul(x_ca1, self.W_ca1_eo)
         x_eo = self.W_ca1_eo @ x_ca1
 
         # activation function
-        # x_eo = self.activation(x_eo)
         x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
                                 K=self._K_out,
                                 beta=self._beta).reshape(-1, 1)
-        # x_eo = torch.sigmoid(20*(x_eo-0.1))
-
-        # print("ca1 ", np.around(x_eo.T, 2))
-        # print("out ", np.around(x_eo.T, 2))
-        # print("f w31 ", np.around(self.W_ca3_ca1, 2))
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3
@@ -378,7 +348,7 @@ def load_session(idx: int=None) -> tuple:
     for i, session in enumerate(ae_sessions):
         print(f"[{i}] {session}")
 
-    if idx is None:
+    if idx is None or idx < 0:
         # select the session
         idx = int(input("Select session\n>>> "))
     else:

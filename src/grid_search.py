@@ -88,6 +88,10 @@ if bool(0):
                         beta=beta_j)
 
             # train
+            _, model = utils.testing(data=dataset_i,
+                                        model=model,
+                                        column=True)
+            model.pause_lr()
             loss_mtl, _ = utils.testing(data=dataset_i,
                                         model=model,
                                         column=True)
@@ -104,12 +108,14 @@ if bool(0):
                         beta=beta)
 
             # train
+            _, model = utils.testing(data=dataset_i,
+                                        model=model,
+                                        column=True)
+            model.pause_lr()
             loss_mtl, _ = utils.testing(data=dataset_i,
                                         model=model,
                                         column=True)
             results2[j, i] = loss_mtl
-
-
 
     logger("<<< Search done >>>")
 
@@ -153,45 +159,54 @@ else:
 
     # settings
     num_var = 20
-    idx_dataset = 2
+    num_sim = 100
+    idx_dataset = 1
     var_beta = np.around(np.linspace(1, 100, num_var))
     var_K_lat = np.linspace(1, dim_ca1-2, num_var).astype(int)
 
-    results = np.empty((num_var, num_var))
+    results = np.empty((num_sim, num_var, num_var))
 
-    for (i, beta_i) in tqdm(enumerate(var_beta)):
-        for j, klat_j in enumerate(var_K_lat):
+    for l in tqdm(range(num_sim)):
+        for (i, beta_i) in tqdm(enumerate(var_beta)):
+            for j, klat_j in enumerate(var_K_lat):
 
-            # --- vary beta ---
-            # make model
-            model = MTL(W_ei_ca1=W_ei_ca1,
-                        W_ca1_eo=W_ca1_eo,
-                        dim_ca3=dim_ca3,
-                        lr=1.,
-                        K_lat=klat_j,
-                        K_out=K,
-                        beta=beta_i)
+                # --- vary beta ---
+                # make model
+                model = MTL(W_ei_ca1=W_ei_ca1,
+                            W_ca1_eo=W_ca1_eo,
+                            dim_ca3=dim_ca3,
+                            lr=1.,
+                            K_lat=klat_j,
+                            K_out=K,
+                            beta=beta_i)
 
-            # train
-            loss_mtl, _ = utils.testing(data=datasets[idx_dataset],
-                                        model=model,
-                                        column=True)
-            results[j, i] = loss_mtl
+                # training mtl
+                _, model = utils.testing(data=datasets[idx_dataset],
+                                         model=model,
+                                         column=True)
 
+                # testing mtl
+                model.pause_lr()
+                loss_mtl, _ = utils.testing(data=datasets[idx_dataset],
+                                            model=model,
+                                            column=True)
+                results[l, j, i] = loss_mtl
 
     logger("<<< Search done >>>")
 
     """ plot """
 
+    results = results.mean(axis=0)
+
     plt.imshow(results, cmap="viridis", aspect="auto",
                vmin=0.)
     plt.colorbar()
     plt.xlabel("$\\beta$")
-    plt.xticks(range(num_var), var_beta)
+    plt.xticks(range(num_var), var_beta.astype(int))
     plt.ylabel("$K_{lat}$")
     plt.yticks(range(num_var), var_K_lat)
 
-    plt.title(f"MSE loss | samples={all_num_samples[idx_dataset]}")
+    plt.title(f"MSE loss | samples={all_num_samples[idx_dataset]} | {K_lat=} {beta=} {K=}")
     plt.show()
 
 
