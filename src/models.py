@@ -151,7 +151,9 @@ class MTL(nn.Module):
                  K_out: int,
                  beta: float,
                  dim_ca3: int,
-                 lr: float, activation: str=None):
+                 lr: float,
+                 alpha: float=0.01,
+                 activation: str=None):
 
         # make docstrings
         """
@@ -188,6 +190,7 @@ class MTL(nn.Module):
         self._K_lat = K_lat
         self._K_out = K_out
         self._beta = beta
+        self._alpha = alpha
 
         # activation function
         if activation == "sparsemax":
@@ -212,7 +215,7 @@ class MTL(nn.Module):
 
     def __repr__(self):
 
-        return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}, dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo})"
+        return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}, dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, K_o={self._K_out}"
 
     def forward(self, x_ei: torch.Tensor, ca1: bool=False):
 
@@ -266,10 +269,9 @@ class MTL(nn.Module):
                               beta=self._beta).reshape(-1, 1)
 
         # ----- # top k values
-        alpha = 0.01
         if self._lr > 0:
-            self.W_ca3_ca1 = nn.Parameter((1 - IS * alpha) * \
-                self.W_ca3_ca1 + alpha * (IS @ x_ca3.T))
+            self.W_ca3_ca1 = nn.Parameter((1 - IS * self._alpha) * \
+                self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
 
         # Forward pass through CA1 to entorhinal cortex output
         x_eo = self.W_ca1_eo @ x_ca1

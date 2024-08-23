@@ -1,11 +1,13 @@
-
-
 ## Architecture
 ---
 
-![[architecture.excalidraw.png]]
+![[architecture.excalidraw|700]]
 
-Initially, all connections are random. Further, $W_{\text{EC}_{\text{in}}\to \text{CA3}}$ and $W_{\text{EC}_{\text{out}}}$ remain frozen for the entire time.
+**Auto-encoder**
+Identified in $\text{EC}_{\text{in}}\to \text{CA1}\to \text{EC}_{\text{out}}$
+
+**MTL**
+Identified in $\text{EC}_{\text{in}}\to \text{CA3}\to \text{CA1}\to \text{EC}_{\text{out}}$ further, $W_{\text{CA3}\to \text{CA1}}$ are initially zero.
 
 ## Objective
 ---
@@ -13,47 +15,77 @@ During the entire 'lifetime' several stimuli $x$ are experienced and learnt in t
 
 ![[error_plot.excalidraw.png]]
 
+
+**Stimuli**
+As for now, the stimuli are patterns of size $N_{\text{EC}_{\text{in}}}$ with $K$ non-zero entries (ones) sampled from a uniform distribution.
+
+**Activation function**
+It is used a new activation function $\sigma_{\beta, k}$ , we called it *sparsemoid*:
+$$
+\begin{align}
+\theta&=\frac{\text{sorted}(z)_{k} +\text{sorted}(z)_{k+1}}{2}\\\\
+z &= \sigma_{\beta,\theta}(z) \\
+\end{align}
+$$
+basically, it sets the input vector $z$ to have around $k$ active neurons with a value in $(0, 1)$ by defining a variable threshold $\theta$ and using it in a generalized sigmoid $(1 + \exp{(-\beta\,(x - \theta)}))^{-1}$ 
+
+This activation function has thus two hyper-parameters $\{\beta, k\}$ which can be tailored for specific layers. 
+
 ## Training procedure
 ---
 The training procedure is structured in two parts.
 
+
 **Pre-training** 
 The connections $W_{\text{EC}_\text{in}\to\text{CA1}}$ are trained through back-propagation such that the layers $\text{EC}_{\text{in}}-\text{CA1}-\text{EC}_{\text{out}}$ form an auto-encoder.  After this phase, these connections are frozen.
 
+
 **Lifetime training**
-The connections  $W_{\text{CA3-CA1}}$ are learnt through BTSP, implemented in a immediate one-shot manner (*i.e.* no time delay and trace decay). A given input is $x$ from $\text{EC}_{\text{in}}$ is propagated through CA3 to CA1: 
+The connections  $W_{\text{CA3-CA1}}$ are learnt through BTSP, implemented in a immediate one-shot manner (*i.e.* no time delay nor trace decay).
+A given input is $x$ from $\text{EC}_{\text{in}}$ is propagated through CA3 to CA1 by applying the dot product $\cdot$ and the *sparsemoid*.
 $$
 \begin{align}
-x_{\text{CA3}} &= W_{\text{EC}_{\text{in}}\to\text{CA3}} \cdot x\\ 
-x_{\text{CA1}} &= W_{\text{CA3}\to\text{CA1}} \cdot x_{\text{CA3}}\\
-&=W_{\text{CA3}\to\text{CA1}} \cdot\left(W_{\text{EC}_{\text{in}}\to\text{CA3}}\cdot x\right)
+x_{\text{CA3}} &= \sigma(W_{\text{EC}_{\text{in}}\to\text{CA3}} \cdot x)\\ 
+x_{\text{CA1}} &= \sigma(W_{\text{CA3}\to\text{CA1}} \cdot x_{\text{CA3}})\\
+&=\sigma(W_{\text{CA3}\to\text{CA1}} \cdot\left(W_{\text{EC}_{\text{in}}\to\text{CA3}}\cdot x\right))
 \end{align} 
 $$ 
-an instructive signal is computed in CA1:  $$ IS = W_{\text{EC}_{\text{in}}\to\text{CA1}}\cdot x $$
+an instructive signal is computed in CA1:  $$ IS = \sigma(W_{\text{EC}_{\text{in}}\to\text{CA1}}\cdot x)$$
 the weight update quantity of the CA3$-$CA1 layer is calculated as the outer product of the first and last signal (assumed both to be column vectors): $$ \Delta W_{\text{CA3}\to\text{CA1}} = x_{\text{CA3}} \cdot IS^{T} $$ 
-the actual update is then implemented through a learning rate $\beta$ : 
+Usually, the update is implemented through a learning rate $\eta$ : 
 $$ 
-W_{\text{CA3}\to\text{CA1}}\leftarrow (1-\beta)W_{\text{CA3}\to\text{CA1}} +\beta\,\Delta W_{\text{CA}\to\text{CA1}} 
+W_{\text{CA3}\to\text{CA1}}\leftarrow (1-\eta)W_{\text{CA3}\to\text{CA1}} +\eta\,\Delta W_{\text{CA}\to\text{CA1}} 
+$$
+here, we take a similar approach with $\eta=IS$ but re-defining the weight update as the CA3 activity  $\Delta W=x_{\text{CA3}}$ . A possible rationale is that the instructive signal *selects* the CA3$\to$CA1 synapses to overwrite with a new value, corresponding to the CA3 neural activity of the new pattern: 
+$$ 
+\begin{align}
+W_{\text{CA3}\to\text{CA1}}&\leftarrow (1-IS)\odot W_{\text{CA3}\to\text{CA1}} +x_{\text{CA3}}\cdot IS^{T}
+\end{align}
 $$
 
-then, the final output is defined as: 
+Then, the final output is then calculated as: 
 $$
-y=W_{\text{CA1}\to\text{EC}_\text{out}}\cdot x_{\text{CA1}}
+y=\sigma(W_{\text{CA1}\to\text{EC}_\text{out}}\cdot x_{\text{CA1}})
 $$ 
 
-**new $IS$**
-In order to prevent unbounded grow of the synapses of re-experienced stimuli, the instructive signal can be defined to quantify the dissimilarity of the feedforward input $x$ and the retrieved memory $x_{\text{CA3}}$:
-$$
-IS = 1 - \cos\left(W_{\text{EC}_{\text{in}}\to{\text{CA1}}}\cdot x, x_{\text{CA3}}\right)
-$$
-with this tweak, the hope is that it reaches the [objective](#Objective).
-
-
-
-### Notes 
+## Results 
 ---
-**Stimuli** $EC_{in}$
-with a fixed number $K$ of active neurons
+![[reconstruction_1.png|690]]
+*first plot* : patterns (rows) from 0 to 4
+*second plot* : reconstruction from the autoencoder
+*third plot* : reconstruction from the MTL (through CA3)
 
-**Activation function**
-with a fixed sparsity (#active neurons) $K$
+
+---
+**Meeting 20.8.24**
+
+weights EC $\to$ CA3 as an invertible matrix
+
+capacity:
+- pattern length 
+- number of patterns
+
+Roadmap:
+- *week 1*: simulation results
+- *week 2*: experimental relevance (fit)
+- *week 3*: experimental predictions
