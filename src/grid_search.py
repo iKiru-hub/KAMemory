@@ -66,7 +66,7 @@ parameters to vary:
 if bool(0):
 
     # settings
-    num_var = 20
+    num_var = 10
     var_beta = np.around(np.linspace(1, 100, num_var))
     var_K_lat = np.linspace(1, dim_ca1-2, num_var).astype(int)
 

@@ -18,14 +18,20 @@ Q1: *how can EC readout remain stable while BTSP is occurring on CA3-CA1 synapse
 - [x] **grid-search**
 
 
-- [ ] check bias
+- [x] check bias
 
-
-**speedup tricks**
+**speedup tricks** *>>> tried*
 - [ ] test every past patterns each time a new pattern is learnt
 
 **memory capacity**
 - [ ] chance level threshold
+
+**parameter search**
+parameters:
+- $K_{\text{lat}}$
+- $K_{\text{CA3}}$
+- $\beta$
+- $\alpha$
 
 
 #### Biblography

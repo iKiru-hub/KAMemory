@@ -5,8 +5,15 @@ from torch.nn import MSELoss
 from torch.utils.data import DataLoader, TensorDataset
 from tqdm import tqdm
 
-from models import Autoencoder, MTL, logger, load_session
-import utils
+try:
+    import utils
+    from models import Autoencoder, MTL, logger, load_session
+except ModuleNotFoundError:
+    try:
+        import src.utils as utils
+        from src.models import Autoencoder, MTL, logger, load_session
+    except ModuleNotFoundError:
+        raise ValueError("`utils` module not found")
 
 
 """ settings """
@@ -23,9 +30,17 @@ beta = info["beta"]
 K = info["K"]
 
 alpha = 0.01
+use_bias = True
+logger("{use_bias=}")
 
 # get weights from the autoencoder
-W_ei_ca1, W_ca1_eo = autoencoder.get_weights()
+# get weights from the autoencoder
+if use_bias:
+    W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(
+                    bias=True)
+else:
+    W_ei_ca1, W_ca1_eo = autoencoder.get_weights(bias=False)
+    B_ei_ca1, B_ca1_eo = None, None
 
 logger("<<< Loaded session >>>")
 
@@ -51,8 +66,10 @@ for k in range(num_samples):
 
 """
 
-[[s1]
- [s1, s2]
+[[s1] <-- dataset 1
+ [s1, s2] <-- dataset 2
+ [s1, s2, s2] <-- dataset 3
+ [s1, s2, s2, s3]
  ...]
 
 """
@@ -92,6 +109,8 @@ for l in tqdm(range(num_rep)):
             # make model
             model = MTL(W_ei_ca1=W_ei_ca1,
                         W_ca1_eo=W_ca1_eo,
+                        B_ei_ca1=B_ei_ca1,
+                        B_ca1_eo=B_ca1_eo,
                         dim_ca3=dim_ca3,
                         lr=1.,
                         K_lat=K_lat,
@@ -99,17 +118,20 @@ for l in tqdm(range(num_rep)):
                         beta=beta,
                         alpha=alpha)
 
-            # train
+            # train a dataset with pattern index 0.. i
             model.eval()
             with torch.no_grad():
+
+                # one pattern at a time
                 for batch in datasets[i]:
                     # forward
                     _ = model(batch[0].reshape(-1, 1))
 
-            # test
+            # test a dataset with pattern index 0.. i 
             model.pause_lr()
             model.eval()
             with torch.no_grad():
+                # one pattern at a time
                 for j, batch in enumerate(datasets[i]):
                     x = batch[0].reshape(-1, 1)
 
@@ -212,7 +234,9 @@ elif plot_type == 2:
 
 elif plot_type == 3:
 
-    outputs = outputs.mean(axis=0).sum(axis=0)
+    # (rep, alpha, sample, sample)
+    outputs = outputs.mean(axis=0)[0]
+    # -> (sample, sample)
 
     plt.figure()
 
@@ -224,14 +248,23 @@ elif plot_type == 3:
     # plt.axhline(0.1, color="r", linestyle="--",
     #             alpha=0.2)
     # smoothing
-    outputs = outputs[:, 0]
-    nsmooth = 10
-    outputs = np.convolve(outputs,
-                          np.ones(nsmooth)/nsmooth,
-                          mode="same")
-    plt.plot(outputs, 'o-')
+    num_p = 5
+    jumps = 19
+    colors = plt.cm.rainbow(np.linspace(0, 1, num_p))
+    for di, d in enumerate(range(0, jumps*num_p, jumps)):
+        output_d = outputs[d:, d] # selection of one pattern
+        # nsmooth = 10
+        # output_d = np.convolve(output_d,
+        #                       np.ones(nsmooth)/nsmooth,
+        #                       mode="valid")
+        plt.plot(output_d, '-', label=f"$i=${d}", alpha=0.3,
+                 color=colors[di])
 
     plt.ylim(0., 1)
+    plt.ylabel("accuracy")
+    plt.xlabel("time")
+    plt.legend()
+    plt.title("accuracy over time for pattern $i$")
     plt.grid()
 
     plt.show()

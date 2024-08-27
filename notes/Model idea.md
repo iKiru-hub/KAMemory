@@ -89,3 +89,19 @@ Roadmap:
 - *week 1*: simulation results
 - *week 2*: experimental relevance (fit)
 - *week 3*: experimental predictions
+
+
+
+#### Memory capacity
+---
+for each reconstruction $\hat{y}$ calculates how much
+
+
+## Goals
+
+- [ ] define a good threshold $\theta$ for the memory capacity -> hyper-parameter
+- [ ] grid search over the parameters -> good model
+
+- [ ] thinking about the paper
+
+

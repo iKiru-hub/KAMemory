@@ -7,7 +7,13 @@ from tqdm import tqdm
 import os, json
 from pprint import pprint
 
-import utils
+try:
+    import utils
+except ModuleNotFoundError:
+    try:
+        import src.utils as utils
+    except ModuleNotFoundError:
+        raise ValueError("`utils` module not found")
 
 
 logger = utils.setup_logger(__name__)
@@ -21,7 +27,8 @@ cache_dir_2 = "src/cache"
 class Autoencoder(nn.Module):
 
     def __init__(self, input_dim: int=10, encoding_dim=10,
-                 activation: str=None, K: int=10, beta: float=20.):
+                 activation: str=None, K: int=10, beta: float=20.,
+                 use_bias: bool=True):
 
         """
         Simple autoencoder with a single linear layer as encoder and decoder.
@@ -36,6 +43,15 @@ class Autoencoder(nn.Module):
             the activation function to use, choices are
             [None, sparsemax, sigmoid].
             Default is None
+        K: int
+            the number of top values to select.
+            Default is 10
+        beta: float
+            the beta value for the sparsemoid function.
+            Default is 20.
+        use_bias: bool
+            use bias in the linear layers.
+            Default is True.
         """
 
         super(Autoencoder, self).__init__()
@@ -47,13 +63,13 @@ class Autoencoder(nn.Module):
 
         # Encoder
         self.encoder = nn.Sequential(
-            nn.Linear(input_dim, encoding_dim, bias=True),
+            nn.Linear(input_dim, encoding_dim, bias=use_bias),
             # nn.ReLU(True),
         )
 
         # Decoder
         self.decoder = nn.Sequential(
-            nn.Linear(encoding_dim, input_dim, bias=True),
+            nn.Linear(encoding_dim, input_dim, bias=use_bias),
             # nn.ReLU(True),
         )
 
@@ -120,7 +136,7 @@ class Autoencoder(nn.Module):
 
         return x
 
-    def get_weights(self):
+    def get_weights(self, bias: bool=False):
 
         """
         Get the weights of the autoencoder model
@@ -134,6 +150,12 @@ class Autoencoder(nn.Module):
         ei_ca1 = self.encoder[0].weight.data.reshape(self._encoding_dim, self._input_dim)
         ca1_eo = self.decoder[0].weight.data.reshape(self._input_dim, self._encoding_dim)
 
+        if bias:
+            ei_ca1_b = self.encoder[0].bias.data.reshape(-1, 1)
+            ca1_eo_b = self.decoder[0].bias.data.reshape(-1, 1)
+
+            return ei_ca1, ca1_eo, ei_ca1_b, ca1_eo_b
+
         return ei_ca1, ca1_eo
 
 
@@ -141,7 +163,6 @@ class Autoencoder(nn.Module):
 
 
 Kis = 50
-
 
 class MTL(nn.Module):
 
@@ -152,6 +173,9 @@ class MTL(nn.Module):
                  beta: float,
                  dim_ca3: int,
                  lr: float,
+                 K_ca3: int=5,
+                 B_ei_ca1: torch.Tensor=None,
+                 B_ca1_eo: torch.Tensor=None,
                  alpha: float=0.01,
                  activation: str=None):
 
@@ -188,6 +212,7 @@ class MTL(nn.Module):
         self._lr = lr
         self._lr_orig = lr
         self._K_lat = K_lat
+        self._K_ca3 = K_ca3
         self._K_out = K_out
         self._beta = beta
         self._alpha = alpha
@@ -207,15 +232,24 @@ class MTL(nn.Module):
                                                  self._dim_ei) / dim_ca3)
         self.W_ei_ca1 = nn.Parameter(W_ei_ca1)
         self.W_ca3_ca1 = nn.Parameter(torch.zeros(self._dim_ca1, dim_ca3))
-
         self.W_ca1_eo = nn.Parameter(W_ca1_eo)
+
+        self.B_ei_ca1 = nn.Parameter(torch.zeros(self._dim_ca1, 1) \
+                                    if B_ei_ca1 is None else B_ei_ca1)
+        self.B_ca1_eo = nn.Parameter(torch.zeros(self._dim_eo, 1) \
+                                    if B_ca1_eo is None else B_ca1_eo)
+        self.is_bias = B_ei_ca1 is not None and B_ca1_eo is not None
 
         self._ca1 = None
         self._ca3 = None
 
     def __repr__(self):
 
-        return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}, dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, K_o={self._K_out}"
+        return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}," + \
+            f" dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, " + \
+            f" bias={self.is_bias}, lr={self._lr}," + \
+            f"beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, " + \
+            f"K_o={self._K_out}"
 
     def forward(self, x_ei: torch.Tensor, ca1: bool=False):
 
@@ -262,7 +296,7 @@ class MTL(nn.Module):
                                  flag=False).reshape(-1, 1)
 
         # compute instructive signal
-        IS = self.W_ei_ca1 @ x_ei
+        IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
 
         # activation function
         IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
@@ -274,7 +308,7 @@ class MTL(nn.Module):
                 self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
 
         # Forward pass through CA1 to entorhinal cortex output
-        x_eo = self.W_ca1_eo @ x_ca1
+        x_eo = self.W_ca1_eo @ x_ca1 + self.B_ca1_eo
 
         # activation function
         x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
@@ -367,6 +401,7 @@ def load_session(idx: int=None) -> tuple:
                         activation=None,
                         K=info["K_lat"],
                         beta=info["beta"])
+
     model.load_state_dict(torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
 
     logger("info:")

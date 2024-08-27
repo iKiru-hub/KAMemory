@@ -325,7 +325,9 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
 
 def testing(data: np.ndarray, model: object,
             criterion: object=MSELoss(),
-            column: bool=False):
+            column: bool=False,
+            use_tensor: bool=False,
+            progressive_test: bool=False):
 
     """
     Test the model
@@ -349,25 +351,93 @@ def testing(data: np.ndarray, model: object,
     else:
         dataloader = data
 
+    if use_tensor:
+        try:
+            data_tensor
+        except NameError:
+            raise ValueError("data_tensor is not defined")
+        dataloader = data_tensor.unsqueeze(1)
+
     # Set the model to evaluation mode
     model.eval()
     loss = 0.
+    acc_matrix = torch.zeros(len(dataloader), len(dataloader))
+
+    record = []
 
     with torch.no_grad():
 
-        for batch in dataloader:
-
-            zs = batch[0] if not column else batch[0].reshape(-1, 1)
+        for i, batch in enumerate(dataloader):
+            x = batch[0] if not column else batch[0].reshape(-1, 1)
 
             # Forward pass
-            outputs = model(zs)
-
-            # evaluate the output
-            loss += criterion(outputs, zs)
+            outputs = model(x)  # MTL training BTSP
+            loss += criterion(outputs, x)
 
     model.train()
 
     return loss / len(dataloader), model
+
+
+def progressive_testing(data: np.ndarray, model: object):
+
+    """
+    Test the model
+
+    Parameters
+    ----------
+    data: np.ndarray
+        z data
+    model: nn.Module
+        the model
+    """
+
+    datasets = []
+    acc_matrix = torch.zeros(len(data),
+                             len(data))
+    for k in range(len(data)):
+        data = torch.tensor(data[:k+1], dtype=torch.float32).detach()
+        dataloader = DataLoader(TensorDataset(data),
+                                batch_size=1,
+                                shuffle=False)
+        datasets += [dataloader]
+
+    # Set the model to evaluation mode
+    model.eval()
+
+    with torch.no_grad():
+
+        # loop over all patterns
+        for i, dataset in enumerate(datasets):
+            x = x[0].reshape(-1, 1)
+
+            # Forward pass
+            outputs = model(x)
+
+            # test all previous patterns
+            model.pause_lr()
+
+            # testing over all previous patterns 0.. i
+            for j, x in enumerate(datasets[i]):
+                x = x[0].reshape(-1, 1)
+
+                # forward
+                y = model(x)
+
+                # record : cosine similarity
+                value = (y.T @ x) / \
+                    (torch.norm(x) * torch.norm(y))
+                acc_matrix[i, j] = (value.item() - 0.2) / 0.8
+
+                print(i, j)
+
+            model.resume_lr()
+
+    model.train()
+
+    return acc_matrix, model
+
+
 
 
 """ miscellanous """

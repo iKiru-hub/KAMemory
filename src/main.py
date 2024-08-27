@@ -1,10 +1,19 @@
-import utils
 import torch
-from models import Autoencoder, MTL, logger, load_session
 import numpy as np
 import argparse
 
 import matplotlib.pyplot as plt
+
+try:
+    import utils
+    from models import Autoencoder, MTL, logger, load_session
+except ModuleNotFoundError:
+    try:
+        import src.utils as utils
+        from src.models import Autoencoder, MTL, logger, load_session
+    except ModuleNotFoundError:
+        raise ValueError("`utils` module not found")
+
 
 
 if __name__ == "__main__":
@@ -107,11 +116,16 @@ if __name__ == "__main__":
     """ mtl training """
 
     # get weights from the autoencoder
-    W_ei_ca1, W_ca1_eo = autoencoder.get_weights()
+    # W_ei_ca1, W_ca1_eo = autoencoder.get_weights()
+    W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
+
+    logger.debug(f"{W_ei_ca1.shape=}\n{type(W_ei_ca1)}")
 
     # make model
     model = MTL(W_ei_ca1=W_ei_ca1,
                 W_ca1_eo=W_ca1_eo,
+                B_ei_ca1=B_ei_ca1,
+                B_ca1_eo=B_ca1_eo,
                 dim_ca3=dim_ca3,
                 lr=1.,
                 K_lat=K_lat,
