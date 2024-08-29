@@ -9,6 +9,8 @@ from torch.utils.data import DataLoader, TensorDataset
 import torch.nn as nn
 import torch.autograd as autograd
 
+from numba import jit
+
 import logging, coloredlogs
 from tqdm import tqdm
 import os
@@ -408,7 +410,7 @@ def progressive_testing(data: np.ndarray, model: object):
     with torch.no_grad():
 
         # loop over all patterns
-        for i, dataset in enumerate(datasets):
+        for i, x in enumerate(datasets[-1]):
             x = x[0].reshape(-1, 1)
 
             # Forward pass
@@ -537,6 +539,57 @@ def plot_squashed_data(data: np.ndarray, title: str="",
 
     if ax is None:
         plt.show()
+
+
+def calc_capacity(outputs: np.ndarray,
+                  threshold: float,
+                  nsmooth: int=20,
+                  idx_pattern: int=0) -> int:
+
+    """
+    This function calculates the capacity of the network
+    by finding the number of patterns that can be stored
+
+    Parameters
+    ----------
+    outputs : np.ndarray
+        outputs of the network
+    threshold : float
+        threshold value
+    nsmooth : int, optional
+        smoothing factor, by default 20
+    idx_pattern : int, optional
+        index of the pattern, by default 0
+
+    Returns
+    -------
+    int
+        capacity
+    """
+
+    assert outputs.ndim == 2, "outputs must be 2D"
+
+    # select the first pattern and pad it
+    padded_out = np.pad(outputs[idx_pattern:, idx_pattern],
+                        (nsmooth-1, 0), mode="edge")
+    
+    # smooth it
+    outputs = np.convolve(padded_out,
+                      np.ones(nsmooth)/nsmooth,
+                      mode="valid")
+
+    # find the highest index where the output
+    # is below the threshold
+    idx = np.argmin(np.where(outputs >= threshold,
+                             outputs, -np.inf),
+                    axis=0).item()
+
+    return idx
+        
+
+
+""" activation funcitons """
+
 
 
 class SparsemaxFunction(autograd.Function):

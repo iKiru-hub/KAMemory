@@ -47,8 +47,8 @@ logger("<<< Loaded session >>>")
 
 """ data """
 
-num_samples = 100
-num_rep = 5
+num_samples = 400
+num_rep = 2
 datasets = []
 
 stimuli = utils.sparse_stimulus_generator(N=num_samples,
@@ -79,14 +79,13 @@ for k in range(num_samples):
 
 num_alphas = 1
 if num_alphas < 2:
-    alphas = [0.4]
+    alphas = [0.1]
 else:
     alphas = np.around(np.linspace(0.075, 0.3, num_alphas), 2)
 
 outputs = np.zeros((num_rep, num_alphas, num_samples, num_samples))
 
 for l in tqdm(range(num_rep)):
-
     for h, alpha in enumerate(alphas):
 
         # data
@@ -243,20 +242,21 @@ elif plot_type == 3:
     plt.subplot(121)
     plt.imshow(outputs, cmap="viridis",
                vmin=0, vmax=1, aspect="auto")
+    plt.title(f"$\\alpha=${alphas[0]}")
 
     plt.subplot(122)
     # plt.axhline(0.1, color="r", linestyle="--",
     #             alpha=0.2)
     # smoothing
-    num_p = 5
-    jumps = 19
+    num_p = 7
+    jumps = 30
     colors = plt.cm.rainbow(np.linspace(0, 1, num_p))
     for di, d in enumerate(range(0, jumps*num_p, jumps)):
         output_d = outputs[d:, d] # selection of one pattern
-        # nsmooth = 10
-        # output_d = np.convolve(output_d,
-        #                       np.ones(nsmooth)/nsmooth,
-        #                       mode="valid")
+        nsmooth = 2
+        output_d = np.convolve(output_d,
+                              np.ones(nsmooth)/nsmooth,
+                              mode="valid")
         plt.plot(output_d, '-', label=f"$i=${d}", alpha=0.3,
                  color=colors[di])
 

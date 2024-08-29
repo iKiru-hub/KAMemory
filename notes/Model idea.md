@@ -76,6 +76,47 @@ $$
 *third plot* : reconstruction from the MTL (through CA3)
 
 
+#### Memory capacity
+---
+
+code snippet
+```python
+
+# outputs.shape : (#patterns, #patterns)
+# parameters : idx_pattern, nsmooth, threshold
+
+# select the first pattern and pad it
+padded_out = np.pad(outputs[idx_pattern:, idx_pattern],
+					(nsmooth-1, 0), mode="edge")
+
+# smooth it
+outputs = np.convolve(padded_out,
+				  np.ones(nsmooth)/nsmooth,
+				  mode="valid")
+
+# find the highest index where the output
+# is below the threshold
+idx = np.argmin(np.where(outputs >= threshold,
+						 outputs, -np.inf),
+				axis=0).item()
+
+```
+
+
+- [x] define a good threshold $\theta$ for the memory capacity -> hyper-parameter
+- [x] enquiry the problem with the below-threshold calculations
+
+![[accuracy_0.png]]
+*Recollection accuracy for all patterns*
+
+![[capacity_0.png]]
+*Recollection accuracy for a given pattern over the the number patterns stored afterwards, for multiple values of alpha*
+
+![[capacity_over_alpha.png|670]]
+*Recollection accuracy for all patterns for multiple values of alpha*
+
+
+## Notes
 ---
 **Meeting 20.8.24**
 
@@ -92,16 +133,18 @@ Roadmap:
 
 
 
-#### Memory capacity
+## Grid search
 ---
-for each reconstruction $\hat{y}$ calculates how much
+- [ ] grid search over the parameters with the capacity metric found above -> good model
+
+- sample random points from a uniform.
 
 
-## Goals
-
-- [ ] define a good threshold $\theta$ for the memory capacity -> hyper-parameter
-- [ ] grid search over the parameters -> good model
+## Paper
+---
 
 - [ ] thinking about the paper
 
 
+**Decodability during learning**
+	- downstream regions should maintain their interpretation of HP representations during learning
