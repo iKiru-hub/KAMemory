@@ -1,0 +1,169 @@
+2024-08-31 17:51:37,346 INFO    StreamThr :82710 [internal.py:wandb_internal():85] W&B internal server running at pid: 82710, started at: 2024-08-31 17:51:37.345403
+2024-08-31 17:51:37,347 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: status
+2024-08-31 17:51:37,358 INFO    WriterThread:82710 [datastore.py:open_for_write():87] open: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/run-h4nvi7pw.wandb
+2024-08-31 17:51:37,358 DEBUG   SenderThread:82710 [sender.py:send():391] send: header
+2024-08-31 17:51:37,395 DEBUG   SenderThread:82710 [sender.py:send():391] send: run
+2024-08-31 17:51:37,883 INFO    SenderThread:82710 [dir_watcher.py:__init__():211] watching files in: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files
+2024-08-31 17:51:37,884 INFO    SenderThread:82710 [sender.py:_start_run_threads():1200] run started: h4nvi7pw with start time 1725123097.34521
+2024-08-31 17:51:37,904 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: run_start
+2024-08-31 17:51:37,919 DEBUG   HandlerThread:82710 [system_info.py:__init__():26] System info init
+2024-08-31 17:51:37,919 DEBUG   HandlerThread:82710 [system_info.py:__init__():41] System info init done
+2024-08-31 17:51:37,919 INFO    HandlerThread:82710 [system_monitor.py:start():194] Starting system monitor
+2024-08-31 17:51:37,919 INFO    SystemMonitor:82710 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-08-31 17:51:37,919 INFO    HandlerThread:82710 [system_monitor.py:probe():214] Collecting system info
+2024-08-31 17:51:37,920 INFO    SystemMonitor:82710 [interfaces.py:start():188] Started cpu monitoring
+2024-08-31 17:51:37,921 INFO    SystemMonitor:82710 [interfaces.py:start():188] Started disk monitoring
+2024-08-31 17:51:37,925 INFO    SystemMonitor:82710 [interfaces.py:start():188] Started gpuapple monitoring
+2024-08-31 17:51:37,927 INFO    SystemMonitor:82710 [interfaces.py:start():188] Started memory monitoring
+2024-08-31 17:51:37,931 INFO    SystemMonitor:82710 [interfaces.py:start():188] Started network monitoring
+2024-08-31 17:51:38,250 DEBUG   HandlerThread:82710 [system_info.py:probe():152] Probing system
+2024-08-31 17:51:38,255 DEBUG   HandlerThread:82710 [system_info.py:_probe_git():137] Probing git
+2024-08-31 17:51:38,280 DEBUG   HandlerThread:82710 [system_info.py:_probe_git():145] Probing git done
+2024-08-31 17:51:38,280 DEBUG   HandlerThread:82710 [system_info.py:probe():200] Probing system done
+2024-08-31 17:51:38,280 DEBUG   HandlerThread:82710 [system_monitor.py:probe():223] {'os': 'macOS-14.5-arm64-arm-64bit', 'python': '3.11.9', 'heartbeatAt': '2024-08-31T16:51:38.250944', 'startedAt': '2024-08-31T16:51:37.326115', 'docker': None, 'cuda': None, 'args': ('--count', '100'), 'state': 'running', 'program': '/Users/daniekru/Research/lab/KAMemory/src/param_search.py', 'codePathLocal': 'src/param_search.py', 'codePath': 'src/param_search.py', 'git': {'remote': 'git@github.com:iKiru-hub/KAMemory.git', 'commit': '68d94f169060ebfa50d797004dda9a5b1d810793'}, 'email': 'dkirubel@gmail.com', 'root': '/Users/daniekru/Research/lab/KAMemory', 'host': 'Krubeals-MBP.cust.communityfibre.co.uk', 'username': 'daniekru', 'executable': '/Users/daniekru/Research/codebase/myenvs/env_cl1/bin/python3', 'cpu_count': 8, 'cpu_count_logical': 8, 'disk': {'/': {'total': 460.4317207336426, 'used': 12.414810180664062}}, 'gpuapple': {'type': 'Apple M1 Pro', 'vendor': 'sppci_vendor_Apple'}, 'memory': {'total': 16.0}}
+2024-08-31 17:51:38,281 INFO    HandlerThread:82710 [system_monitor.py:probe():224] Finished collecting system info
+2024-08-31 17:51:38,281 INFO    HandlerThread:82710 [system_monitor.py:probe():227] Publishing system info
+2024-08-31 17:51:38,281 INFO    HandlerThread:82710 [system_monitor.py:probe():229] Finished publishing system info
+2024-08-31 17:51:38,283 DEBUG   SenderThread:82710 [sender.py:send():391] send: files
+2024-08-31 17:51:38,283 INFO    SenderThread:82710 [sender.py:_save_file():1466] saving file wandb-metadata.json with policy now
+2024-08-31 17:51:38,351 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: python_packages
+2024-08-31 17:51:38,351 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-31 17:51:38,351 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: python_packages
+2024-08-31 17:51:38,352 DEBUG   SenderThread:82710 [sender.py:send():391] send: telemetry
+2024-08-31 17:51:38,352 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-31 17:51:38,352 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: stop_status
+2024-08-31 17:51:38,804 INFO    wandb-upload_0:82710 [upload_job.py:push():130] Uploaded file /var/folders/77/b66qkr5d21l_3nnw6f563fw80000gp/T/tmp_o93sfvgwandb/lmxdi27v-wandb-metadata.json
+2024-08-31 17:51:38,888 INFO    Thread-12 :82710 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/wandb-metadata.json
+2024-08-31 17:51:38,888 INFO    Thread-12 :82710 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/requirements.txt
+2024-08-31 17:51:39,438 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-31 17:51:39,439 DEBUG   SenderThread:82710 [sender.py:send():391] send: history
+2024-08-31 17:51:39,439 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: summary_record
+2024-08-31 17:51:39,439 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: check_version
+2024-08-31 17:51:39,439 INFO    SenderThread:82710 [sender.py:_save_file():1466] saving file wandb-summary.json with policy end
+2024-08-31 17:51:39,439 DEBUG   SenderThread:82710 [sender.py:send():391] send: telemetry
+2024-08-31 17:51:39,439 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: check_version
+2024-08-31 17:51:39,482 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: server_info
+2024-08-31 17:51:39,482 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: server_info
+2024-08-31 17:51:39,601 DEBUG   SenderThread:82710 [sender.py:send():391] send: exit
+2024-08-31 17:51:39,601 INFO    SenderThread:82710 [sender.py:send_exit():598] handling exit code: 0
+2024-08-31 17:51:39,601 INFO    SenderThread:82710 [sender.py:send_exit():600] handling runtime: 1
+2024-08-31 17:51:39,602 INFO    SenderThread:82710 [sender.py:_save_file():1466] saving file wandb-summary.json with policy end
+2024-08-31 17:51:39,602 INFO    SenderThread:82710 [sender.py:send_exit():606] send defer
+2024-08-31 17:51:39,602 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,602 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 0
+2024-08-31 17:51:39,603 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,603 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 0
+2024-08-31 17:51:39,603 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 1
+2024-08-31 17:51:39,603 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,603 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 1
+2024-08-31 17:51:39,603 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,603 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 1
+2024-08-31 17:51:39,603 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 2
+2024-08-31 17:51:39,603 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,603 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 2
+2024-08-31 17:51:39,603 INFO    HandlerThread:82710 [system_monitor.py:finish():203] Stopping system monitor
+2024-08-31 17:51:39,604 DEBUG   SystemMonitor:82710 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-08-31 17:51:39,604 DEBUG   SystemMonitor:82710 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-08-31 17:51:39,604 DEBUG   SystemMonitor:82710 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-08-31 17:51:39,604 INFO    HandlerThread:82710 [interfaces.py:finish():200] Joined cpu monitor
+2024-08-31 17:51:39,604 INFO    HandlerThread:82710 [interfaces.py:finish():200] Joined disk monitor
+2024-08-31 17:51:39,605 INFO    HandlerThread:82710 [interfaces.py:finish():200] Joined gpuapple monitor
+2024-08-31 17:51:39,605 INFO    HandlerThread:82710 [interfaces.py:finish():200] Joined memory monitor
+2024-08-31 17:51:39,605 INFO    HandlerThread:82710 [interfaces.py:finish():200] Joined network monitor
+2024-08-31 17:51:39,605 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,605 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 2
+2024-08-31 17:51:39,605 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 3
+2024-08-31 17:51:39,605 DEBUG   SenderThread:82710 [sender.py:send():391] send: telemetry
+2024-08-31 17:51:39,605 DEBUG   SenderThread:82710 [sender.py:send():391] send: stats
+2024-08-31 17:51:39,605 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,605 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 3
+2024-08-31 17:51:39,606 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,606 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 3
+2024-08-31 17:51:39,606 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 4
+2024-08-31 17:51:39,606 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,606 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 4
+2024-08-31 17:51:39,606 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,606 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 4
+2024-08-31 17:51:39,606 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 5
+2024-08-31 17:51:39,606 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,606 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 5
+2024-08-31 17:51:39,606 DEBUG   SenderThread:82710 [sender.py:send():391] send: summary
+2024-08-31 17:51:39,607 INFO    SenderThread:82710 [sender.py:_save_file():1466] saving file wandb-summary.json with policy end
+2024-08-31 17:51:39,607 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,607 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 5
+2024-08-31 17:51:39,607 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 6
+2024-08-31 17:51:39,607 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,607 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 6
+2024-08-31 17:51:39,607 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,607 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 6
+2024-08-31 17:51:39,610 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: status_report
+2024-08-31 17:51:39,750 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 7
+2024-08-31 17:51:39,750 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,750 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 7
+2024-08-31 17:51:39,751 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,751 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 7
+2024-08-31 17:51:39,751 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 8
+2024-08-31 17:51:39,751 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,751 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 8
+2024-08-31 17:51:39,751 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,752 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 8
+2024-08-31 17:51:39,752 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 9
+2024-08-31 17:51:39,752 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,752 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 9
+2024-08-31 17:51:39,752 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,752 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 9
+2024-08-31 17:51:39,752 INFO    SenderThread:82710 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-08-31 17:51:39,895 INFO    SenderThread:82710 [dir_watcher.py:_on_file_modified():288] file/dir modified: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/config.yaml
+2024-08-31 17:51:39,895 INFO    SenderThread:82710 [dir_watcher.py:_on_file_created():271] file/dir created: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/wandb-summary.json
+2024-08-31 17:51:39,896 INFO    SenderThread:82710 [dir_watcher.py:finish():388] scan: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files
+2024-08-31 17:51:39,896 INFO    SenderThread:82710 [dir_watcher.py:finish():402] scan save: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/requirements.txt requirements.txt
+2024-08-31 17:51:39,897 INFO    SenderThread:82710 [dir_watcher.py:finish():402] scan save: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/config.yaml config.yaml
+2024-08-31 17:51:39,897 INFO    SenderThread:82710 [dir_watcher.py:finish():402] scan save: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/wandb-summary.json wandb-summary.json
+2024-08-31 17:51:39,897 INFO    SenderThread:82710 [dir_watcher.py:finish():402] scan save: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/wandb-metadata.json wandb-metadata.json
+2024-08-31 17:51:39,898 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 10
+2024-08-31 17:51:39,898 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:39,902 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 10
+2024-08-31 17:51:39,904 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:39,904 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 10
+2024-08-31 17:51:39,905 INFO    SenderThread:82710 [file_pusher.py:finish():169] shutting down file pusher
+2024-08-31 17:51:40,275 INFO    wandb-upload_2:82710 [upload_job.py:push():130] Uploaded file /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/wandb-summary.json
+2024-08-31 17:51:40,294 INFO    wandb-upload_0:82710 [upload_job.py:push():130] Uploaded file /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/requirements.txt
+2024-08-31 17:51:40,381 INFO    wandb-upload_1:82710 [upload_job.py:push():130] Uploaded file /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/files/config.yaml
+2024-08-31 17:51:40,587 INFO    Thread-11 (_thread_body):82710 [sender.py:transition_state():626] send defer: 11
+2024-08-31 17:51:40,587 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:40,588 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 11
+2024-08-31 17:51:40,588 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:40,588 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 11
+2024-08-31 17:51:40,589 INFO    SenderThread:82710 [file_pusher.py:join():175] waiting for file pusher
+2024-08-31 17:51:40,590 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 12
+2024-08-31 17:51:40,590 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:40,590 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 12
+2024-08-31 17:51:40,591 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:40,591 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 12
+2024-08-31 17:51:40,591 INFO    SenderThread:82710 [file_stream.py:finish():601] file stream finish called
+2024-08-31 17:51:40,608 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-31 17:51:40,743 INFO    SenderThread:82710 [file_stream.py:finish():605] file stream finish is done
+2024-08-31 17:51:40,743 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 13
+2024-08-31 17:51:40,744 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: poll_exit
+2024-08-31 17:51:40,744 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:40,744 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 13
+2024-08-31 17:51:40,745 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:40,745 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 13
+2024-08-31 17:51:40,745 INFO    SenderThread:82710 [sender.py:transition_state():626] send defer: 14
+2024-08-31 17:51:40,746 DEBUG   SenderThread:82710 [sender.py:send():391] send: final
+2024-08-31 17:51:40,746 DEBUG   SenderThread:82710 [sender.py:send():391] send: footer
+2024-08-31 17:51:40,750 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: defer
+2024-08-31 17:51:40,750 INFO    HandlerThread:82710 [handler.py:handle_request_defer():184] handle defer: 14
+2024-08-31 17:51:40,750 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: defer
+2024-08-31 17:51:40,750 INFO    SenderThread:82710 [sender.py:send_request_defer():622] handle sender defer: 14
+2024-08-31 17:51:40,752 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-31 17:51:40,752 DEBUG   SenderThread:82710 [sender.py:send_request():418] send_request: poll_exit
+2024-08-31 17:51:40,754 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-31 17:51:40,755 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: get_summary
+2024-08-31 17:51:40,755 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: sampled_history
+2024-08-31 17:51:40,758 DEBUG   HandlerThread:82710 [handler.py:handle_request():158] handle_request: shutdown
+2024-08-31 17:51:40,759 INFO    HandlerThread:82710 [handler.py:finish():884] shutting down handler
+2024-08-31 17:51:41,758 INFO    WriterThread:82710 [datastore.py:close():296] close: /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_175137-h4nvi7pw/run-h4nvi7pw.wandb
+2024-08-31 17:51:41,758 INFO    SenderThread:82710 [sender.py:finish():1631] shutting down sender
+2024-08-31 17:51:41,759 INFO    SenderThread:82710 [file_pusher.py:finish():169] shutting down file pusher
+2024-08-31 17:51:41,759 INFO    SenderThread:82710 [file_pusher.py:join():175] waiting for file pusher

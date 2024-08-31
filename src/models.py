@@ -343,7 +343,8 @@ class MTL(nn.Module):
 """ load AE and info """
 
 
-def load_session(idx: int=None) -> tuple:
+def load_session(idx: int=None,
+                 verbose: bool=True) -> tuple:
 
     """
     Load the training information and
@@ -354,7 +355,10 @@ def load_session(idx: int=None) -> tuple:
     ----------
     idx : int
         the index of the session to load.
-        Default is None
+        Default is None.
+    verbose : bool
+        print the training information.
+        Default is True.
 
     Returns
     -------
@@ -380,14 +384,15 @@ def load_session(idx: int=None) -> tuple:
     if len(ae_sessions) == 0:
         raise ValueError("No saved sessions found")
 
-    logger("Saved sessions:")
-    for i, session in enumerate(ae_sessions):
-        print(f"[{i}] {session}")
-
     if idx is None or idx < 0:
+
+        logger("Saved sessions:")
+        for i, session in enumerate(ae_sessions):
+            print(f"[{i}] {session}")
+
         # select the session
         idx = int(input("Select session\n>>> "))
-    else:
+    elif verbose:
         logger(f"Pre-selected session: [{idx}]")
 
     # load the session
@@ -404,8 +409,9 @@ def load_session(idx: int=None) -> tuple:
 
     model.load_state_dict(torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
 
-    logger("info:")
-    pprint(info)
+    if verbose:
+        logger("info:")
+        pprint(info)
 
     return info, model
 

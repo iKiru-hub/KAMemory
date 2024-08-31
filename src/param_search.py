@@ -1,0 +1,321 @@
+import wandb
+import numpy as np
+from tqdm import tqdm
+from scipy.ndimage import convolve1d
+import torch
+from torch.utils.data import DataLoader, TensorDataset
+
+import models as models
+import utils as utils
+import main as main
+
+import argparse
+
+logger = utils.setup_logger(__name__)
+
+"""
+This is a sweep search (Weights and Biases).
+
+--- N.B. ---
+K_lat and K_ca3 assume the session has an input size
+of 50 (or greater than 40)
+"""
+
+
+
+""" general settings """
+
+NUM_VAR = 10
+THRESHOLD = 0.8
+SESSION_IDX = 0
+
+
+""" sweep settings """
+
+# Define sweep config
+sweep_configuration = {
+    "method": "bayes",
+
+    "name": "param_search",
+
+    "metric": {
+        "goal": "maximize",
+        "name": "capacity"
+    },
+
+    "parameters": {
+        "alpha": {"distribution": "uniform",
+                  "min": 0.01,
+                  "max": 1.},
+        "K_lat": {"distribution": "int_uniform",
+                  "min": 1,
+                  "max": 40},
+        "K_ca3": {"distribution": "int_uniform",
+                  "min": 1,
+                  "max": 40},
+        "beta": {"distribution": "int_uniform",
+                 "min": 1,
+                 "max": 100}
+    }
+}
+
+
+""" data and model settings """
+
+def make_data(num_samples: int,
+              dim_ei: int,
+              K: int):
+
+    """
+    Make datasets for training and testing.
+
+    Parameters
+    ----------
+    num_samples : int
+        Number of samples to generate.
+    dim_ei : int
+        Dimension of the input layer.
+    K : int
+        Number of output neurons.
+
+    Returns
+    -------
+    datasets : list
+        List of datasets.
+    """
+
+    datasets = []
+    for i in range(num_samples):
+        stimuli = utils.sparse_stimulus_generator(N=i+1,
+                                                  K=K,
+                                                  size=dim_ei,
+                                                  plot=False)
+        data = torch.tensor(stimuli, dtype=torch.float32)
+        dataloader = DataLoader(TensorDataset(data),
+                                batch_size=1,
+                                shuffle=False)
+        datasets += [dataloader]
+
+    return datasets
+
+
+def train_model(model_params: dict,
+                datasets: int,
+                num_samples: int,
+                random_lvl: float):
+
+    """
+    Train a model on a dataset.
+
+    Parameters
+    ----------
+    model : dict
+        Model parameters.
+    dataset: torch.utils.data.DataLoader
+        Dataset to train on.
+    num_samples : int
+        Number of samples.
+    random_lvl : float
+        Random level.
+
+    Returns
+    -------
+    model : torch.nn.Module
+        Trained model.
+    """
+
+    outputs = np.zeros((num_samples, num_samples))
+    for i in range(num_samples):
+
+        # make model
+        model = models.MTL(**model_params)
+
+        # train a dataset with pattern index 0.. i
+        model.eval()
+        with torch.no_grad():
+
+            # one pattern at a time
+            for batch in datasets[i]:
+                # forward
+                _ = model(batch[0].reshape(-1, 1))
+
+        # test a dataset with pattern index 0.. i 
+        model.pause_lr()
+        model.eval()
+        with torch.no_grad():
+
+            # one pattern at a time
+            for j, batch in enumerate(datasets[i]):
+                x = batch[0].reshape(-1, 1)
+
+                # forward
+                y = model(x)
+
+            value = (y.T @ x) / \
+                        (torch.norm(x) * torch.norm(y))
+
+            outputs[i, j] = (value.item() - 0.2) / 0.8
+
+    return outputs
+
+
+""" training """
+
+def main():
+
+    logger("<<< ---------------------- >>>")
+
+    # load session
+    info, autoencoder = models.load_session(idx=SESSION_IDX,
+                                            verbose=True)
+
+    # get session parameters
+    dim_ei = info["dim_ei"]
+    dim_ca3 = info["dim_ca3"]
+    dim_ca1 = info["dim_ca1"]
+    dim_eo = info["dim_eo"]
+    K = info["K"]
+    num_samples = 200
+
+    # get parameters: w1, w2, b1, b2
+    ae_params = autoencoder.get_weights(bias=True)
+
+    # make datasets
+    datasets = make_data(num_samples=num_samples,
+                         dim_ei=dim_ei,
+                         K=K)
+
+    RANDOM_LVL = 1 / K
+
+    # --- wandb sweep ---
+    # run = wandb.init()
+
+    # make model parameters
+    model_params = {
+        "W_ei_ca1": ae_params[0],
+        "W_ca1_eo": ae_params[1],
+        "B_ei_ca1": ae_params[2],
+        "B_ca1_eo": ae_params[3],
+        "dim_ca3": dim_ca3,
+        "lr": 1.,
+        "K_lat": 15,
+        "K_ca3": 10,
+        "K_out": K,
+        "beta": 60,
+        "alpha": 0.01
+    }
+    # model_params = {
+    #     "W_ei_ca1": ae_params[0],
+    #     "W_ca1_eo": ae_params[1],
+    #     "B_ei_ca1": ae_params[2],
+    #     "B_ca1_eo": ae_params[3],
+    #     "dim_ca3": dim_ca3,
+    #     "lr": 1.,
+    #     "K_lat": wandb.config.K_lat,
+    #     "K_ca3": wandb.config.K_ca3,
+    #     "K_out": K,
+    #     "beta": wandb.config.beta,
+    #     "alpha": wandb.config.alpha
+    # }
+
+    # run
+    outputs = train_model(model_params=model_params,
+                          datasets=datasets,
+                          num_samples=num_samples,
+                          random_lvl=0.2)
+    capacity = utils.calc_capacity(outputs=outputs,
+                                   threshold=0.8,
+                                   nsmooth=20,
+                                   idx_pattern=None)
+
+    logger(f"capacities: {capacity}")
+
+    # wandb.log({"capacity": np.mean(capacity)})
+
+
+
+
+# Define sweep config
+# sweep_configuration = {
+#     "method": "random",
+#     "name": "sweep",
+#     "metric": {"goal": "maximize", "name": "val_acc"},
+#     "parameters": {
+#         "batch_size": {"values": [16, 32, 64]},
+#         "epochs": {"values": [5, 10, 15]},
+#         "lr": {"max": 0.1, "min": 0.0001},
+#     },
+# }
+
+# # Initialize sweep by passing in config.
+# # (Optional) Provide a name of the project.
+# sweep_id = wandb.sweep(sweep=sweep_configuration, project="my-first-sweep")
+
+
+# # Define training function that takes in hyperparameter
+# # values from `wandb.config` and uses them to train a
+# # model and return metric
+# def train_one_epoch(epoch, lr, bs):
+#     acc = 0.25 + ((epoch / 30) + (random.random() / 10))
+#     loss = 0.2 + (1 - ((epoch - 1) / 10 + random.random() / 5))
+#     return acc, loss
+
+
+# def evaluate_one_epoch(epoch):
+#     acc = 0.1 + ((epoch / 20) + (random.random() / 10))
+#     loss = 0.25 + (1 - ((epoch - 1) / 10 + random.random() / 6))
+#     return acc, loss
+
+
+# def main():
+#     run = wandb.init()
+
+#     # note that we define values from `wandb.config`
+#     # instead of defining hard values
+#     lr = wandb.config.lr
+#     bs = wandb.config.batch_size
+#     epochs = wandb.config.epochs
+
+#     for epoch in np.arange(1, epochs):
+#         train_acc, train_loss = train_one_epoch(epoch, lr, bs)
+#         val_acc, val_loss = evaluate_one_epoch(epoch)
+
+#         wandb.log(
+#             {
+#                 "epoch": epoch,
+#                 "train_acc": train_acc,
+#                 "train_loss": train_loss,
+#                 "val_acc": val_acc,
+#                 "val_loss": val_loss,
+#             }
+#         )
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="param search for MTL model")
+    parser.add_argument('--count', type=int,
+                        help='number of iterations',
+                        default=10)
+    args = parser.parse_args()
+
+    main()
+
+    # Initialize sweep by passing in config.
+    # (Optional) Provide a name of the project.
+    # sweep_id = wandb.sweep(sweep=sweep_configuration,
+    #                        project="kam_1")
+
+    # logger.info(f"%sweep id: {sweep_id}")
+    # logger.info(f"%count: {args.count}")
+
+    # # Start sweep job.
+    # wandb.agent(sweep_id,
+    #             function=main,
+    #             count=args.count)
+
+
+
+
+

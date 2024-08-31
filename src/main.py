@@ -19,7 +19,7 @@ except ModuleNotFoundError:
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
-        description='Navigation memory')
+        description="BTSP model")
     parser.add_argument('--num', type=int,
                         help='number of samples',
                         default=1)

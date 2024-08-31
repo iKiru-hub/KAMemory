@@ -544,11 +544,11 @@ def plot_squashed_data(data: np.ndarray, title: str="",
 def calc_capacity(outputs: np.ndarray,
                   threshold: float,
                   nsmooth: int=20,
-                  idx_pattern: int=0) -> int:
+                  idx_pattern: int=None) -> int:
 
     """
     This function calculates the capacity of the network
-    by finding the number of patterns that can be stored
+    by finding the number of patterns that can be stored.
 
     Parameters
     ----------
@@ -559,20 +559,32 @@ def calc_capacity(outputs: np.ndarray,
     nsmooth : int, optional
         smoothing factor, by default 20
     idx_pattern : int, optional
-        index of the pattern, by default 0
+        index of the pattern, by default None
 
     Returns
     -------
-    int
+    int or list
         capacity
     """
 
     assert outputs.ndim == 2, "outputs must be 2D"
 
+    if idx_pattern is None:
+
+        results = []
+        for i in range(outputs.shape[0]):
+            idx = calc_capacity(outputs=outputs,
+                                threshold=threshold,
+                                nsmooth=nsmooth,
+                                idx_pattern=i)
+            results.append(idx)
+
+        return results
+
     # select the first pattern and pad it
     padded_out = np.pad(outputs[idx_pattern:, idx_pattern],
                         (nsmooth-1, 0), mode="edge")
-    
+
     # smooth it
     outputs = np.convolve(padded_out,
                       np.ones(nsmooth)/nsmooth,
@@ -585,7 +597,7 @@ def calc_capacity(outputs: np.ndarray,
                     axis=0).item()
 
     return idx
-        
+
 
 
 """ activation funcitons """

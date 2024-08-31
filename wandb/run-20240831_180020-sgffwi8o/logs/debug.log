@@ -1,0 +1,35 @@
+2024-08-31 18:00:20,181 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Current SDK version is 0.17.8
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Configure stats pid to 81259
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Loading settings from /Users/daniekru/.config/wandb/settings
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Loading settings from /Users/daniekru/Research/lab/KAMemory/wandb/settings
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Loading settings from environment variables: {'project': 'kam_1', 'entity': 'ikiru-university-of-oslo', 'root_dir': '/Users/daniekru/Research/lab/KAMemory', 'run_id': 'sgffwi8o', 'sweep_param_path': '/Users/daniekru/Research/lab/KAMemory/wandb/sweep-3in953hc/config-sgffwi8o.yaml', 'sweep_id': '3in953hc'}
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Applying setup settings: {'_disable_service': False}
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Inferring run settings from compute environment: {'program_relpath': 'src/param_search.py', 'program_abspath': '/Users/daniekru/Research/lab/KAMemory/src/param_search.py', 'program': '/Users/daniekru/Research/lab/KAMemory/src/param_search.py'}
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_setup.py:_flush():77] Applying login settings: {}
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_init.py:_log_setup():524] Logging user logs to /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_180020-sgffwi8o/logs/debug.log
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_init.py:_log_setup():525] Logging internal logs to /Users/daniekru/Research/lab/KAMemory/wandb/run-20240831_180020-sgffwi8o/logs/debug-internal.log
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():607] calling init triggers
+2024-08-31 18:00:20,182 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():614] wandb.init called with sweep_config: {'K_ca3': 1, 'K_lat': 18, 'alpha': 0.4582254001240631, 'beta': 81}
+config: {}
+2024-08-31 18:00:20,183 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():657] starting backend
+2024-08-31 18:00:20,183 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():661] setting up manager
+2024-08-31 18:00:20,191 INFO    Thread-248 (_run_job):81259 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2024-08-31 18:00:20,191 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():669] backend started and connected
+2024-08-31 18:00:20,199 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_config_callback():1392] config_cb None None {'K_ca3': 1, 'K_lat': 18, 'alpha': 0.4582254001240631, 'beta': 81}
+2024-08-31 18:00:20,202 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():767] updated telemetry
+2024-08-31 18:00:20,240 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():800] communicating run to backend with 90.0 second timeout
+2024-08-31 18:00:20,555 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():851] starting run threads in backend
+2024-08-31 18:00:20,923 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_console_start():2463] atexit reg
+2024-08-31 18:00:20,923 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_redirect():2309] redirect: wrap_raw
+2024-08-31 18:00:20,923 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_redirect():2374] Wrapping output streams.
+2024-08-31 18:00:20,923 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_redirect():2399] Redirects installed.
+2024-08-31 18:00:20,923 INFO    Thread-248 (_run_job):81259 [wandb_init.py:init():894] run started, returning control to user process
+2024-08-31 18:00:21,958 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_finish():2160] finishing run ikiru-university-of-oslo/kam_1/sgffwi8o
+2024-08-31 18:00:21,959 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_atexit_cleanup():2424] got exitcode: 0
+2024-08-31 18:00:21,959 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_restore():2406] restore
+2024-08-31 18:00:21,959 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_restore():2412] restore done
+2024-08-31 18:00:21,959 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_on_finish():2677] communicating current version
+2024-08-31 18:00:22,000 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_on_finish():2686] got version response 
+2024-08-31 18:00:24,409 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_footer_history_summary_info():4078] rendering history
+2024-08-31 18:00:24,409 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_footer_history_summary_info():4110] rendering summary
+2024-08-31 18:00:24,427 INFO    Thread-248 (_run_job):81259 [wandb_run.py:_footer_sync_info():4037] logging synced files

@@ -75,7 +75,8 @@ if bool(0):
 
     for i, dataset_i in enumerate(datasets):
         logger(f"Dataset {i+1}/{num_datasets}")
-        for j, (beta_j, klat_j) in enumerate(zip(var_beta, var_K_lat)):
+        for j, (beta_j, klat_j) in enumerate(zip(var_beta,
+                                                 var_K_lat)):
 
             # --- vary beta ---
             # make model

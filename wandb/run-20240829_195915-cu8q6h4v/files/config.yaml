@@ -1,0 +1,34 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.11.9
+    cli_version: 0.17.8
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1724957955
+    t:
+      1:
+      - 55
+      2:
+      - 55
+      3:
+      - 2
+      - 23
+      - 37
+      4: 3.11.9
+      5: 0.17.8
+      8:
+      - 4
+      - 5
+      13: darwin-arm64
+batch_size:
+  desc: null
+  value: 64
+epochs:
+  desc: null
+  value: 10
+lr:
+  desc: null
+  value: 0.08768563239050746
