@@ -1,0 +1,18 @@
+{"time":"2024-09-24T18:03:41.121459+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:03:41.121576+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180341-liubu2xo/logs/debug-core.log"}
+{"time":"2024-09-24T18:03:41.12172+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:03:41.121735+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180341-liubu2xo/logs/debug-core.log"}
+{"time":"2024-09-24T18:03:41.130079+02:00","level":"INFO","msg":"created new stream","id":"liubu2xo"}
+{"time":"2024-09-24T18:03:41.130177+02:00","level":"INFO","msg":"stream: started","id":"liubu2xo"}
+{"time":"2024-09-24T18:03:41.130254+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"liubu2xo"}}
+{"time":"2024-09-24T18:03:41.130231+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"liubu2xo"}}
+{"time":"2024-09-24T18:03:41.130363+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"liubu2xo"}}
+{"time":"2024-09-24T18:03:41.510618+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T18:03:41.511407+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T18:03:42.704456+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T18:03:42.704498+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T18:03:45.604585+02:00","level":"INFO","msg":"stream: closing","id":"liubu2xo"}
+{"time":"2024-09-24T18:03:45.604656+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"liubu2xo"}}
+{"time":"2024-09-24T18:03:45.604748+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"liubu2xo"}}
+{"time":"2024-09-24T18:03:45.605105+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"liubu2xo"}}
+{"time":"2024-09-24T18:03:45.605134+02:00","level":"INFO","msg":"stream: closed","id":"liubu2xo"}

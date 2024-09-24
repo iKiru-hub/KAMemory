@@ -111,7 +111,6 @@ for l in tqdm(range(num_rep)):
                         B_ei_ca1=B_ei_ca1,
                         B_ca1_eo=B_ca1_eo,
                         dim_ca3=dim_ca3,
-                        lr=1.,
                         K_lat=K_lat,
                         K_out=K,
                         beta=beta,

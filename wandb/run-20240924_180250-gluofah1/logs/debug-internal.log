@@ -1,0 +1,18 @@
+{"time":"2024-09-24T18:02:51.011986+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:02:51.012061+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180250-gluofah1/logs/debug-core.log"}
+{"time":"2024-09-24T18:02:51.012218+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:02:51.012243+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180250-gluofah1/logs/debug-core.log"}
+{"time":"2024-09-24T18:02:51.020607+02:00","level":"INFO","msg":"created new stream","id":"gluofah1"}
+{"time":"2024-09-24T18:02:51.020711+02:00","level":"INFO","msg":"stream: started","id":"gluofah1"}
+{"time":"2024-09-24T18:02:51.020745+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"gluofah1"}}
+{"time":"2024-09-24T18:02:51.020873+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"gluofah1"}}
+{"time":"2024-09-24T18:02:51.020823+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"gluofah1"}}
+{"time":"2024-09-24T18:02:51.288861+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T18:02:51.290811+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T18:02:52.472109+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T18:02:52.472142+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T18:02:54.872001+02:00","level":"INFO","msg":"stream: closing","id":"gluofah1"}
+{"time":"2024-09-24T18:02:54.872038+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"gluofah1"}}
+{"time":"2024-09-24T18:02:54.872066+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"gluofah1"}}
+{"time":"2024-09-24T18:02:54.872083+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"gluofah1"}}
+{"time":"2024-09-24T18:02:54.872242+02:00","level":"INFO","msg":"stream: closed","id":"gluofah1"}

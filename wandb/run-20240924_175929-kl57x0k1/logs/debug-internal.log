@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:59:29.623895+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:59:29.62405+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175929-kl57x0k1/logs/debug-core.log"}
+{"time":"2024-09-24T17:59:29.624198+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:59:29.624214+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175929-kl57x0k1/logs/debug-core.log"}
+{"time":"2024-09-24T17:59:29.631988+02:00","level":"INFO","msg":"created new stream","id":"kl57x0k1"}
+{"time":"2024-09-24T17:59:29.632061+02:00","level":"INFO","msg":"stream: started","id":"kl57x0k1"}
+{"time":"2024-09-24T17:59:29.632146+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"kl57x0k1"}}
+{"time":"2024-09-24T17:59:29.632165+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"kl57x0k1"}}
+{"time":"2024-09-24T17:59:29.632087+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"kl57x0k1"}}
+{"time":"2024-09-24T17:59:29.928756+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:59:29.93185+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:59:31.136967+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:59:31.136996+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:59:33.095064+02:00","level":"INFO","msg":"stream: closing","id":"kl57x0k1"}
+{"time":"2024-09-24T17:59:33.09512+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"kl57x0k1"}}
+{"time":"2024-09-24T17:59:33.095184+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"kl57x0k1"}}
+{"time":"2024-09-24T17:59:33.09549+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"kl57x0k1"}}
+{"time":"2024-09-24T17:59:33.095515+02:00","level":"INFO","msg":"stream: closed","id":"kl57x0k1"}

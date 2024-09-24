@@ -87,7 +87,6 @@ if bool(0):
             model = MTL(W_ei_ca1=W_ei_ca1,
                         W_ca1_eo=W_ca1_eo,
                         dim_ca3=dim_ca3,
-                        lr=1.,
                         K_lat=K_lat,
                         K_out=K,
                         beta=beta_j)
@@ -107,7 +106,6 @@ if bool(0):
             model = MTL(W_ei_ca1=W_ei_ca1,
                         W_ca1_eo=W_ca1_eo,
                         dim_ca3=dim_ca3,
-                        lr=1.,
                         K_lat=klat_j,
                         K_out=K,
                         beta=beta)
@@ -180,7 +178,6 @@ else:
                 model = MTL(W_ei_ca1=W_ei_ca1,
                             W_ca1_eo=W_ca1_eo,
                             dim_ca3=dim_ca3,
-                            lr=1.,
                             K_lat=klat_j,
                             K_out=K,
                             beta=beta_i)

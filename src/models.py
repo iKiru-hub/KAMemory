@@ -171,13 +171,11 @@ class MTL(nn.Module):
                  K_lat: int,
                  K_out: int,
                  beta: float,
+                 alpha: float=0.01,
                  dim_ca3: int,
-                 lr: float,
                  K_ca3: int=5,
                  B_ei_ca1: torch.Tensor=None,
-                 B_ca1_eo: torch.Tensor=None,
-                 alpha: float=0.01,
-                 activation: str=None):
+                 B_ca1_eo: torch.Tensor=None):
 
         # make docstrings
         """
@@ -189,16 +187,24 @@ class MTL(nn.Module):
             the weight matrix from entorhinal cortex to CA1
         W_ca1_eo: torch.Tensor
             the weight matrix from CA1 to entorhinal cortex output
+        B_ei_ca1: torch.Tensor
+            the bias for the EC to CA1 layer.
+            Default is None
+        B_ca1_eo: torch.Tensor
+            the bias for the CA1 to EC output layer.
+            Default is None
         K_lat: int
             the number of top values to select
         K_out: int
             the number of top values to select for the output
+        K_ca3: int
+            the number of top values to select for the CA3 layer
         beta: float
             the beta value for the sparsemoid function
+        alpha: float
+            the learning rate for the weight update
         dim_ca3: int
             the size of the CA3 layer
-        lr: float
-            the learning rate
         """
 
         super(MTL, self).__init__()
@@ -209,23 +215,11 @@ class MTL(nn.Module):
         self._dim_ca1 = W_ca1_eo.shape[1]
 
         # network parameters
-        self._lr = lr
-        self._lr_orig = lr
         self._K_lat = K_lat
         self._K_ca3 = K_ca3
         self._K_out = K_out
         self._beta = beta
         self._alpha = alpha
-
-        # activation function
-        if activation == "sparsemax":
-            self.activation = utils.Sparsemax()
-        elif activation == "sigmoid":
-            self.activation = nn.Sigmoid()
-        elif activation == "soft":
-            self.activation = utils.SoftSigmoid()
-        else:
-            self.activation = utils.Identity()
 
         # Initialize weight matrices for each layer
         self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
@@ -243,11 +237,14 @@ class MTL(nn.Module):
         self._ca1 = None
         self._ca3 = None
 
+        # mode
+        self.mode = "train"
+
     def __repr__(self):
 
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}," + \
             f" dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, " + \
-            f" bias={self.is_bias}, lr={self._lr}," + \
+            f" bias={self.is_bias}" + \
             f"beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, " + \
             f"K_o={self._K_out}"
 
@@ -269,27 +266,14 @@ class MTL(nn.Module):
             reconstructed data
         """
 
-        # Forward pass through the entorhinal cortex to CA3
-        # x_ca3 = torch.matmul(x_ei, self.W_ei_ca3)
+        # forward pass through the entorhinal cortex to CA3
         x_ca3 = self.W_ei_ca3 @ x_ei # 50, 1
         x_ca3 = utils.sparsemoid(x_ca3.reshape(1, -1),
                                  K=2,
                                  beta=self._beta).reshape(-1, 1)
 
-        # activation function
-        # x_ca3 = self.activation(x_ca3)
-
-        # --- implement 
-
-        # Forward pass through CA3 to CA1
-        # x_ca1 = torch.matmul(x_ca3, self.W_ca3_ca1)
+        # forward pass through CA3 to CA1
         x_ca1 = self.W_ca3_ca1 @ x_ca3 # 50, 1
-
-        # print("ei ", np.around(x_ei.T, 2))
-        # print("[ca1] ", x_ca1.shape)
-        # print("w31 ", np.around(self.W_ca3_ca1, 2))
-
-        # -- x=(5, 50)
         x_ca1 = utils.sparsemoid(x_ca1.reshape(1, -1),
                                  K=self._K_lat,
                                  beta=self._beta,
@@ -297,13 +281,11 @@ class MTL(nn.Module):
 
         # compute instructive signal
         IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
-
-        # activation function
         IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
                               beta=self._beta).reshape(-1, 1)
 
-        # ----- # top k values
-        if self._lr > 0:
+        # weight update
+        if self.mode == "train":
             self.W_ca3_ca1 = nn.Parameter((1 - IS * self._alpha) * \
                 self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
 
@@ -329,7 +311,7 @@ class MTL(nn.Module):
         Pause learning rate
         """
 
-        self._lr = 0.
+        self.mode = "test"
 
     def resume_lr(self):
 
@@ -337,7 +319,7 @@ class MTL(nn.Module):
         Resume learning rate
         """
 
-        self._lr = self._lr_orig
+        self.mode = "train"
 
 
 """ load AE and info """

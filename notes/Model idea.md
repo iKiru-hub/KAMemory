@@ -106,14 +106,19 @@ idx = np.argmin(np.where(outputs >= threshold,
 - [x] define a good threshold $\theta$ for the memory capacity -> hyper-parameter
 - [x] enquiry the problem with the below-threshold calculations
 
+
 ![[accuracy_0.png]]
-*Recollection accuracy for all patterns*
+***Recollection accuracy for all patterns**
 
 ![[capacity_0.png]]
-*Recollection accuracy for a given pattern over the the number patterns stored afterwards, for multiple values of alpha*
+****Recollection accuracy for a given pattern over the the number patterns stored afterwards, for multiple values of alpha***
 
 ![[capacity_over_alpha.png|670]]
-*Recollection accuracy for all patterns for multiple values of alpha*
+***Recollection accuracy for all patterns for multiple values of alpha***
+
+
+![[rcapacities_123914.gif]]
+
 
 
 ## Notes
@@ -163,6 +168,8 @@ Roadmap:
 
 1) optimize the network (also bayesian is fine)
 2) understanding how capacity depends on the parameters (full)
+
+https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
 
 
 ## Paper

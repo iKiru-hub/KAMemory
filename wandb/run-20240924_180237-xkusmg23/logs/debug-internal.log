@@ -1,0 +1,18 @@
+{"time":"2024-09-24T18:02:37.969025+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:02:37.969155+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180237-xkusmg23/logs/debug-core.log"}
+{"time":"2024-09-24T18:02:37.969371+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:02:37.969387+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180237-xkusmg23/logs/debug-core.log"}
+{"time":"2024-09-24T18:02:37.978629+02:00","level":"INFO","msg":"created new stream","id":"xkusmg23"}
+{"time":"2024-09-24T18:02:37.978746+02:00","level":"INFO","msg":"stream: started","id":"xkusmg23"}
+{"time":"2024-09-24T18:02:37.978834+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"xkusmg23"}}
+{"time":"2024-09-24T18:02:37.978783+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"xkusmg23"}}
+{"time":"2024-09-24T18:02:37.97895+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"xkusmg23"}}
+{"time":"2024-09-24T18:02:38.54646+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T18:02:38.548562+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T18:02:39.73176+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T18:02:39.731783+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T18:02:41.906642+02:00","level":"INFO","msg":"stream: closing","id":"xkusmg23"}
+{"time":"2024-09-24T18:02:41.906669+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"xkusmg23"}}
+{"time":"2024-09-24T18:02:41.906706+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"xkusmg23"}}
+{"time":"2024-09-24T18:02:41.906722+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"xkusmg23"}}
+{"time":"2024-09-24T18:02:41.906826+02:00","level":"INFO","msg":"stream: closed","id":"xkusmg23"}

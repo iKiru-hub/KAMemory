@@ -1,0 +1,18 @@
+{"time":"2024-09-24T18:01:50.166966+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:01:50.167073+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180150-ytdygo5z/logs/debug-core.log"}
+{"time":"2024-09-24T18:01:50.1672+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:01:50.167212+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180150-ytdygo5z/logs/debug-core.log"}
+{"time":"2024-09-24T18:01:50.173099+02:00","level":"INFO","msg":"created new stream","id":"ytdygo5z"}
+{"time":"2024-09-24T18:01:50.173151+02:00","level":"INFO","msg":"stream: started","id":"ytdygo5z"}
+{"time":"2024-09-24T18:01:50.173168+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ytdygo5z"}}
+{"time":"2024-09-24T18:01:50.173186+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ytdygo5z"}}
+{"time":"2024-09-24T18:01:50.173201+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"ytdygo5z"}}
+{"time":"2024-09-24T18:01:50.456763+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T18:01:50.459751+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T18:01:51.64051+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T18:01:51.640574+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T18:01:53.913767+02:00","level":"INFO","msg":"stream: closing","id":"ytdygo5z"}
+{"time":"2024-09-24T18:01:53.91385+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ytdygo5z"}}
+{"time":"2024-09-24T18:01:53.91393+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ytdygo5z"}}
+{"time":"2024-09-24T18:01:53.914306+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"ytdygo5z"}}
+{"time":"2024-09-24T18:01:53.914342+02:00","level":"INFO","msg":"stream: closed","id":"ytdygo5z"}

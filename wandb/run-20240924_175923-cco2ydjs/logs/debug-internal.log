@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:59:24.014708+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:59:24.01478+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175923-cco2ydjs/logs/debug-core.log"}
+{"time":"2024-09-24T17:59:24.014923+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:59:24.014941+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175923-cco2ydjs/logs/debug-core.log"}
+{"time":"2024-09-24T17:59:24.022592+02:00","level":"INFO","msg":"created new stream","id":"cco2ydjs"}
+{"time":"2024-09-24T17:59:24.022693+02:00","level":"INFO","msg":"stream: started","id":"cco2ydjs"}
+{"time":"2024-09-24T17:59:24.022712+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"cco2ydjs"}}
+{"time":"2024-09-24T17:59:24.022735+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"cco2ydjs"}}
+{"time":"2024-09-24T17:59:24.022836+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"cco2ydjs"}}
+{"time":"2024-09-24T17:59:24.32262+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:59:24.325967+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:59:25.505391+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:59:25.505416+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:59:27.670436+02:00","level":"INFO","msg":"stream: closing","id":"cco2ydjs"}
+{"time":"2024-09-24T17:59:27.67104+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"cco2ydjs"}}
+{"time":"2024-09-24T17:59:27.671254+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"cco2ydjs"}}
+{"time":"2024-09-24T17:59:27.671368+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"cco2ydjs"}}
+{"time":"2024-09-24T17:59:27.671845+02:00","level":"INFO","msg":"stream: closed","id":"cco2ydjs"}

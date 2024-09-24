@@ -1,0 +1,10 @@
+wandb_version: 1
+
+K_ca3:
+  value: 1
+K_lat:
+  value: 16
+alpha:
+  value: 0.26163372541355545
+beta:
+  value: 68

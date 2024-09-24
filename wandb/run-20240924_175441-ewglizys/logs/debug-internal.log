@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:54:41.963917+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:54:41.964023+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175441-ewglizys/logs/debug-core.log"}
+{"time":"2024-09-24T17:54:41.964841+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:54:41.964864+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175441-ewglizys/logs/debug-core.log"}
+{"time":"2024-09-24T17:54:41.974615+02:00","level":"INFO","msg":"created new stream","id":"ewglizys"}
+{"time":"2024-09-24T17:54:41.974715+02:00","level":"INFO","msg":"stream: started","id":"ewglizys"}
+{"time":"2024-09-24T17:54:41.974754+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ewglizys"}}
+{"time":"2024-09-24T17:54:41.974777+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ewglizys"}}
+{"time":"2024-09-24T17:54:41.974775+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"ewglizys"}}
+{"time":"2024-09-24T17:54:42.283444+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:54:42.285759+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:54:43.507229+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:54:43.507264+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:54:45.632932+02:00","level":"INFO","msg":"stream: closing","id":"ewglizys"}
+{"time":"2024-09-24T17:54:45.632968+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ewglizys"}}
+{"time":"2024-09-24T17:54:45.633021+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ewglizys"}}
+{"time":"2024-09-24T17:54:45.633213+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"ewglizys"}}
+{"time":"2024-09-24T17:54:45.633248+02:00","level":"INFO","msg":"stream: closed","id":"ewglizys"}

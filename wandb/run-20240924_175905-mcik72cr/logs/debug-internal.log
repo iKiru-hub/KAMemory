@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:59:05.738105+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:59:05.738186+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175905-mcik72cr/logs/debug-core.log"}
+{"time":"2024-09-24T17:59:05.738326+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:59:05.738341+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175905-mcik72cr/logs/debug-core.log"}
+{"time":"2024-09-24T17:59:05.748208+02:00","level":"INFO","msg":"created new stream","id":"mcik72cr"}
+{"time":"2024-09-24T17:59:05.748307+02:00","level":"INFO","msg":"stream: started","id":"mcik72cr"}
+{"time":"2024-09-24T17:59:05.748403+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"mcik72cr"}}
+{"time":"2024-09-24T17:59:05.748382+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"mcik72cr"}}
+{"time":"2024-09-24T17:59:05.748498+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"mcik72cr"}}
+{"time":"2024-09-24T17:59:06.099268+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:59:06.101345+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:59:07.289444+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:59:07.289474+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:59:09.363072+02:00","level":"INFO","msg":"stream: closing","id":"mcik72cr"}
+{"time":"2024-09-24T17:59:09.363133+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"mcik72cr"}}
+{"time":"2024-09-24T17:59:09.363218+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"mcik72cr"}}
+{"time":"2024-09-24T17:59:09.363438+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"mcik72cr"}}
+{"time":"2024-09-24T17:59:09.363465+02:00","level":"INFO","msg":"stream: closed","id":"mcik72cr"}

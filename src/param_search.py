@@ -27,7 +27,6 @@ of 50 (or greater than 40)
 
 """ general settings """
 
-NUM_VAR = 10
 THRESHOLD = 0.8
 SESSION_IDX = 0
 
@@ -49,15 +48,15 @@ sweep_configuration = {
         "alpha": {"distribution": "uniform",
                   "min": 0.01,
                   "max": 1.},
+        "beta": {"distribution": "int_uniform",
+                 "min": 1,
+                 "max": 100}
         "K_lat": {"distribution": "int_uniform",
                   "min": 1,
                   "max": 40},
         "K_ca3": {"distribution": "int_uniform",
                   "min": 1,
                   "max": 40},
-        "beta": {"distribution": "int_uniform",
-                 "min": 1,
-                 "max": 100}
     }
 }
 
@@ -201,7 +200,6 @@ def main():
         "B_ei_ca1": ae_params[2],
         "B_ca1_eo": ae_params[3],
         "dim_ca3": dim_ca3,
-        "lr": 1.,
         "K_lat": wandb.config.K_lat,
         "K_ca3": wandb.config.K_ca3,
         "K_out": K,

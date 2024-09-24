@@ -1,0 +1,18 @@
+{"time":"2024-09-24T18:02:19.765116+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:02:19.765213+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180219-1vericnm/logs/debug-core.log"}
+{"time":"2024-09-24T18:02:19.765379+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T18:02:19.765395+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_180219-1vericnm/logs/debug-core.log"}
+{"time":"2024-09-24T18:02:19.77441+02:00","level":"INFO","msg":"created new stream","id":"1vericnm"}
+{"time":"2024-09-24T18:02:19.77455+02:00","level":"INFO","msg":"stream: started","id":"1vericnm"}
+{"time":"2024-09-24T18:02:19.774584+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"1vericnm"}}
+{"time":"2024-09-24T18:02:19.774609+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"1vericnm"}}
+{"time":"2024-09-24T18:02:19.774592+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"1vericnm"}}
+{"time":"2024-09-24T18:02:20.349674+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T18:02:20.352816+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T18:02:21.532789+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T18:02:21.532812+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T18:02:23.581058+02:00","level":"INFO","msg":"stream: closing","id":"1vericnm"}
+{"time":"2024-09-24T18:02:23.581121+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"1vericnm"}}
+{"time":"2024-09-24T18:02:23.58119+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"1vericnm"}}
+{"time":"2024-09-24T18:02:23.581431+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"1vericnm"}}
+{"time":"2024-09-24T18:02:23.581458+02:00","level":"INFO","msg":"stream: closed","id":"1vericnm"}

@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:55:22.259468+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:55:22.259503+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175522-3ch50cbg/logs/debug-core.log"}
+{"time":"2024-09-24T17:55:22.259726+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:55:22.259771+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175522-3ch50cbg/logs/debug-core.log"}
+{"time":"2024-09-24T17:55:22.263112+02:00","level":"INFO","msg":"created new stream","id":"3ch50cbg"}
+{"time":"2024-09-24T17:55:22.26314+02:00","level":"INFO","msg":"stream: started","id":"3ch50cbg"}
+{"time":"2024-09-24T17:55:22.263155+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"3ch50cbg"}}
+{"time":"2024-09-24T17:55:22.263176+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"3ch50cbg"}}
+{"time":"2024-09-24T17:55:22.263194+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"3ch50cbg"}}
+{"time":"2024-09-24T17:55:22.641061+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:55:22.641813+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:55:23.864631+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:55:23.864669+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:55:26.328471+02:00","level":"INFO","msg":"stream: closing","id":"3ch50cbg"}
+{"time":"2024-09-24T17:55:26.328515+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"3ch50cbg"}}
+{"time":"2024-09-24T17:55:26.328537+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"3ch50cbg"}}
+{"time":"2024-09-24T17:55:26.328547+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"3ch50cbg"}}
+{"time":"2024-09-24T17:55:26.328611+02:00","level":"INFO","msg":"stream: closed","id":"3ch50cbg"}

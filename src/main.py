@@ -127,7 +127,6 @@ if __name__ == "__main__":
                 B_ei_ca1=B_ei_ca1,
                 B_ca1_eo=B_ca1_eo,
                 dim_ca3=dim_ca3,
-                lr=1.,
                 K_lat=K_lat,
                 K_out=K,
                 beta=beta)
@@ -138,22 +137,22 @@ if __name__ == "__main__":
     epochs = 1
     for _ in range(epochs):
         _, model = utils.testing(data=training_sample_btsp,
-                                        model=model,
-                                        column=True)
+                                 model=model,
+                                 column=True)
 
         loss_mtl, _ = utils.testing(data=training_sample_btsp,
-                                        model=model,
-                                        column=True)
+                                    model=model,
+                                    column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
 
     # reconstruct data
     model.pause_lr()
     out_mtl, latent_mtl = utils.reconstruct_data(
-        data=training_sample_btsp,
-                                     num=num_btsp_samples,
-                                     model=model,
-                                     column=True,
-                                     plot=False)
+                     data=training_sample_btsp,
+                     num=num_btsp_samples,
+                     model=model,
+                     column=True,
+                     plot=False)
 
     """ plotting """
 
@@ -229,4 +228,3 @@ if __name__ == "__main__":
 
     # fig.suptitle("Latent space [CA1]")
     # plt.show()
-

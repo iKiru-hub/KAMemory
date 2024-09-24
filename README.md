@@ -5,7 +5,20 @@
 Q1: *how can EC readout remain stable while BTSP is occurring on CA3-CA1 synapses?*
 
 
-#### todo
+
+#### Results
+
+
+Dependance of the memory capacity on the learning rate ($\alpha$)
+![roaming](media/rcapacities_123914.gif)
+
+
+**parameter search**
+see https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
+
+
+
+#### TODO
 
 - [x] **Make the neural spaces homogenous**
 	- [x] sparse inputs
@@ -32,6 +45,9 @@ parameters:
 - $K_{\text{CA3}}$
 - $\beta$
 - $\alpha$
+
+
+
 
 
 #### Biblography

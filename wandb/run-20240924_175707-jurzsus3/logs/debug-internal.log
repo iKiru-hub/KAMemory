@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:57:07.734472+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:57:07.734589+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175707-jurzsus3/logs/debug-core.log"}
+{"time":"2024-09-24T17:57:07.734765+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:57:07.734783+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_175707-jurzsus3/logs/debug-core.log"}
+{"time":"2024-09-24T17:57:07.743767+02:00","level":"INFO","msg":"created new stream","id":"jurzsus3"}
+{"time":"2024-09-24T17:57:07.743869+02:00","level":"INFO","msg":"stream: started","id":"jurzsus3"}
+{"time":"2024-09-24T17:57:07.743969+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"jurzsus3"}}
+{"time":"2024-09-24T17:57:07.743903+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"jurzsus3"}}
+{"time":"2024-09-24T17:57:07.744036+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"jurzsus3"}}
+{"time":"2024-09-24T17:57:08.123035+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:57:08.124057+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:57:09.29169+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:57:09.29172+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:57:11.209773+02:00","level":"INFO","msg":"stream: closing","id":"jurzsus3"}
+{"time":"2024-09-24T17:57:11.209817+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"jurzsus3"}}
+{"time":"2024-09-24T17:57:11.20986+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"jurzsus3"}}
+{"time":"2024-09-24T17:57:11.209868+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"jurzsus3"}}
+{"time":"2024-09-24T17:57:11.210128+02:00","level":"INFO","msg":"stream: closed","id":"jurzsus3"}
