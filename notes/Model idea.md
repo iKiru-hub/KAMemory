@@ -134,6 +134,16 @@ Roadmap:
 **notes**
 - plot the distribution of activations in $CA1$ and $EC_{out}$ to check that the average norm increases with low values of $\alpha$
 
+**notes** 11.9.24
+
+**notes** 24.9.24
+![[Pasted image 20240924143040.png]]
+- ecological task (no sp/nsp distinction)
+
+- random IS: same shape but random entries (i.e. as if it was shuffled) | bc BTSP meant to be random somehow
+
+
+
 ### Slides
 ---
 1. summary of BTSP, papers and overview
@@ -147,9 +157,12 @@ Roadmap:
 
 ## Grid search
 ---
-- [ ] grid search over the parameters with the capacity metric found above -> good model
+- [x] grid search over the parameters with the capacity metric found above -> good model
 
 - sample random points from a uniform.
+
+1) optimize the network (also bayesian is fine)
+2) understanding how capacity depends on the parameters (full)
 
 
 ## Paper
@@ -160,3 +173,21 @@ Roadmap:
 
 **Decodability during learning**
 	- downstream regions should maintain their interpretation of HP representations during learning
+
+
+
+## TODO
+---
+
+**Albert**
+- [ ] architecture figure
+- [ ] btsp figure
+- [ ] ecological environment
+
+**Kiru**
+- [ ] training figure
+- [ ] matrix figure
+- [ ] pc smell/task
+- [ ] prediction
+
+

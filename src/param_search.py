@@ -154,7 +154,8 @@ def train_model(model_params: dict,
             value = (y.T @ x) / \
                         (torch.norm(x) * torch.norm(y))
 
-            outputs[i, j] = (value.item() - 0.2) / 0.8
+            outputs[i, j] = (value.item() - random_lvl) /\
+                (1 - random_lvl)
 
     return outputs
 
@@ -167,7 +168,7 @@ def main():
 
     # load session
     info, autoencoder = models.load_session(idx=SESSION_IDX,
-                                            verbose=True)
+                                            verbose=False)
 
     # get session parameters
     dim_ei = info["dim_ei"]
@@ -175,7 +176,7 @@ def main():
     dim_ca1 = info["dim_ca1"]
     dim_eo = info["dim_eo"]
     K = info["K"]
-    num_samples = 200
+    num_samples = 100
 
     # get parameters: w1, w2, b1, b2
     ae_params = autoencoder.get_weights(bias=True)
@@ -188,7 +189,7 @@ def main():
     RANDOM_LVL = 1 / K
 
     # --- wandb sweep ---
-    # run = wandb.init()
+    run = wandb.init()
 
     # make model parameters
     model_params = {
@@ -198,39 +199,26 @@ def main():
         "B_ca1_eo": ae_params[3],
         "dim_ca3": dim_ca3,
         "lr": 1.,
-        "K_lat": 15,
-        "K_ca3": 10,
+        "K_lat": wandb.config.K_lat,
+        "K_ca3": wandb.config.K_ca3,
         "K_out": K,
-        "beta": 60,
-        "alpha": 0.01
+        "beta": wandb.config.beta,
+        "alpha": wandb.config.alpha
     }
-    # model_params = {
-    #     "W_ei_ca1": ae_params[0],
-    #     "W_ca1_eo": ae_params[1],
-    #     "B_ei_ca1": ae_params[2],
-    #     "B_ca1_eo": ae_params[3],
-    #     "dim_ca3": dim_ca3,
-    #     "lr": 1.,
-    #     "K_lat": wandb.config.K_lat,
-    #     "K_ca3": wandb.config.K_ca3,
-    #     "K_out": K,
-    #     "beta": wandb.config.beta,
-    #     "alpha": wandb.config.alpha
-    # }
 
     # run
     outputs = train_model(model_params=model_params,
                           datasets=datasets,
                           num_samples=num_samples,
-                          random_lvl=0.2)
+                          random_lvl=RANDOM_LVL)
     capacity = utils.calc_capacity(outputs=outputs,
-                                   threshold=0.8,
+                                   threshold=THRESHOLD,
                                    nsmooth=20,
                                    idx_pattern=None)
 
-    logger(f"capacities: {capacity}")
+    logger(f"capacity: {np.mean(capacity)}")
 
-    # wandb.log({"capacity": np.mean(capacity)})
+    wandb.log({"capacity": np.mean(capacity)})
 
 
 
@@ -300,20 +288,18 @@ if __name__ == "__main__":
                         default=10)
     args = parser.parse_args()
 
-    main()
-
     # Initialize sweep by passing in config.
     # (Optional) Provide a name of the project.
-    # sweep_id = wandb.sweep(sweep=sweep_configuration,
-    #                        project="kam_1")
+    sweep_id = wandb.sweep(sweep=sweep_configuration,
+                           project="kam_1")
 
-    # logger.info(f"%sweep id: {sweep_id}")
-    # logger.info(f"%count: {args.count}")
+    logger.info(f"%sweep id: {sweep_id}")
+    logger.info(f"%count: {args.count}")
 
-    # # Start sweep job.
-    # wandb.agent(sweep_id,
-    #             function=main,
-    #             count=args.count)
+    # Start sweep job.
+    wandb.agent(sweep_id,
+                function=main,
+                count=args.count)
 
 
 
