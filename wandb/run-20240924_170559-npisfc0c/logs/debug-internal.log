@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:05:59.720901+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:05:59.720986+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170559-npisfc0c/logs/debug-core.log"}
+{"time":"2024-09-24T17:05:59.721109+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:05:59.721121+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170559-npisfc0c/logs/debug-core.log"}
+{"time":"2024-09-24T17:05:59.72953+02:00","level":"INFO","msg":"created new stream","id":"npisfc0c"}
+{"time":"2024-09-24T17:05:59.729608+02:00","level":"INFO","msg":"stream: started","id":"npisfc0c"}
+{"time":"2024-09-24T17:05:59.729657+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"npisfc0c"}}
+{"time":"2024-09-24T17:05:59.729642+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"npisfc0c"}}
+{"time":"2024-09-24T17:05:59.729625+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"npisfc0c"}}
+{"time":"2024-09-24T17:06:00.025038+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:06:00.028246+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:06:01.199842+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:06:01.199882+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:06:03.357541+02:00","level":"INFO","msg":"stream: closing","id":"npisfc0c"}
+{"time":"2024-09-24T17:06:03.357595+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"npisfc0c"}}
+{"time":"2024-09-24T17:06:03.357667+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"npisfc0c"}}
+{"time":"2024-09-24T17:06:03.35805+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"npisfc0c"}}
+{"time":"2024-09-24T17:06:03.358082+02:00","level":"INFO","msg":"stream: closed","id":"npisfc0c"}

@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:04:46.232579+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:04:46.232704+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170446-ungpwp2q/logs/debug-core.log"}
+{"time":"2024-09-24T17:04:46.232886+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:04:46.232911+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170446-ungpwp2q/logs/debug-core.log"}
+{"time":"2024-09-24T17:04:46.243277+02:00","level":"INFO","msg":"created new stream","id":"ungpwp2q"}
+{"time":"2024-09-24T17:04:46.243369+02:00","level":"INFO","msg":"stream: started","id":"ungpwp2q"}
+{"time":"2024-09-24T17:04:46.243396+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ungpwp2q"}}
+{"time":"2024-09-24T17:04:46.243467+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ungpwp2q"}}
+{"time":"2024-09-24T17:04:46.243545+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"ungpwp2q"}}
+{"time":"2024-09-24T17:04:46.59465+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:04:46.598403+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:04:47.811093+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:04:47.811132+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:04:49.880379+02:00","level":"INFO","msg":"stream: closing","id":"ungpwp2q"}
+{"time":"2024-09-24T17:04:49.88044+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ungpwp2q"}}
+{"time":"2024-09-24T17:04:49.880508+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ungpwp2q"}}
+{"time":"2024-09-24T17:04:49.880845+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"ungpwp2q"}}
+{"time":"2024-09-24T17:04:49.880871+02:00","level":"INFO","msg":"stream: closed","id":"ungpwp2q"}

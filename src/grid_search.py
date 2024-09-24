@@ -9,6 +9,10 @@ from models import Autoencoder, MTL, logger, load_session
 import utils
 
 
+"""
+Grid search coded from the bottom up
+"""
+
 
 """ settings """
 

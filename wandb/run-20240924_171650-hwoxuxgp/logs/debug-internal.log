@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:16:50.797669+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:16:50.797793+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_171650-hwoxuxgp/logs/debug-core.log"}
+{"time":"2024-09-24T17:16:50.797885+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:16:50.797894+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_171650-hwoxuxgp/logs/debug-core.log"}
+{"time":"2024-09-24T17:16:50.802425+02:00","level":"INFO","msg":"created new stream","id":"hwoxuxgp"}
+{"time":"2024-09-24T17:16:50.802461+02:00","level":"INFO","msg":"stream: started","id":"hwoxuxgp"}
+{"time":"2024-09-24T17:16:50.802477+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"hwoxuxgp"}}
+{"time":"2024-09-24T17:16:50.802504+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"hwoxuxgp"}}
+{"time":"2024-09-24T17:16:50.802496+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"hwoxuxgp"}}
+{"time":"2024-09-24T17:16:51.114931+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:16:51.116075+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:16:52.288849+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:16:52.288888+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:16:54.320056+02:00","level":"INFO","msg":"stream: closing","id":"hwoxuxgp"}
+{"time":"2024-09-24T17:16:54.320124+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"hwoxuxgp"}}
+{"time":"2024-09-24T17:16:54.32022+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"hwoxuxgp"}}
+{"time":"2024-09-24T17:16:54.320716+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"hwoxuxgp"}}
+{"time":"2024-09-24T17:16:54.320759+02:00","level":"INFO","msg":"stream: closed","id":"hwoxuxgp"}

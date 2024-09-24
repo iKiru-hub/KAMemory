@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:08:51.018841+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:08:51.018926+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170850-ps2vm4dm/logs/debug-core.log"}
+{"time":"2024-09-24T17:08:51.019116+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:08:51.01914+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170850-ps2vm4dm/logs/debug-core.log"}
+{"time":"2024-09-24T17:08:51.027613+02:00","level":"INFO","msg":"created new stream","id":"ps2vm4dm"}
+{"time":"2024-09-24T17:08:51.027698+02:00","level":"INFO","msg":"stream: started","id":"ps2vm4dm"}
+{"time":"2024-09-24T17:08:51.027725+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ps2vm4dm"}}
+{"time":"2024-09-24T17:08:51.027774+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"ps2vm4dm"}}
+{"time":"2024-09-24T17:08:51.027924+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ps2vm4dm"}}
+{"time":"2024-09-24T17:08:51.402788+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:08:51.404704+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:08:52.593932+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:08:52.593972+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:08:55.012541+02:00","level":"INFO","msg":"stream: closing","id":"ps2vm4dm"}
+{"time":"2024-09-24T17:08:55.012575+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ps2vm4dm"}}
+{"time":"2024-09-24T17:08:55.012636+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ps2vm4dm"}}
+{"time":"2024-09-24T17:08:55.012787+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"ps2vm4dm"}}
+{"time":"2024-09-24T17:08:55.012826+02:00","level":"INFO","msg":"stream: closed","id":"ps2vm4dm"}

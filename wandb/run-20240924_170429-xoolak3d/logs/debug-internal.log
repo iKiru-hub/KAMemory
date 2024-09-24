@@ -1,0 +1,18 @@
+{"time":"2024-09-24T17:04:29.341106+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:04:29.341178+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170429-xoolak3d/logs/debug-core.log"}
+{"time":"2024-09-24T17:04:29.341295+02:00","level":"INFO","msg":"using version","core version":"0.18.1"}
+{"time":"2024-09-24T17:04:29.341304+02:00","level":"INFO","msg":"created symlink","path":"/Users/daniekru/Research/lab/KAMemory/wandb/run-20240924_170429-xoolak3d/logs/debug-core.log"}
+{"time":"2024-09-24T17:04:29.351115+02:00","level":"INFO","msg":"created new stream","id":"xoolak3d"}
+{"time":"2024-09-24T17:04:29.351174+02:00","level":"INFO","msg":"stream: started","id":"xoolak3d"}
+{"time":"2024-09-24T17:04:29.351182+02:00","level":"INFO","msg":"handler: started","stream_id":{"value":"xoolak3d"}}
+{"time":"2024-09-24T17:04:29.35123+02:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"xoolak3d"}}
+{"time":"2024-09-24T17:04:29.351214+02:00","level":"INFO","msg":"sender: started","stream_id":{"value":"xoolak3d"}}
+{"time":"2024-09-24T17:04:29.657065+02:00","level":"INFO","msg":"wandb-core","!BADKEY":null}
+{"time":"2024-09-24T17:04:29.659851+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-09-24T17:04:30.816239+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-09-24T17:04:30.816268+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-09-24T17:04:33.125509+02:00","level":"INFO","msg":"stream: closing","id":"xoolak3d"}
+{"time":"2024-09-24T17:04:33.125573+02:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"xoolak3d"}}
+{"time":"2024-09-24T17:04:33.125649+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"xoolak3d"}}
+{"time":"2024-09-24T17:04:33.125955+02:00","level":"INFO","msg":"sender: closed","stream_id":{"value":"xoolak3d"}}
+{"time":"2024-09-24T17:04:33.125981+02:00","level":"INFO","msg":"stream: closed","id":"xoolak3d"}
