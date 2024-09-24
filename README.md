@@ -10,7 +10,7 @@ Q1: *how can EC readout remain stable while BTSP is occurring on CA3-CA1 synapse
 
 
 Dependance of the memory capacity on the learning rate ($\alpha$)
-![roaming](media/rcapacities_123914.gif)
+![roaming](media/rcapacities_193733.gif)
 
 
 **parameter search**
