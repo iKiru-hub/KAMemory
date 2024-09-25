@@ -39,10 +39,6 @@ class Autoencoder(nn.Module):
             the size of the input data
         encoding_dim: int
             the size of the encoded data
-        activation: str
-            the activation function to use, choices are
-            [None, sparsemax, sigmoid].
-            Default is None
         K: int
             the number of top values to select.
             Default is 10
@@ -64,30 +60,12 @@ class Autoencoder(nn.Module):
         # Encoder
         self.encoder = nn.Sequential(
             nn.Linear(input_dim, encoding_dim, bias=use_bias),
-            # nn.ReLU(True),
         )
 
         # Decoder
         self.decoder = nn.Sequential(
             nn.Linear(encoding_dim, input_dim, bias=use_bias),
-            # nn.ReLU(True),
         )
-
-        # if activation == "sparsemax":
-        #     self.encoder.add_module("sparsemax",
-        #                             utils.Sparsemax())
-        #     self.decoder.add_module("sparsemax",
-        #                             utils.Sparsemax())
-        # elif activation == "sigmoid":
-        #     self.encoder.add_module("sigmoid",
-        #                             nn.Sigmoid())
-        #     self.decoder.add_module("sigmoid",
-        #                             nn.Sigmoid())
-        # elif activation == "soft":
-        #     self.encoder.add_module("soft",
-        #                             utils.SoftSigmoid())
-        #     self.decoder.add_module("soft",
-        #                             utils.SoftSigmoid())
 
     def forward(self, x: torch.Tensor, ca1: bool=False):
 
@@ -108,27 +86,11 @@ class Autoencoder(nn.Module):
         """
 
         z = self.encoder(x)
-
-        # print(z)
-
-        # --- activation function | 1st 2nd 3rd... [Kth Kth+1] ... last
-        # z_sorted = torch.sort(z, descending=True, dim=1).values
-
-        # alpha = z_sorted[:, self._K:self._K+2]
-        # alpha = alpha.mean(axis=1).reshape(-1, 1)
-
-        # apply
-        # z = self._beta * (z - alpha)
-        # z = self._beta * z
         z = utils.sparsemoid(z=z, K=self._K,
                              beta=self._beta)
 
-        # z = torch.sigmoid(z)
         # ---
-
         x = self.decoder(z)
-        # x = utils.sparsemoid(x, K=self._K,
-        #                      beta=self._beta)
         x = torch.sigmoid(10*(x-0.1))
 
         if ca1:
@@ -170,9 +132,9 @@ class MTL(nn.Module):
                  W_ca1_eo: torch.Tensor,
                  K_lat: int,
                  K_out: int,
+                 dim_ca3: int,
                  beta: float,
                  alpha: float=0.01,
-                 dim_ca3: int,
                  K_ca3: int=5,
                  B_ei_ca1: torch.Tensor=None,
                  B_ca1_eo: torch.Tensor=None):

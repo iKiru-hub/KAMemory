@@ -27,12 +27,14 @@ if __name__ == "__main__":
                         help='load session')
     parser.add_argument('--idx', type=int,
                         help='number of samples',
-                        default=0)
+                        default=2)
     args = parser.parse_args()
 
     """ settings """
 
     if args.load:
+
+        logger(f"loading idx={args.idx}...")
 
         info, autoencoder = load_session(idx=args.idx)
 
@@ -62,16 +64,19 @@ if __name__ == "__main__":
 
         # model hyper-parameters
         K = 5
-        K_lat = 15
-        beta = 60
+        K_lat = 18
+        beta = 54
 
         # autoencoder
         autoencoder = Autoencoder(input_dim=dim_ei,
                                   encoding_dim=dim_ca1,
-                                  activation=None,
                                   K=K_lat,
                                   beta=beta)
         logger(f"%Autoencoder: {autoencoder}")
+
+    # MTL hyper-parameters
+    K_ca3 = 22
+    alpha = 0.208
 
     """ make data """
 
@@ -93,11 +98,11 @@ if __name__ == "__main__":
 
     logger("<<< Data generated >>>")
 
-    """ autoencoder training """
+    """ AUTOENCODER training """
 
     # train autoencoder
     if not args.load:
-        epochs = 400
+        epochs = 1_000
         loss_ae, autoencoder = utils.train_autoencoder(
                         training_data=training_samples,
                         test_data=test_samples,
@@ -113,7 +118,7 @@ if __name__ == "__main__":
                                     show=False, 
                                     plot=False)
 
-    """ mtl training """
+    """ MTL training """
 
     # get weights from the autoencoder
     # W_ei_ca1, W_ca1_eo = autoencoder.get_weights()
@@ -129,7 +134,9 @@ if __name__ == "__main__":
                 dim_ca3=dim_ca3,
                 K_lat=K_lat,
                 K_out=K,
-                beta=beta)
+                K_ca3=K_ca3,
+                beta=beta,
+                alpha=alpha)
 
     logger(f"%MTL: {model}")
 
@@ -156,11 +163,10 @@ if __name__ == "__main__":
 
     """ plotting """
 
-    # fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(15, 5), sharex=True)
-
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
     is_squash = False
 
+    # --- plot latent layers
     utils.plot_squashed_data(
         data=training_sample_btsp,
                              ax=ax1,
@@ -173,7 +179,7 @@ if __name__ == "__main__":
 
     fig.suptitle(f"Latent layers - $K_l=${K_lat} $\\beta=${autoencoder._beta}")
 
-    #
+    # --- plot data reconstruction
     fig2, (ax12, ax22, ax32) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
     is_squash = False
 
@@ -187,20 +193,11 @@ if __name__ == "__main__":
     utils.plot_squashed_data(data=out_mtl, ax=ax32,
                              title="MTL", squash=is_squash)
 
-    # print("AE: ", np.around(out_ae, 2))
-    # print("MTL: ", np.around(out_mtl, 2))
-
-    fig2.suptitle(f"Data reconstruction of {num_btsp_samples} patterns - $K=${K} $\\beta=${autoencoder._beta}",
-                  fontsize=15)
+    fig2.suptitle(f"Reconstruction of {num_btsp_samples} stimuli",
+                  fontsize=19)
 
     #
     fig3, (ax13) = plt.subplots(1, 1, figsize=(15, 5), sharex=True)
-    # colorbar
-    # cbar = plt.colorbar(
-    #     ax13.imshow(model.W_ca3_ca1.detach().numpy(),
-    #                 cmap="Greys",
-    #                 aspect="auto"))
-
     cbar = plt.colorbar(
         ax13.imshow(training_sample_btsp - out_mtl,
                     cmap="seismic",
@@ -212,19 +209,3 @@ if __name__ == "__main__":
     plt.show()
 
 
-    # fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
-
-    # ax1.imshow(latent_ae[:5], cmap='gray_r', aspect='auto')
-    # ax1.set_ylabel("Autoencoder")
-    # print(f"\n>>> latent_ae (last ECin input): {np.around(latent_ae[-1], 2)}")
-
-    # ax2.imshow(latent_mtl[:5], cmap='gray_r', aspect='auto')
-    # ax2.set_ylabel("MTL")
-    # print(f"\n>>> latent_mtl (last ECin input): {np.around(latent_mtl[-1], 2)}")
-
-    # ax3.imshow(latent_mtl_rnd[:5], cmap='gray_r', aspect='auto')
-    # ax3.set_ylabel("MTL (random)")
-    # print(f"\n>>> latent_mtl_rnd (last ECin input): {np.around(latent_mtl_rnd[-1], 2)}")
-
-    # fig.suptitle("Latent space [CA1]")
-    # plt.show()

@@ -18,7 +18,7 @@ except ModuleNotFoundError:
 
 """ settings """
 
-info, autoencoder = load_session(idx=0)
+info, autoencoder = load_session(idx=1)
 
 dim_ei = info["dim_ei"]
 dim_ca3 = info["dim_ca3"]
@@ -28,10 +28,13 @@ dim_eo = info["dim_eo"]
 K_lat = info["K_lat"]
 beta = info["beta"]
 K = info["K"]
+K_ca3 = 22
+best_alpha = 0.208
 
-alpha = 0.01
 use_bias = True
 logger("{use_bias=}")
+
+logger(f"{K=}, {K_lat=}, {beta=}, {best_alpha=}")
 
 # get weights from the autoencoder
 # get weights from the autoencoder
@@ -47,8 +50,8 @@ logger("<<< Loaded session >>>")
 
 """ data """
 
-num_samples = 400
-num_rep = 2
+num_samples = 100
+num_rep = 500
 datasets = []
 
 stimuli = utils.sparse_stimulus_generator(N=num_samples,
@@ -79,7 +82,7 @@ for k in range(num_samples):
 
 num_alphas = 1
 if num_alphas < 2:
-    alphas = [0.1]
+    alphas = [best_alpha]
 else:
     alphas = np.around(np.linspace(0.075, 0.3, num_alphas), 2)
 
@@ -103,7 +106,7 @@ for l in tqdm(range(num_rep)):
             datasets += [dataloader]
 
         # run
-        for i in tqdm(range(num_samples)):
+        for i in range(num_samples):
 
             # make model
             model = MTL(W_ei_ca1=W_ei_ca1,
@@ -149,7 +152,7 @@ for l in tqdm(range(num_rep)):
 
 """ plot """
 
-plot_type = 3
+plot_type = 4
 
 if plot_type == 0:
 
@@ -247,17 +250,17 @@ elif plot_type == 3:
     # plt.axhline(0.1, color="r", linestyle="--",
     #             alpha=0.2)
     # smoothing
-    num_p = 7
-    jumps = 30
-    colors = plt.cm.rainbow(np.linspace(0, 1, num_p))
-    for di, d in enumerate(range(0, jumps*num_p, jumps)):
-        output_d = outputs[d:, d] # selection of one pattern
-        nsmooth = 2
-        output_d = np.convolve(output_d,
-                              np.ones(nsmooth)/nsmooth,
-                              mode="valid")
-        plt.plot(output_d, '-', label=f"$i=${d}", alpha=0.3,
-                 color=colors[di])
+    # num_p = 7
+    # jumps = 30
+    # colors = plt.cm.rainbow(np.linspace(0, 1, num_p))
+    # for di, d in enumerate(range(0, jumps*num_p, jumps)):
+    #     output_d = outputs[d:, d] # selection of one pattern
+    #     nsmooth = 2
+    #     output_d = np.convolve(output_d,
+    #                           np.ones(nsmooth)/nsmooth,
+    #                           mode="valid")
+    #     plt.plot(output_d, '-', label=f"$i=${d}", alpha=0.3,
+    #              color=colors[di])
 
     plt.ylim(0., 1)
     plt.ylabel("accuracy")
@@ -269,4 +272,24 @@ elif plot_type == 3:
     plt.show()
 
 
+elif plot_type == 4:
+
+    # (rep, alpha, sample, sample)
+    outputs = outputs.mean(axis=0)[0]
+    # -> (sample, sample)
+
+    plt.figure()
+
+    plt.subplot(111)
+    plt.imshow(outputs, cmap="viridis",
+               vmin=0, vmax=1, aspect="auto")
+
+    plt.xlabel("stimulus $j$", fontsize=17)
+    plt.ylabel("stimulus $i$", fontsize=17)
+    plt.title("Average recall accuracy during sequential learning",
+              fontsize=21, fontweight="light", pad=10)
+    plt.xticks([])
+    plt.yticks([])
+
+    plt.show()
 

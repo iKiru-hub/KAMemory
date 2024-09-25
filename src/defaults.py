@@ -15,7 +15,7 @@ dim_ca1 = 50
 dim_eo = dim_ei
 
 # data settings
-num_samples = 15_000
+num_samples = 20_000
 K = 5
 
 training_samples = utils.sparse_stimulus_generator(N=num_samples,
@@ -32,17 +32,16 @@ logger(f"Training data generated: {training_samples.shape}")
 
 """ autoencoder training """
 
-K_lat = 15
-beta = 60
+K_lat = 18
+beta = 54
 autoencoder = Autoencoder(input_dim=dim_ei,
                           encoding_dim=dim_ca1,
-                          activation=None,
                           K=K_lat,
                           beta=beta)
 logger(f"%Autoencoder: {autoencoder}")
 
 # train autoencoder
-epochs = 700
+epochs = 2_000
 loss_ae, autoencoder = utils.train_autoencoder(
                 training_data=training_samples,
                 test_data=test_samples,

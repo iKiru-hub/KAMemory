@@ -13,6 +13,10 @@ Identified in $\text{EC}_{\text{in}}\to \text{CA3}\to \text{CA1}\to \text{EC}_{\
 ---
 During the entire 'lifetime' several stimuli $x$ are experienced and learnt in the CA3$-$CA1 synapses. The goal is to maintain a low decoder error $\mathcal{L}(x,y)$, where $x,y$ are the activity vectors of $\text{EC}_{\text{in}},\text{EC}_{\text{out}}$ respectively.
 
+**Decodability during learning**
+- downstream regions should maintain their interpretation of HP representations during learning
+
+
 ![[error_plot.excalidraw.png]]
 
 
@@ -117,47 +121,8 @@ idx = np.argmin(np.where(outputs >= threshold,
 ***Recollection accuracy for all patterns for multiple values of alpha***
 
 
-![[rcapacities_123914.gif]]
+![[rcapacities_193733.gif]]
 
-
-
-## Notes
----
-**Meeting 20.8.24**
-
-weights EC $\to$ CA3 as an invertible matrix
-
-capacity:
-- pattern length 
-- number of patterns
-
-Roadmap:
-- *week 1*: simulation results
-- *week 2*: experimental relevance (fit)
-- *week 3*: experimental predictions
-
-**notes**
-- plot the distribution of activations in $CA1$ and $EC_{out}$ to check that the average norm increases with low values of $\alpha$
-
-**notes** 11.9.24
-
-**notes** 24.9.24
-![[Pasted image 20240924143040.png]]
-- ecological task (no sp/nsp distinction)
-
-- random IS: same shape but random entries (i.e. as if it was shuffled) | bc BTSP meant to be random somehow
-
-
-
-### Slides
----
-1. summary of BTSP, papers and overview
-2. question: *decodability problem*
-3. describe the model and the choices in light of a minimalist drive
-4. explain figure (4) and how our rule is a simplified version (it approximates the original rule) as a square function, with LTP and LTD acting immediately with the pairing IS-ET
-5. explain the architecture and its online/offline dynamics, areas and training
-6. describe the simulation setup + nice figures
-7. topic: how to merge it with experimental evidence? what predictions can be made?
 
 
 ## Grid search
@@ -169,22 +134,19 @@ Roadmap:
 1) optimize the network (also bayesian is fine)
 2) understanding how capacity depends on the parameters (full)
 
+**Weights & Biases**
 https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
 
 
-## Paper
+## Plans
 ---
 
-- [ ] thinking about the paper
+#### Goals
+- [ ] send abstract to Claudia <--- 14.10
+- [ ] submit to Cosyne (end of October)
+- [ ] write paper <--- 2024
 
-
-**Decodability during learning**
-	- downstream regions should maintain their interpretation of HP representations during learning
-
-
-
-## TODO
----
+#### proximal TODO
 
 **Albert**
 - [ ] architecture figure
@@ -192,9 +154,8 @@ https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
 - [ ] ecological environment
 
 **Kiru**
-- [ ] training figure
-- [ ] matrix figure
-- [ ] pc smell/task
+- [ ] training figure <--- *28.09*
+- [ ] matrix figure   <--- *28.09*
+- [ ] pc visualization | task
 - [ ] prediction
-
 
