@@ -215,6 +215,7 @@ def train_autoencoder(training_data: np.ndarray,
     # Training loop
     epoch = 0
     epoch_log = 100
+    test_loss_curve = []
     for epoch in (pbar := tqdm(range(epochs), desc = f"{epoch}")):
         total_loss = 0
         for batch in dataloader:
@@ -235,13 +236,13 @@ def train_autoencoder(training_data: np.ndarray,
         test_loss, _ = testing(data=test_dataloader,
                                model=model,
                                criterion=criterion)
-
+        test_loss_curve.append(test_loss/len(dataloader))
         if (epoch+1) % epoch_log == 0:
             pbar.set_description(f"Epoch [{epoch+1}], " + \
                 f"Loss: {total_loss / len(dataloader):.4f}, " + \
                                  f"Test: {test_loss:.4f}")
 
-    return total_loss, model
+    return total_loss, test_loss, model
 
 
 def reconstruct_data(data: np.ndarray, model: object, num: int=5,
