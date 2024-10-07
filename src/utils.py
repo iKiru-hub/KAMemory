@@ -242,7 +242,7 @@ def train_autoencoder(training_data: np.ndarray,
                 f"Loss: {total_loss / len(dataloader):.4f}, " + \
                                  f"Test: {test_loss:.4f}")
 
-    return total_loss, test_loss, model
+    return total_loss, test_loss_curve, model
 
 
 def reconstruct_data(data: np.ndarray, model: object, num: int=5,
