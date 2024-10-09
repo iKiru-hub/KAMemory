@@ -47,7 +47,7 @@ Linear track:
 Autoencoder:
 - mixed inputs (spatial + non-spatial)
 - obtain spatial cells in the latent layer
-- 
+
 
 ![[Pasted image 20241008152511.png]]
 

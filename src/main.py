@@ -112,7 +112,8 @@ if __name__ == "__main__":
         logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
 
     # reconstruct data
-    out_ae, latent_ae = utils.reconstruct_data(data=training_sample_btsp,
+    out_ae, latent_ae = utils.reconstruct_data(
+                                    data=training_sample_btsp,
                                     num=num_btsp_samples,
                                     model=autoencoder,
                                     show=False, 

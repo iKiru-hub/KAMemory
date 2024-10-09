@@ -162,5 +162,35 @@ https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
 - [ ] figures but with fewer stimuli
 
 
+---
+**weight change plot** 
 
+            self.W_ca3_ca1 = nn.Parameter((1 - IS * self._alpha) * \
+                self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
+
+$$
+W = (1-IS*\alpha) * W + \alpha * (IS \cdot x_{ca3})
+$$
+IS=1
+	$\alpha * x_{ca3}$ : 1 or 0
+
+---
+
+**IS=1, x_ca3=1**
+$$
+\begin{align}
+W_{t}&=(1-\alpha)*W_{t-1}+\alpha\\
+W_{t}&=W_{t-1}-\alpha W_{t-1}+\alpha\\
+W_{t}-W_{t-1}&=\alpha(1-W_{t-1})\\
+\Delta W&=\alpha(1-W_{t-1})
+\end{align}
+$$
+**IS=1, x_ca3=0**
+$$
+\begin{align}
+W_{t}&=(1-\alpha)*W_{t-1}\\
+W_{t}&=W_{t-1}-\alpha W_{t-1}\\
+W_t-W_{t-1}&=-\alpha W_{t-1}
+\end{align}
+$$
 

@@ -15,8 +15,7 @@ except ModuleNotFoundError:
     except ModuleNotFoundError:
         raise ValueError("`utils` module not found")
 
-
-logger = utils.setup_logger(__name__)
+logger = utils.logger
 
 cache_dir = "cache"
 cache_dir_2 = "src/cache"
@@ -176,6 +175,7 @@ class MTL(nn.Module):
         self._dim_ei = W_ei_ca1.shape[1]
         self._dim_eo = W_ca1_eo.shape[0]
         self._dim_ca1 = W_ca1_eo.shape[1]
+        self._dim_ca3 = dim_ca3
 
         # network parameters
         self._K_lat = K_lat
@@ -199,6 +199,7 @@ class MTL(nn.Module):
 
         self._ca1 = None
         self._ca3 = None
+        self.last_dw = None
 
         # mode
         self.shuffled_is = shuffled_is
@@ -208,7 +209,7 @@ class MTL(nn.Module):
 
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}," + \
             f" dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, " + \
-            f" bias={self.is_bias}" + \
+            f" bias={self.is_bias}, " + \
             f"beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, " + \
             f"K_o={self._K_out}"
 
@@ -257,6 +258,9 @@ class MTL(nn.Module):
             self.W_ca3_ca1 = nn.Parameter((1 - IS * self._alpha) * \
                 self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
 
+            self.last_dw = self._alpha * (IS @ x_ca3.T) * self.W_ca3_ca1 - \
+                (1 - IS*self._alpha) * self.W_ca3_ca1
+
         # Forward pass through CA1 to entorhinal cortex output
         x_eo = self.W_ca1_eo @ x_ca1 + self.B_ca1_eo
 
@@ -287,6 +291,19 @@ class MTL(nn.Module):
         Resume learning rate
         """
 
+        self.mode = "train"
+
+    def reset(self):
+
+        """ reset the trained weights """
+
+        self.W_ca3_ca1 = nn.Parameter(torch.zeros(
+                    self._dim_ca1, self._dim_ca3))
+
+        self._ca1 = None
+        self._ca3 = None
+
+        # mode
         self.mode = "train"
 
 

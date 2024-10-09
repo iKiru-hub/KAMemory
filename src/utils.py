@@ -13,15 +13,20 @@ from numba import jit
 
 import logging
 try:
-    coloredlogs
-except NameError or ModuleNotFoundError:
+    import coloredlogs
+    ISCOLORED = True
+except ModuleNotFoundError:
     import warnings
+    ISCOLORED = False
     warnings.warn("coloredlogs not installed")
 
 from tqdm import tqdm
 import os
 import json
 
+import models
+
+print(f"{__name__}::{ISCOLORED=}")
 
 
 """ stimulus generator """
@@ -272,6 +277,8 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
     """
 
     # Convert numpy array to torch tensor
+    print(f"data: {data.shape}")
+    print(f"num: {num}")
     data_tensor = torch.tensor(data[:num],
                                dtype=torch.float32)
 
@@ -401,10 +408,8 @@ def progressive_testing(data: np.ndarray, model: object):
     """
 
     datasets = []
-    acc_matrix = torch.zeros(len(data),
-                             len(data))
     for k in range(len(data)):
-        data = torch.tensor(data[:k+1], dtype=torch.float32).detach()
+        data = torch.tensor(data[:k+1], dtype=torch.float32, requires_grad=False)
         dataloader = DataLoader(TensorDataset(data),
                                 batch_size=1,
                                 shuffle=False)
@@ -412,11 +417,15 @@ def progressive_testing(data: np.ndarray, model: object):
 
     # Set the model to evaluation mode
     model.eval()
+    acc_matrix = torch.zeros(len(data),
+                             len(data))
 
     with torch.no_grad():
 
         # loop over all patterns
         for i, x in enumerate(datasets[-1]):
+
+            logger.debug(f"dataset {i}, {x}")
             x = x[0].reshape(-1, 1)
 
             # Forward pass
@@ -437,13 +446,14 @@ def progressive_testing(data: np.ndarray, model: object):
                     (torch.norm(x) * torch.norm(y))
                 acc_matrix[i, j] = (value.item() - 0.2) / 0.8
 
-                print(i, j)
+                # logger(f"pattern {j}")
 
             model.resume_lr()
 
     model.train()
 
     return acc_matrix, model
+
 
 
 def reconstruction_loss(y: np.ndarray, y_pred: np.ndarray) -> float:
@@ -467,11 +477,388 @@ def reconstruction_loss(y: np.ndarray, y_pred: np.ndarray) -> float:
     return np.mean((y - y_pred)**2)
 
 
+def train_for_accuracy(alpha: float,
+                       num_rep: int,
+                       num_samples: int,
+                       complete_dataset: object=None,
+                       **kwargs) -> np.ndarray:
+
+    """
+    trainings for a given alpha (already set in the model)
+
+    Parameters
+    ----------
+    alpha : float
+        learning rate
+    num_rep : int
+        number of repetitions
+    num_samples : int
+        number of samples
+    complete_dataset : object
+        data. Default None
+    **kwargs
+        idx : int
+            index of the autoencoder to load.
+            Default 0.
+        use_bias : bool
+            use bias. Default True.
+        shuffled : bool
+            shuffled the IS. Default False.
+        verbose : bool
+            verbose. Default False.
+
+    Returns
+    -------
+    np.ndarray
+        outputs
+    """
+
+    verbose = kwargs.get("verbose", False)
+
+    # --- load autoencoder
+    info, autoencoder = models.load_session(
+        idx=kwargs.get("idx", 0), verbose=verbose)
+
+    # information
+    dim_ei = info["dim_ei"]
+    dim_ca3 = info["dim_ca3"]
+    dim_ca1 = info["dim_ca1"]
+    dim_eo = info["dim_eo"]
+    K_lat = info["K_lat"]
+    beta = info["beta"]
+    K = info["K"]
+
+    # number training samples used for the AE
+    # num_samples = info["num_samples"]
+
+    # get parameters
+    W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(
+                                bias=kwargs.get("use_bias", True))
+
+    if verbose:
+        logger(f"{autoencoder=}")
+        logger("<<< Loaded session >>>")
+
+    # --- make model
+
+    # get weights from the autoencoder
+    if kwargs.get("use_bias", True):
+        W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
+    else:
+        W_ei_ca1, W_ca1_eo = autoencoder.get_weights(bias=False)
+        B_ei_ca1 = None
+        B_ca1_eo = None
+
+    # make model
+    model = models.MTL(W_ei_ca1=W_ei_ca1,
+                W_ca1_eo=W_ca1_eo,
+                B_ei_ca1=B_ei_ca1,
+                B_ca1_eo=B_ca1_eo,
+                dim_ca3=dim_ca3,
+                K_lat=K_lat,
+                K_out=K,
+                alpha=alpha,
+                beta=beta,
+                shuffled_is=kwargs.get("shuffled", False))
+
+    if verbose:
+        logger(f"%MTL: {model}")
+
+    #
+    outputs = np.zeros((num_rep, num_samples, num_samples))
+
+    if complete_dataset is None:
+        complete_dataset = []
+        is_dataset = False
+    else:
+        is_dataset = True
+
+    for l in tqdm(range(num_rep)):
+
+        # --- make new data
+        if is_dataset:
+            datasets = complete_dataset[l]
+        else:
+            stimuli = sparse_stimulus_generator(N=num_samples,
+                                                K=K,
+                                                size=dim_ei,
+                                                plot=False)
+            datasets = []
+            for k in range(num_samples):
+                data = torch.tensor(stimuli[:k+1], dtype=torch.float32)
+                dataloader = DataLoader(TensorDataset(data),
+                                        batch_size=1,
+                                        shuffle=False)
+                datasets += [dataloader]
+            complete_dataset += [datasets]
+
+        # --- run new repetition
+        for i in tqdm(range(num_samples), disable=True):
+
+            # reset the model
+            model.reset()
+
+            # train a dataset with pattern index 0.. i
+            model.eval()
+            with torch.no_grad():
+
+                # one pattern at a time
+                for batch in datasets[i]:
+                    # forward
+                    _ = model(batch[-1].reshape(-1, 1))
+
+            # --- test a dataset with pattern index 0.. i 
+            model.pause_lr()
+            model.eval()
+            with torch.no_grad():
+                # one pattern at a time
+                for j, batch in enumerate(datasets[i]):
+                    x = batch[-1].reshape(-1, 1)
+
+                    # forward
+                    y = model(x)
+
+                    # record : cosine similarity
+                    value = (y.T @ x) / \
+                        (torch.norm(x) * torch.norm(y))
+
+                    outputs[l, i, j] = (value.item() - 0.2) / 0.8
+
+    return outputs, model, complete_dataset
+
+
+def train_for_reconstruction(alpha: float,
+                             num_samples: int,
+                             **kwargs) -> np.ndarray:
+
+    """
+    trainings for a given alpha (already set in the model)
+
+    Parameters
+    ----------
+    alpha : float
+        learning rate
+    num_samples : int
+        number of samples
+    **kwargs
+        idx : int
+            index of the autoencoder to load.
+            Default 0.
+        use_bias : bool
+            use bias. Default True.
+
+    Returns
+    -------
+    np.ndarray
+        outputs
+    """
+
+    _, model, complete_dataset = train_for_accuracy(alpha=alpha,
+                        num_rep=1,
+                        num_samples=num_samples,
+                        idx=kwargs.get("idx", 0),
+                        use_bias=kwargs.get("use_bias", True))
+
+    _, model_rnd, _ = train_for_accuracy(alpha=alpha,
+                        num_rep=1,
+                        num_samples=num_samples,
+                        idx=kwargs.get("idx", 0),
+                        use_bias=kwargs.get("use_bias", True),
+                        shuffled=True,
+                        complete_dataset=complete_dataset)
+
+    data = complete_dataset[-1][-1].dataset.tensors[0]
+    num = len(data)
+
+    # reconstruct data
+    model.pause_lr()
+    out_mtl, latent_mtl = reconstruct_data(
+                     data=data,
+                     num=num,
+                     model=model,
+                     column=True,
+                     plot=False)
+    rec_loss = np.mean((data.numpy() - out_mtl)**2).item()
+
+    model_rnd.pause_lr()
+    out_mtl_rnd, latent_mtl_rnd = reconstruct_data(
+                     data=data,
+                     num=num,
+                     model=model_rnd,
+                     column=True,
+                     plot=False)
+    rec_loss_rnd = np.mean(
+        (data.numpy() - out_mtl_rnd)**2).item()
+
+    # --- plot
+    fig2, (ax12, ax22, ax32) = plt.subplots(3, 1,
+                                    figsize=(15, 7), sharex=True)
+
+    # add more space between subplots
+    plt.subplots_adjust(hspace=0.2)
+
+    is_squash = False
+
+    plot_squashed_data(data=data.numpy(),
+                             ax=ax12,
+                             title="Patterns",
+                             squash=is_squash,
+                             proper_title=True)
+    plot_squashed_data(data=out_mtl_rnd, ax=ax22,
+                             title=f"shuffled $IS$ - " + \
+                    f"reconstruction loss={rec_loss_rnd:.3f}",
+                             squash=is_squash,
+                             proper_title=True)
+    plot_squashed_data(data=out_mtl, ax=ax32,
+                             title=f"$IS$ - " + \
+                    f"reconstruction loss={rec_loss:.3f}",
+                             squash=is_squash,
+                             proper_title=True)
+
+    plt.show()
+
+
+def train_for_weight_plot(alpha: float,
+                       num_rep: int,
+                       num_samples: int,
+                       complete_dataset: object=None,
+                       **kwargs) -> np.ndarray:
+
+    """
+    trainings for a given alpha (already set in the model)
+
+    Parameters
+    ----------
+    alpha : float
+        learning rate
+    num_rep : int
+        number of repetitions
+    num_samples : int
+        number of samples
+    complete_dataset : object
+        data. Default None
+    **kwargs
+        idx : int
+            index of the autoencoder to load.
+            Default 0.
+        use_bias : bool
+            use bias. Default True.
+        shuffled : bool
+            shuffled the IS. Default False.
+        verbose : bool
+            verbose. Default False.
+
+    Returns
+    -------
+    np.ndarray
+        outputs
+    """
+
+    verbose = kwargs.get("verbose", False)
+
+    # --- load autoencoder
+    info, autoencoder = models.load_session(
+        idx=kwargs.get("idx", 0), verbose=verbose)
+
+    # information
+    dim_ei = info["dim_ei"]
+    dim_ca3 = info["dim_ca3"]
+    dim_ca1 = info["dim_ca1"]
+    dim_eo = info["dim_eo"]
+    K_lat = info["K_lat"]
+    beta = info["beta"]
+    K = info["K"]
+
+    # number training samples used for the AE
+    # num_samples = info["num_samples"]
+
+    # get parameters
+    W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(
+                                bias=kwargs.get("use_bias", True))
+
+    if verbose:
+        logger(f"{autoencoder=}")
+        logger("<<< Loaded session >>>")
+
+    # --- make model
+
+    # get weights from the autoencoder
+    if kwargs.get("use_bias", True):
+        W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
+    else:
+        W_ei_ca1, W_ca1_eo = autoencoder.get_weights(bias=False)
+        B_ei_ca1 = None
+        B_ca1_eo = None
+
+    # make model
+    model = models.MTL(W_ei_ca1=W_ei_ca1,
+                W_ca1_eo=W_ca1_eo,
+                B_ei_ca1=B_ei_ca1,
+                B_ca1_eo=B_ca1_eo,
+                dim_ca3=dim_ca3,
+                K_lat=K_lat,
+                K_out=K,
+                alpha=alpha,
+                beta=beta,
+                shuffled_is=kwargs.get("shuffled", False))
+
+    if verbose:
+        logger(f"%MTL: {model}")
+
+    #
+    record = np.zeros((num_rep, num_samples, dim_ca3, dim_ca3))
+
+    if complete_dataset is None:
+        complete_dataset = []
+        is_dataset = False
+    else:
+        is_dataset = True
+
+    for l in tqdm(range(num_rep)):
+
+        # --- make new data
+        if is_dataset: 
+            datasets = complete_dataset[l]
+        else:
+            stimuli = sparse_stimulus_generator(N=num_samples,
+                                                K=K,
+                                                size=dim_ei,
+                                                plot=False)
+            datasets = []
+            for k in range(num_samples):
+                data = torch.tensor(stimuli[:k+1], dtype=torch.float32)
+                dataloader = DataLoader(TensorDataset(data),
+                                        batch_size=1,
+                                        shuffle=False)
+                datasets += [dataloader]
+            complete_dataset += [datasets]
+
+        # --- run new repetition
+        for i in tqdm(range(num_samples), disable=True):
+
+            # reset the model
+            model.reset()
+
+            # train a dataset with pattern index 0.. i
+            model.eval()
+            with torch.no_grad():
+
+                # one pattern at a time
+                for batch in datasets[i]:
+
+                    # forward
+                    _ = model(batch[0].reshape(-1, 1))
+
+
+    return outputs, model, complete_dataset
+
+
 
 """ miscellanous """
 
 # logger
-def setup_logger(name: str="MAIN", colored: bool=True) -> logging.Logger:
+def setup_logger(name: str="MAIN",
+                 colored: bool=ISCOLORED) -> logging.Logger:
 
     """
     this function sets up a logger
@@ -564,7 +951,7 @@ def plot_squashed_data(data: np.ndarray, title: str="",
         ax.set_title(title, fontsize=15)
     else:
         ax.set_ylabel(title, fontsize=15)
-    ax.set_yticks(range(1, 1+len(data)))
+    ax.set_yticks(range(0, 1+len(data)))
     ax.set_xticks([])
 
     if ax is None:
@@ -806,7 +1193,7 @@ def sparsemoid(z: torch.Tensor, K: int,
     return torch.sigmoid(z)
 
 
-
+logger = setup_logger("MAIN")
 
 
 if __name__ == "__main__":
