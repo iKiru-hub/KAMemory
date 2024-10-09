@@ -156,10 +156,10 @@ https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
 **Kiru**
 - [x] training figure <--- *28.09*
 - [x] matrix figure   <--- *28.09*
-- [ ] btsp figure from the presentation
+- [x] btsp figure from the presentation
 - [ ] pc visualization | task
 - [ ] prediction
-- [ ] figures but with fewer stimuli
+- [x] figures but with fewer stimuli
 
 
 ---
@@ -193,4 +193,7 @@ W_{t}&=W_{t-1}-\alpha W_{t-1}\\
 W_t-W_{t-1}&=-\alpha W_{t-1}
 \end{align}
 $$
+
+
+
 
