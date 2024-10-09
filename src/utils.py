@@ -14,7 +14,7 @@ from numba import jit
 import logging
 try:
     coloredlogs
-except NameError:
+except NameError or ModuleNotFoundError:
     import warnings
     warnings.warn("coloredlogs not installed")
 
