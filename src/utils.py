@@ -26,7 +26,9 @@ import json
 
 import models
 
-print(f"{__name__}::{ISCOLORED=}")
+# print(f"{__name__}::{ISCOLORED=}")
+
+MEDIA_PATH = "".join((os.getcwd().split("KAMemory")[0], "KAMemory/media/"))
 
 
 """ stimulus generator """
@@ -455,7 +457,6 @@ def progressive_testing(data: np.ndarray, model: object):
     return acc_matrix, model
 
 
-
 def reconstruction_loss(y: np.ndarray, y_pred: np.ndarray) -> float:
 
     """
@@ -690,32 +691,16 @@ def train_for_reconstruction(alpha: float,
     rec_loss_rnd = np.mean(
         (data.numpy() - out_mtl_rnd)**2).item()
 
-    # --- plot
-    fig2, (ax12, ax22, ax32) = plt.subplots(3, 1,
-                                    figsize=(15, 7), sharex=True)
+    record = {
+        "data": data.numpy(),
+        "out_mtl": out_mtl,
+        "out_mtl_rnd": out_mtl_rnd,
+        "rec_loss": rec_loss,
+        "rec_loss_rnd": rec_loss_rnd
+    }
 
-    # add more space between subplots
-    plt.subplots_adjust(hspace=0.2)
+    return record
 
-    is_squash = False
-
-    plot_squashed_data(data=data.numpy(),
-                             ax=ax12,
-                             title="Patterns",
-                             squash=is_squash,
-                             proper_title=True)
-    plot_squashed_data(data=out_mtl_rnd, ax=ax22,
-                             title=f"shuffled $IS$ - " + \
-                    f"reconstruction loss={rec_loss_rnd:.3f}",
-                             squash=is_squash,
-                             proper_title=True)
-    plot_squashed_data(data=out_mtl, ax=ax32,
-                             title=f"$IS$ - " + \
-                    f"reconstruction loss={rec_loss:.3f}",
-                             squash=is_squash,
-                             proper_title=True)
-
-    plt.show()
 
 
 def train_for_weight_plot(alpha: float,
@@ -951,7 +936,7 @@ def plot_squashed_data(data: np.ndarray, title: str="",
         ax.set_title(title, fontsize=15)
     else:
         ax.set_ylabel(title, fontsize=15)
-    ax.set_yticks(range(0, 1+len(data)))
+    ax.set_yticks(range(len(data)), range(1, 1+len(data)))
     ax.set_xticks([])
 
     if ax is None:
