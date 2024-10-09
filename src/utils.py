@@ -11,7 +11,13 @@ import torch.autograd as autograd
 
 from numba import jit
 
-import logging, coloredlogs
+import logging
+try:
+    coloredlogs
+except NameError:
+    import warnings
+    warnings.warn("coloredlogs not installed")
+
 from tqdm import tqdm
 import os
 import json
