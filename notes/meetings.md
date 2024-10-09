@@ -32,3 +32,25 @@ Roadmap:
 - ecological task (no sp/nsp distinction)
 - random IS: same shape but random entries (i.e. as if it was shuffled) | bc BTSP meant to be random somehow
 
+
+
+**Meeting** 8.10.24
+
+- fewer patterns
+- deadline for 10
+
+Linear track:
+- simpler
+- experiments are mostly using it
+- sensory cue spread over the environment
+
+Autoencoder:
+- mixed inputs (spatial + non-spatial)
+- obtain spatial cells in the latent layer
+- 
+
+![[Pasted image 20241008152511.png]]
+
+
+
+

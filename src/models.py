@@ -137,7 +137,8 @@ class MTL(nn.Module):
                  alpha: float=0.01,
                  K_ca3: int=5,
                  B_ei_ca1: torch.Tensor=None,
-                 B_ca1_eo: torch.Tensor=None):
+                 B_ca1_eo: torch.Tensor=None,
+                 shuffled_is: bool=False):
 
         # make docstrings
         """
@@ -200,6 +201,7 @@ class MTL(nn.Module):
         self._ca3 = None
 
         # mode
+        self.shuffled_is = shuffled_is
         self.mode = "train"
 
     def __repr__(self):
@@ -245,6 +247,10 @@ class MTL(nn.Module):
         IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
         IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
                               beta=self._beta).reshape(-1, 1)
+
+        # shuffle IS
+        if self.shuffled_is:
+            IS = torch.randperm(IS.shape[0], dtype=torch.float32).reshape(-1, 1)
 
         # weight update
         if self.mode == "train":

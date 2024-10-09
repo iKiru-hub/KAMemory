@@ -215,7 +215,6 @@ def train_autoencoder(training_data: np.ndarray,
     # Training loop
     epoch = 0
     epoch_log = 100
-    test_loss_curve = []
     for epoch in (pbar := tqdm(range(epochs), desc = f"{epoch}")):
         total_loss = 0
         for batch in dataloader:
@@ -236,13 +235,13 @@ def train_autoencoder(training_data: np.ndarray,
         test_loss, _ = testing(data=test_dataloader,
                                model=model,
                                criterion=criterion)
-        test_loss_curve.append(test_loss/len(dataloader))
+
         if (epoch+1) % epoch_log == 0:
             pbar.set_description(f"Epoch [{epoch+1}], " + \
                 f"Loss: {total_loss / len(dataloader):.4f}, " + \
                                  f"Test: {test_loss:.4f}")
 
-    return total_loss, test_loss_curve, model
+    return total_loss, model
 
 
 def reconstruct_data(data: np.ndarray, model: object, num: int=5,
@@ -441,6 +440,26 @@ def progressive_testing(data: np.ndarray, model: object):
     return acc_matrix, model
 
 
+def reconstruction_loss(y: np.ndarray, y_pred: np.ndarray) -> float:
+
+    """
+    Calculate the reconstruction loss
+
+    Parameters
+    ----------
+    y: np.ndarray
+        the original data
+    y_pred: np.ndarray
+        the predicted data
+
+    Returns
+    -------
+    float
+        the reconstruction loss
+    """
+
+    return np.mean((y - y_pred)**2)
+
 
 
 """ miscellanous """
@@ -512,7 +531,8 @@ def setup_logger(name: str="MAIN", colored: bool=True) -> logging.Logger:
 
 
 def plot_squashed_data(data: np.ndarray, title: str="",
-                       ax: plt.Axes=None, squash: bool=False):
+                       ax: plt.Axes=None, squash: bool=False,
+                       proper_title: bool=False):
 
     """
     This function plots the squashed data
@@ -534,7 +554,10 @@ def plot_squashed_data(data: np.ndarray, title: str="",
         fig, ax = plt.subplots(1, 1, figsize=(10, 5))
 
     ax.imshow(data, aspect="auto", cmap="gray_r", vmin=0, vmax=1)
-    ax.set_ylabel(title, fontsize=15)
+    if proper_title:
+        ax.set_title(title, fontsize=15)
+    else:
+        ax.set_ylabel(title, fontsize=15)
     ax.set_yticks(range(1, 1+len(data)))
     ax.set_xticks([])
 

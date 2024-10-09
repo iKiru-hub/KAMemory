@@ -140,17 +140,40 @@ if __name__ == "__main__":
 
     logger(f"%MTL: {model}")
 
+    # model with shuffled IS
+    model_rnd = MTL(W_ei_ca1=W_ei_ca1,
+                    W_ca1_eo=W_ca1_eo,
+                    B_ei_ca1=B_ei_ca1,
+                    B_ca1_eo=B_ca1_eo,
+                    dim_ca3=dim_ca3,
+                    K_lat=K_lat,
+                    K_out=K,
+                    K_ca3=K_ca3,
+                    beta=beta,
+                    alpha=alpha,
+                    shuffled_is=True)
+
+    logger(f"%MTL: {model}")
+
     # train model | testing = training without backprop
     epochs = 1
     for _ in range(epochs):
-        _, model = utils.testing(data=training_sample_btsp,
-                                 model=model,
-                                 column=True)
+        # _, model = utils.testing(data=training_sample_btsp,
+        #                          model=model,
+        #                          column=True)
+
+        # _, model_rnd = utils.testing(data=training_sample_btsp,
+        #                              model=model_rnd,
+        #                              column=True)
 
         loss_mtl, _ = utils.testing(data=training_sample_btsp,
                                     model=model,
                                     column=True)
+        loss_mtl_rnd, _ = utils.testing(data=training_sample_btsp,
+                                        model=model_rnd,
+                                        column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
+        logger(f"<<< MTL (s) trained [{loss_mtl_rnd:.3f}] >>>")
 
     # reconstruct data
     model.pause_lr()
@@ -160,52 +183,78 @@ if __name__ == "__main__":
                      model=model,
                      column=True,
                      plot=False)
+    rec_loss = np.mean((training_sample_btsp - out_mtl)**2).item()
+
+    model_rnd.pause_lr()
+    out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(
+                     data=training_sample_btsp,
+                     num=num_btsp_samples,
+                     model=model_rnd,
+                     column=True,
+                     plot=False)
+    rec_loss_rnd = np.mean((training_sample_btsp - out_mtl_rnd)**2).item()
+
 
     """ plotting """
 
-    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
-    is_squash = False
+    # fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
+    # is_squash = False
 
-    # --- plot latent layers
-    utils.plot_squashed_data(
-        data=training_sample_btsp,
-                             ax=ax1,
-                             title="Patterns", squash=is_squash)
-    utils.plot_squashed_data(data=latent_ae, ax=ax2,
-                             title="Autoencoder",
-                             squash=is_squash)
-    utils.plot_squashed_data(data=latent_mtl, ax=ax3,
-                             title="MTL", squash=is_squash)
+    # # --- plot latent layers
+    # utils.plot_squashed_data(
+    #     data=training_sample_btsp,
+    #                          ax=ax1,
+    #                          title="Patterns", squash=is_squash)
+    # # utils.plot_squashed_data(data=latent_ae, ax=ax2,
+    # #                          title="Autoencoder",
+    # #                          squash=is_squash)
+    # utils.plot_squashed_data(data=latent_mtl_rnd, ax=ax2,
+    #                          title="shuffled $IS$",
+    #                          squash=is_squash)
+    # utils.plot_squashed_data(data=latent_mtl, ax=ax3,
+    #                          title="$IS$", squash=is_squash)
 
-    fig.suptitle(f"Latent layers - $K_l=${K_lat} $\\beta=${autoencoder._beta}")
+    # fig.suptitle(f"Latent layers - $K_l=${K_lat} $\\beta=${autoencoder._beta}")
 
     # --- plot data reconstruction
     fig2, (ax12, ax22, ax32) = plt.subplots(3, 1, figsize=(15, 5), sharex=True)
+
+    # add more space between subplots
+    plt.subplots_adjust(hspace=0.2)
+
     is_squash = False
 
-    utils.plot_squashed_data(
-        data=training_sample_btsp,
+    utils.plot_squashed_data(data=training_sample_btsp,
                              ax=ax12,
-                             title="Patterns", squash=is_squash)
-    utils.plot_squashed_data(data=out_ae, ax=ax22,
-                             title="Autoencoder",
-                             squash=is_squash)
+                             title="Patterns",
+                             squash=is_squash,
+                             proper_title=True)
+    # utils.plot_squashed_data(data=out_ae, ax=ax22,
+    #                          title="Autoencoder",
+    #                          squash=is_squash)
+    utils.plot_squashed_data(data=out_mtl_rnd, ax=ax22,
+                             title=f"shuffled $IS$ - reconstruction loss={rec_loss_rnd:.3f}",
+                             squash=is_squash,
+                             proper_title=True)
     utils.plot_squashed_data(data=out_mtl, ax=ax32,
-                             title="MTL", squash=is_squash)
+                             title=f"$IS$ - reconstruction loss={rec_loss:.3f}",
+                             squash=is_squash,
+                             proper_title=True)
 
+    # move the suptitle a bit closer to the subplots
     fig2.suptitle(f"Reconstruction of {num_btsp_samples} stimuli",
-                  fontsize=19)
+                  fontsize=19, y=0.93)
 
     #
-    fig3, (ax13) = plt.subplots(1, 1, figsize=(15, 5), sharex=True)
-    cbar = plt.colorbar(
-        ax13.imshow(training_sample_btsp - out_mtl,
-                    cmap="seismic",
-                    aspect="auto"))
-    ax13.set_yticks(range(num_btsp_samples))
+    # fig3, (ax13) = plt.subplots(1, 1, figsize=(15, 5), sharex=True)
+    # cbar = plt.colorbar(
+    #     ax13.imshow(training_sample_btsp - out_mtl,
+    #                 cmap="seismic",
+    #                 aspect="auto"))
+    # ax13.set_yticks(range(num_btsp_samples))
 
-    cbar.set_label("Error")
-    ax13.set_title("pattern - mtl")
+    # cbar.set_label("Error")
+    # ax13.set_title("pattern - mtl")
     plt.show()
 
 
