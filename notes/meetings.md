@@ -52,5 +52,37 @@ Autoencoder:
 ![[Pasted image 20241008152511.png]]
 
 
+**Meeting** 10.10.24
+
+linear track
+- group of 2 laps
+- use of ca1 activity and position to evaluate the tuning wrt space
+
+1. how to generate the input
+	- two random sensory cues
+	- iterate over laps and assign
+	- record the info for which lap contains which cue
+
+2. run the agent
+3. split CA1 activity wrt lap containing a specific cue
+4. mean activity of CA1 neurons over laps for a specific cue
+
+plot idea:
+- show the pc tuning in both cases
+
+**Meeting** 12.10.24
 
 
+- [ ] *sensitivity of IS*
+- goal: find neurons in IS (latent layer of AE) strongly tuned to the cue(s):
+	- plot 1 : distribution of sensitivity
+	- plot 2 heatmap: 1st group selective for cue 1, 2nd group for 2nd
+- how: run laps
+	- record the sensitivity of IS when cue_x is present wrt to the average activity (laps for cue1). i.e. sensitivity as activity/average_activity
+
+- [ ] *CA1 tuning*
+- use the distribution of IS to sort CA1 activity and plot the resulting distribution
+- goal: see the influence to CA1 tuning
+
+idea:
+- place fields are place + cue fields

@@ -15,7 +15,11 @@ except ModuleNotFoundError:
     except ModuleNotFoundError:
         raise ValueError("`utils` module not found")
 
-logger = utils.logger
+try:
+    logger = utils.logger
+except AttributeError:
+    import warnings
+    warnings.warn("logger function not found")
 
 cache_dir = "cache"
 cache_dir_2 = "src/cache"
@@ -117,7 +121,7 @@ class Autoencoder(nn.Module):
 
             return ei_ca1, ca1_eo, ei_ca1_b, ca1_eo_b
 
-        return ei_ca1, ca1_eo
+        return ei_ca1, ca1_eo, None, None
 
 
 """ Main model """
@@ -135,9 +139,9 @@ class MTL(nn.Module):
                  beta: float,
                  alpha: float=0.01,
                  K_ca3: int=5,
+                 identity_IS : bool=False,
                  B_ei_ca1: torch.Tensor=None,
-                 B_ca1_eo: torch.Tensor=None,
-                 shuffled_is: bool=False):
+                 B_ca1_eo: torch.Tensor=None):
 
         # make docstrings
         """
@@ -175,13 +179,13 @@ class MTL(nn.Module):
         self._dim_ei = W_ei_ca1.shape[1]
         self._dim_eo = W_ca1_eo.shape[0]
         self._dim_ca1 = W_ca1_eo.shape[1]
-        self._dim_ca3 = dim_ca3
 
         # network parameters
         self._K_lat = K_lat
         self._K_ca3 = K_ca3
         self._K_out = K_out
         self._beta = beta
+        self._beta_ca3 = 100*beta
         self._alpha = alpha
 
         # Initialize weight matrices for each layer
@@ -199,17 +203,26 @@ class MTL(nn.Module):
 
         self._ca1 = None
         self._ca3 = None
-        self.last_dw = None
+        self._eo = None
+
+        self.identity_IS = identity_IS
 
         # mode
-        self.shuffled_is = shuffled_is
         self.mode = "train"
+
+        self.recordings = {}
+        self.recordings["x_ei"] = []
+        self.recordings["ca3"] = []
+        self.recordings["IS"] = []
+        self.recordings["ca1"] = []
+        self.recordings["eo"] = []
+        self.recordings["W_ca3_ca1"] = []
 
     def __repr__(self):
 
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}," + \
             f" dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, " + \
-            f" bias={self.is_bias}, " + \
+            f" bias={self.is_bias}" + \
             f"beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, " + \
             f"K_o={self._K_out}"
 
@@ -234,8 +247,8 @@ class MTL(nn.Module):
         # forward pass through the entorhinal cortex to CA3
         x_ca3 = self.W_ei_ca3 @ x_ei # 50, 1
         x_ca3 = utils.sparsemoid(x_ca3.reshape(1, -1),
-                                 K=2,
-                                 beta=self._beta).reshape(-1, 1)
+                                 K=self._K_ca3,
+                                 beta=self._beta_ca3).reshape(-1, 1)
 
         # forward pass through CA3 to CA1
         x_ca1 = self.W_ca3_ca1 @ x_ca3 # 50, 1
@@ -245,21 +258,17 @@ class MTL(nn.Module):
                                  flag=False).reshape(-1, 1)
 
         # compute instructive signal
-        IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
-        IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
-                              beta=self._beta).reshape(-1, 1)
-
-        # shuffle IS
-        if self.shuffled_is:
-            IS = torch.randperm(IS.shape[0], dtype=torch.float32).reshape(-1, 1)
+        if self.identity_IS:
+          IS = x_ei
+        else:
+          IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
+          IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
+                                beta=self._beta).reshape(-1, 1)
 
         # weight update
         if self.mode == "train":
             self.W_ca3_ca1 = nn.Parameter((1 - IS * self._alpha) * \
                 self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
-
-            self.last_dw = self._alpha * (IS @ x_ca3.T) * self.W_ca3_ca1 - \
-                (1 - IS*self._alpha) * self.W_ca3_ca1
 
         # Forward pass through CA1 to entorhinal cortex output
         x_eo = self.W_ca1_eo @ x_ca1 + self.B_ca1_eo
@@ -271,7 +280,9 @@ class MTL(nn.Module):
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3
+        self._eo = x_eo
 
+        self.record(x_ei, IS)
         if ca1:
             return x_eo, x_ca1
 
@@ -293,18 +304,15 @@ class MTL(nn.Module):
 
         self.mode = "train"
 
-    def reset(self):
+    def record(self, x_ei, IS):
+        self.recordings["x_ei"].append(x_ei.clone())
+        self.recordings["ca3"].append(self._ca3.clone())
+        self.recordings["ca1"].append(self._ca1.clone())
+        self.recordings["eo"].append(self._eo.clone())
+        self.recordings["W_ca3_ca1"].append(self.W_ca3_ca1.clone())
+        self.recordings["IS"].append(IS.clone())
 
-        """ reset the trained weights """
 
-        self.W_ca3_ca1 = nn.Parameter(torch.zeros(
-                    self._dim_ca1, self._dim_ca3))
-
-        self._ca1 = None
-        self._ca3 = None
-
-        # mode
-        self.mode = "train"
 
 
 """ load AE and info """

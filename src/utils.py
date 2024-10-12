@@ -177,6 +177,202 @@ def plot_stimuli(samples: np.ndarray):
     plt.show()
 
 
+def sparse_stimulus_generator_sensory(num_stimuli: int, K : int,
+                                      mec_size: int,  lec_size: int,
+                                      N_x : int, N_y : int,
+                                      pf_sigma: int,
+                                      num_cues: int=1,
+                                      position_list=None,
+                                      cue_positions=None,
+                                      sen_list=None,
+                                      plot: bool=False) -> np.ndarray:
+
+    """
+    This function generates random z patterns with a certain
+    degree of sparsity
+
+    Parameters
+    ----------
+    N : int
+        Number of samples
+    K : int
+        Number of active units
+    size : int, optional
+        Size of the z patterns, by default 10
+    plot : bool, optional
+        Whether to plot the z patterns.
+        Default False
+
+    Returns
+    -------
+    samples : np.ndarray
+        z patterns
+    """
+
+    def place_field_activity(N_x, N_y, sigma, xi, yi):
+        """
+        Computes place field activity for each cell on an NxN grid for a given location (xi, yi).
+        """
+
+        def circular_distance(x1, x2, N):
+            """
+            Computes the minimum circular distance in the x-direction (wraps around the boundaries).
+            """
+            return np.minimum(np.abs(x1 - x2), N - np.abs(x1 - x2))
+
+        # Create a grid of size NxN with place cells at each position
+        x = np.linspace(0, N_x-1, N_x)
+        y = np.linspace(0, N_y-1, N_y)
+        X, Y = np.meshgrid(x, y)
+        # Calculate the squared Euclidean distance between (xi, yi) and each place cell location
+        dist_squared = circular_distance(X, xi, N_x) ** 2 + (Y - yi) ** 2
+
+        # Compute Gaussian activity for each place cell
+        activity = np.exp(-dist_squared / (2 * sigma ** 2))
+        return activity
+
+    samples = np.zeros((num_stimuli, mec_size + lec_size))
+
+    if lec_size > 0:
+        fixed_cue = np.zeros((num_cues, lec_size))
+        for k in range(num_cues):
+            cue_idx = np.random.choice(range(lec_size), replace=False, size=K)
+            fixed_cue[k, cue_idx] = 1
+
+    for i in range(num_stimuli):
+
+        if mec_size > 0:
+            x_i, y_i = (position_list[i] if position_list is not None \
+                                else (np.random.randint(0, N_x), np.random.randint(0, N_y)))
+            activity_grid = place_field_activity(N_x, N_y, pf_sigma, x_i, y_i)
+            samples[i, :mec_size] = activity_grid.flatten()
+
+        if lec_size > 0:
+            if cue_positions is not None:
+
+                cue_i = np.where(x_i == cue_positions)[0]
+                if len(cue_i) > 0:
+                    activity_lec = fixed_cue[cue_i]
+                else:
+                    activity_lec = np.zeros((lec_size))
+                    lec_idx = np.random.choice(range(lec_size),
+                                               replace=False, size=K)
+                    activity_lec[lec_idx] = 1
+
+                # if x_i == cue_position:
+                #     activity_lec = fixed_cue
+                # else:
+                #     activity_lec = np.zeros((lec_size))
+                #     lec_idx = np.random.choice(range(lec_size), replace=False, size=K)
+                #     activity_lec[lec_idx] = 1
+
+                samples[i, mec_size:] = sen_list[i] if sen_list is not None else activity_lec
+
+    samples = samples.astype(np.float32)
+
+    return samples
+
+
+def sparse_stimulus_generator_sensory_2(num_stimuli: int, K : int,
+                                      mec_size: int,  lec_size: int,
+                                      N_x : int, N_y : int,
+                                      pf_sigma: int,
+                                      num_cues: int=1,
+                                      position_list=None,
+                                      cue_positions=None,
+                                      sen_list=None,
+                                      plot: bool=False) -> np.ndarray:
+
+    """
+    This function generates random z patterns with a certain
+    degree of sparsity
+
+    Parameters
+    ----------
+    N : int
+        Number of samples
+    K : int
+        Number of active units
+    size : int, optional
+        Size of the z patterns, by default 10
+    plot : bool, optional
+        Whether to plot the z patterns.
+        Default False
+
+    Returns
+    -------
+    samples : np.ndarray
+        z patterns
+    """
+
+    def place_field_activity(N_x, N_y, sigma, xi, yi):
+        """
+        Computes place field activity for each cell on an NxN grid for a given location (xi, yi).
+        """
+
+        def circular_distance(x1, x2, N):
+            """
+            Computes the minimum circular distance in the x-direction (wraps around the boundaries).
+            """
+            return np.minimum(np.abs(x1 - x2), N - np.abs(x1 - x2))
+
+        # Create a grid of size NxN with place cells at each position
+        x = np.linspace(0, N_x-1, N_x)
+        y = np.linspace(0, N_y-1, N_y)
+        X, Y = np.meshgrid(x, y)
+        # Calculate the squared Euclidean distance between (xi, yi) and each place cell location
+        dist_squared = circular_distance(X, xi, N_x) ** 2 + (Y - yi) ** 2
+
+        # Compute Gaussian activity for each place cell
+        activity = np.exp(-dist_squared / (2 * sigma ** 2))
+        return activity
+
+    def place_tuning(x, c, sigma):
+        return np.exp(-((x - c) ** 2) / (2 * sigma ** 2))
+
+    samples = np.zeros((num_stimuli, mec_size + lec_size))
+
+    if lec_size > 0:
+        fixed_cue = np.zeros((num_cues, lec_size))
+        for k in range(num_cues):
+            cue_idx = np.random.choice(range(lec_size), replace=False, size=K)
+            fixed_cue[k, cue_idx] = 1
+
+    for i in range(num_stimuli):
+
+        if mec_size > 0:
+            x_i, y_i = (position_list[i] if position_list is not None \
+                                else (np.random.randint(0, N_x), np.random.randint(0, N_y)))
+            activity_grid = place_field_activity(N_x, N_y, pf_sigma, x_i, y_i)
+            samples[i, :mec_size] = activity_grid.flatten()
+
+        if lec_size > 0:
+            if cue_positions is not None:
+
+                cue_i = np.where(x_i == cue_positions)[0]
+                if len(cue_i) > 0:
+                    activity_lec = fixed_cue[cue_i]
+                else:
+                    activity_lec = np.zeros((lec_size))
+                    lec_idx = np.random.choice(range(lec_size),
+                                               replace=False, size=K)
+                    activity_lec[lec_idx] = 1
+
+                # if x_i == cue_position:
+                #     activity_lec = fixed_cue
+                # else:
+                #     activity_lec = np.zeros((lec_size))
+                #     lec_idx = np.random.choice(range(lec_size), replace=False, size=K)
+                #     activity_lec[lec_idx] = 1
+
+                samples[i, mec_size:] = sen_list[i] if sen_list is not None else activity_lec
+
+    samples = samples.astype(np.float32)
+
+    return samples
+
+
+
 
 """ training """
 
@@ -702,7 +898,6 @@ def train_for_reconstruction(alpha: float,
     return record
 
 
-
 def train_for_weight_plot(alpha: float,
                        num_rep: int,
                        num_samples: int,
@@ -887,7 +1082,8 @@ def setup_logger(name: str="MAIN",
 
         def __repr__(self):
 
-            return f"LoggerWrapper(name={self.logger.name})"
+            self.logger.info(".")
+            return ""
 
         def __call__(self, msg: str=""):
             self.logger.info(msg)
@@ -906,41 +1102,6 @@ def setup_logger(name: str="MAIN",
                 self.logger.debug(msg)
 
     return LoggerWrapper(logger)
-
-
-def plot_squashed_data(data: np.ndarray, title: str="",
-                       ax: plt.Axes=None, squash: bool=False,
-                       proper_title: bool=False):
-
-    """
-    This function plots the squashed data
-
-    Parameters
-    ----------
-    data : np.ndarray
-        squashed data
-    title : str, optional
-        title of the plot, by default ""
-    ax : plt.Axes, optional
-        axis of the plot, by default None
-    """
-
-    if squash:
-        data = data.sum(axis=0).reshape(1, -1)
-
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(10, 5))
-
-    ax.imshow(data, aspect="auto", cmap="gray_r", vmin=0, vmax=1)
-    if proper_title:
-        ax.set_title(title, fontsize=15)
-    else:
-        ax.set_ylabel(title, fontsize=15)
-    ax.set_yticks(range(len(data)), range(1, 1+len(data)))
-    ax.set_xticks([])
-
-    if ax is None:
-        plt.show()
 
 
 def calc_capacity(outputs: np.ndarray,
@@ -999,6 +1160,86 @@ def calc_capacity(outputs: np.ndarray,
                     axis=0).item()
 
     return idx
+
+
+def get_track_input(tp: dict, network_params: dict):
+  position_list = [(x, 0) for lap in range(tp["num_laps"]) for x in range(tp["length"])]
+
+  if tp["reward"] == "random":
+    reward_list = None
+  if tp["cue"] == "random":
+    cue_list = None
+
+  sen_list = None
+
+  track_input = sparse_stimulus_generator_sensory(num_stimuli=tp["num_laps"]*tp["length"],
+                                                  K = network_params["K_lec"],
+                                                  mec_size=network_params["dim_mec"],
+                                                  lec_size=network_params["dim_lec"],
+                                                  N_x=network_params["mec_N_x"],
+                                                  N_y=network_params["mec_N_y"],
+                                                  pf_sigma=network_params["mec_sigma"],
+                                                  num_cues=network_params["num_cues"],
+                                                  position_list=position_list,
+                                                  cue_positions=tp["cue_position"],
+                                                  sen_list=None,
+                                                  plot=False)
+  return track_input
+
+
+""" visualization """
+
+
+def plot_squashed_data(data: np.ndarray, title: str="",
+                       ax: plt.Axes=None, squash: bool=False,
+                       proper_title: bool=False):
+
+    """
+    This function plots the squashed data
+
+    Parameters
+    ----------
+    data : np.ndarray
+        squashed data
+    title : str, optional
+        title of the plot, by default ""
+    ax : plt.Axes, optional
+        axis of the plot, by default None
+    """
+
+    if squash:
+        data = data.sum(axis=0).reshape(1, -1)
+
+    if ax is None:
+        fig, ax = plt.subplots(1, 1, figsize=(10, 5))
+
+    ax.imshow(data, aspect="auto", cmap="gray_r", vmin=0, vmax=1)
+    if proper_title:
+        ax.set_title(title, fontsize=15)
+    else:
+        ax.set_ylabel(title, fontsize=15)
+    ax.set_yticks(range(len(data)), range(1, 1+len(data)))
+    ax.set_xticks([])
+
+    if ax is None:
+        plt.show()
+
+
+def plot_input(input, network_params):
+  mec = input[:network_params["dim_mec"]]
+  lec = input[network_params["dim_mec"]:]
+
+  fig, axs = plt.subplots(1, 2, figsize=(12, 12))
+  axs[0].imshow(mec.reshape(network_params["mec_N_y"], network_params["mec_N_x"]), cmap='gray_r')
+  axs[0].set_title('space')
+  lec_width = int(np.sqrt(network_params["dim_lec"]))
+  axs[1].imshow(lec.reshape((-1, network_params["dim_lec"])), cmap='gray_r')
+  axs[1].set_title('sensory')
+  axs[0].set_yticks([])
+  axs[1].set_yticks([])
+  axs[0].set_xticks([])
+  axs[1].set_xticks([])
+  plt.show()
 
 
 

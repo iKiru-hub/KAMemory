@@ -160,7 +160,7 @@ https://wandb.ai/ikiru-university-of-oslo/kam_2/sweeps/tc96txc8?nw=nwuserikiru
 - [ ] pc visualization | task
 - [ ] prediction
 - [x] figures but with fewer stimuli
-
+- [ ] add a sensory cue to the linear track PC simulation
 
 ---
 **weight change plot** 
