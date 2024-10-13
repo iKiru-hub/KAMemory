@@ -86,3 +86,8 @@ plot idea:
 
 idea:
 - place fields are place + cue fields
+
+
+
+
+**Meeting** 13.10.25

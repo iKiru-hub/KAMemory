@@ -592,6 +592,66 @@ def testing(data: np.ndarray, model: object,
     return loss / len(dataloader), model
 
 
+def testing_mod_lr(data: np.ndarray, model: object,
+                   alpha_samples: np.ndarray,
+                   criterion: object=MSELoss(),
+                   column: bool=False,
+                   use_tensor: bool=False,
+                   progressive_test: bool=False):
+
+    """
+    Test the model
+
+    Parameters
+    ----------
+    data: np.ndarray
+        z data
+    model: nn.Module
+        the model
+    """
+
+    if not isinstance(data, DataLoader):
+        # Convert numpy array to torch tensor
+        data_tensor = torch.tensor(data, dtype=torch.float32)
+
+        # Create a dataset and data loader
+        dataset = TensorDataset(data_tensor)
+        dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+
+    else:
+        dataloader = data
+
+    if use_tensor:
+        try:
+            data_tensor
+        except NameError:
+            raise ValueError("data_tensor is not defined")
+        dataloader = data_tensor.unsqueeze(1)
+
+    # Set the model to evaluation mode
+    model.eval()
+    loss = 0.
+    acc_matrix = torch.zeros(len(dataloader), len(dataloader))
+
+    alpha = model.alpha
+
+    with torch.no_grad():
+
+        for i, batch in enumerate(dataloader):
+            x = batch[0] if not column else batch[0].reshape(-1, 1)
+
+            new_alpha = np.maximum(0.1, lr * alpha_samples[i])
+
+            # Forward pass
+            model.set_alpha(alpha=new_alpha)
+            outputs = model(x)  # MTL training BTSP
+            loss += criterion(outputs, x)
+
+    model.train()
+
+    return loss / len(dataloader), model
+
+
 def progressive_testing(data: np.ndarray, model: object):
 
     """

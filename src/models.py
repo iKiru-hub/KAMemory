@@ -140,6 +140,7 @@ class MTL(nn.Module):
                  alpha: float=0.01,
                  K_ca3: int=5,
                  identity_IS : bool=False,
+                 random_IS : bool=False,
                  B_ei_ca1: torch.Tensor=None,
                  B_ca1_eo: torch.Tensor=None):
 
@@ -206,6 +207,7 @@ class MTL(nn.Module):
         self._eo = None
 
         self.identity_IS = identity_IS
+        self.random_IS = random_IS
 
         # mode
         self.mode = "train"
@@ -259,11 +261,14 @@ class MTL(nn.Module):
 
         # compute instructive signal
         if self.identity_IS:
-          IS = x_ei
+            IS = x_ei
         else:
-          IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
-          IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
-                                beta=self._beta).reshape(-1, 1)
+            IS = self.W_ei_ca1 @ x_ei + self.B_ei_ca1
+            IS = utils.sparsemoid(IS.reshape(1, -1), K=self._K_lat,
+                                  beta=self._beta).reshape(-1, 1)
+            if self.random_IS:
+                # permute the IS
+                IS = IS[torch.randperm(IS.size(0))]
 
         # weight update
         if self.mode == "train":
@@ -303,6 +308,14 @@ class MTL(nn.Module):
         """
 
         self.mode = "train"
+
+    def set_alpha(self, alpha: float):
+ 
+        """
+        Set the learning rate
+        """
+
+        self._alpha = alpha
 
     def record(self, x_ei, IS):
         self.recordings["x_ei"].append(x_ei.clone())
