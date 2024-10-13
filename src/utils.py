@@ -816,7 +816,7 @@ def train_for_accuracy(alpha: float,
                 K_out=K,
                 alpha=alpha,
                 beta=beta,
-                shuffled_is=kwargs.get("shuffled", False))
+                random_IS=kwargs.get("shuffled", False))
 
     if verbose:
         logger(f"%MTL: {model}")

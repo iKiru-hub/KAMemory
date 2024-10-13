@@ -72,15 +72,14 @@ plot idea:
 
 **Meeting** 12.10.24
 
-
-- [ ] *sensitivity of IS*
+- [x] *sensitivity of IS*
 - goal: find neurons in IS (latent layer of AE) strongly tuned to the cue(s):
 	- plot 1 : distribution of sensitivity
 	- plot 2 heatmap: 1st group selective for cue 1, 2nd group for 2nd
 - how: run laps
 	- record the sensitivity of IS when cue_x is present wrt to the average activity (laps for cue1). i.e. sensitivity as activity/average_activity
 
-- [ ] *CA1 tuning*
+- [x] *CA1 tuning*
 - use the distribution of IS to sort CA1 activity and plot the resulting distribution
 - goal: see the influence to CA1 tuning
 
@@ -91,3 +90,12 @@ idea:
 
 
 **Meeting** 13.10.25
+
+@albert
+**abstract**
+
+@kiru
+**plots**
+- prettify
+
+

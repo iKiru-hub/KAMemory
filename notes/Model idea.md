@@ -195,5 +195,9 @@ W_t-W_{t-1}&=-\alpha W_{t-1}
 $$
 
 
+**PARAMETERS**
 
+**sparsity**
+EC: 10%
+CA3 = CA1 : 2%
 

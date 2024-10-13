@@ -325,6 +325,22 @@ class MTL(nn.Module):
         self.recordings["W_ca3_ca1"].append(self.W_ca3_ca1.clone())
         self.recordings["IS"].append(IS.clone())
 
+    def reset(self):
+
+        self._ca1 = None
+        self._ca3 = None
+        self._eo = None
+
+        # mode
+        self.mode = "train"
+        self.recordings = {}
+        self.recordings["x_ei"] = []
+        self.recordings["ca3"] = []
+        self.recordings["IS"] = []
+        self.recordings["ca1"] = []
+        self.recordings["eo"] = []
+        self.recordings["W_ca3_ca1"] = []
+
 
 
 
