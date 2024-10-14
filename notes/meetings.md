@@ -87,8 +87,6 @@ idea:
 - place fields are place + cue fields
 
 
-
-
 **Meeting** 13.10.25
 
 @albert
@@ -96,6 +94,24 @@ idea:
 
 @kiru
 **plots**
-- prettify
+- [ ] prettify
+- [x] clean the notebook
 
 
+**Meeting** 14.10.25
+@kiru
+- [x] decodability figure: already with place and sensory input pattern
+slight difference in MTL performance in:
+```python
+model.load_state_dict(
+	# torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
+	torch.load(f"{cache_dir}/{session}/autoencoder.pt",
+			   weights_only=True))
+```
++binarize option of the spatial input
+
+- [x] try same position $\neq$ cue
+plot difference between IS-indexed (normal) and CA1-indexed (bad)
+
+
+accuracy plot with lec data is weird
