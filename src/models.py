@@ -59,6 +59,7 @@ class Autoencoder(nn.Module):
         self._encoding_dim = encoding_dim
         self._K = K
         self._beta = beta
+        self._use_bias = use_bias
 
         # Encoder
         self.encoder = nn.Sequential(
@@ -115,7 +116,7 @@ class Autoencoder(nn.Module):
         ei_ca1 = self.encoder[0].weight.data.reshape(self._encoding_dim, self._input_dim)
         ca1_eo = self.decoder[0].weight.data.reshape(self._input_dim, self._encoding_dim)
 
-        if bias:
+        if bias and self._use_bias:
             ei_ca1_b = self.encoder[0].bias.data.reshape(-1, 1)
             ca1_eo_b = self.decoder[0].bias.data.reshape(-1, 1)
 
@@ -256,7 +257,7 @@ class MTL(nn.Module):
         x_ca1 = self.W_ca3_ca1 @ x_ca3 # 50, 1
         x_ca1 = utils.sparsemoid(x_ca1.reshape(1, -1),
                                  K=self._K_lat,
-                                 beta=self._beta,
+                                 beta=self._beta_ca3,
                                  flag=False).reshape(-1, 1)
 
         # compute instructive signal
@@ -279,9 +280,9 @@ class MTL(nn.Module):
         x_eo = self.W_ca1_eo @ x_ca1 + self.B_ca1_eo
 
         # activation function
-        x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
-                                K=self._K_out,
-                                beta=self._beta).reshape(-1, 1)
+        # x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
+        #                         K=self._K_out,
+        #                         beta=self._beta).reshape(-1, 1)
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3
@@ -404,14 +405,38 @@ def load_session(idx: int=None,
     with open(f"{cache_dir}/{session}/info.json", "r") as f:
         info = json.load(f)
 
-    # load the model
-    model = Autoencoder(input_dim=info["dim_ei"],
-                        encoding_dim=info["dim_ca1"],
-                        activation=None,
-                        K=info["K_lat"],
-                        beta=info["beta"])
 
-    model.load_state_dict(torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
+    if "network_params" in info:
+        input_dim = info["network_params"]["dim_ei"]
+        encoding_dim = info["network_params"]["dim_ca1"]
+        K = info["network_params"]["K_ca1"]
+        beta = info["network_params"]["beta_ca1"]
+        bias = info["network_params"]["bias"]
+    else:
+        input_dim = info["dim_ei"]
+        encoding_dim = info["dim_ca1"]
+        K = info["K_lat"]
+        beta = info["beta"]
+        try:
+            bias = info["bias"]
+        except KeyError:
+            logger.warning("bias not found in the info file, set to True")
+            bias = True
+
+    logger.debug(f"{bias=}")
+
+    # load the model
+    model = Autoencoder(input_dim=input_dim,
+                        encoding_dim=encoding_dim,
+                        activation=None,
+                        K=K,
+                        beta=beta,
+                        use_bias=bias)
+
+    model.load_state_dict(
+        torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
+        # torch.load(f"{cache_dir}/{session}/autoencoder.pt",
+        #            weights_only=True))
 
     if verbose:
         logger("info:")

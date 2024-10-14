@@ -31,6 +31,7 @@ import models
 MEDIA_PATH = "".join((os.getcwd().split("KAMemory")[0], "KAMemory/media/"))
 
 
+
 """ stimulus generator """
 
 def stimulus_generator(N: int, size: int=10, heads: int=2, variance: float=0.1,
@@ -181,11 +182,16 @@ def sparse_stimulus_generator_sensory(num_stimuli: int, K : int,
                                       mec_size: int,  lec_size: int,
                                       N_x : int, N_y : int,
                                       pf_sigma: int,
-                                      num_cues: int=1,
+                                      num_laps: int,
+                                      lap_length: int=None,
+                                      num_cues: int=None,
                                       position_list=None,
                                       cue_positions=None,
                                       sen_list=None,
-                                      plot: bool=False) -> np.ndarray:
+                                      plot: bool=False,
+                                      sigma: float=5,
+                                      verbose: bool=True,
+                                      binarize: bool=False) -> np.ndarray:
 
     """
     This function generates random z patterns with a certain
@@ -231,147 +237,126 @@ def sparse_stimulus_generator_sensory(num_stimuli: int, K : int,
         activity = np.exp(-dist_squared / (2 * sigma ** 2))
         return activity
 
-    samples = np.zeros((num_stimuli, mec_size + lec_size))
+    # --- init
+    IS_CUE = position_list is not None
 
-    if lec_size > 0:
+    # --- make cue patterns
+    #cue_pattern_size = lec_size//num_cues  # 
+    if lec_size > 0 and num_cues is not None:
         fixed_cue = np.zeros((num_cues, lec_size))
         for k in range(num_cues):
             cue_idx = np.random.choice(range(lec_size), replace=False, size=K)
-            fixed_cue[k, cue_idx] = 1
+            #fixed_cue[cue_idx] = 1
+            fixed_cue[k, K*k: K*(k+1)] = 1  # | 1, 1, .0s  , 1, 1, ..0s.. |
 
-    for i in range(num_stimuli):
+    # 0, 0, 1, 0, 1, 1...
+    #lap_cues = np.random.choice(range(num_cues), size=num_laps) if num_laps is not None else None
+    lap_cues = np.zeros(num_laps) if position_list is not None else None
+    position_pool = np.arange(N_x)  # Possible positions in 1D track
+    samples = np.zeros((num_stimuli, mec_size + lec_size))
+    alpha_samples = np.zeros(num_stimuli)
 
+    lap_i = 0
+    cue_duration = 1
+
+    # --- loop over each time step in each lap
+    for i in range(num_stimuli): # laps x length
+
+        # determine lap-cue association
+        if IS_CUE:
+
+            # count laps
+            if i % lap_length == 0:
+                lap_idx = (lap_i // cue_duration) % num_cues
+                lap_cues[lap_i] = lap_idx
+
+                if verbose:
+                    print(f"-------------\nlap {lap_i}, cue {lap_idx}")
+                lap_i += 1
+
+        # SPATIAL input
         if mec_size > 0:
-            x_i, y_i = (position_list[i] if position_list is not None \
-                                else (np.random.randint(0, N_x), np.random.randint(0, N_y)))
+            # Reset the pool every 50 samples
+            if position_list is None:
+              if i % mec_size == 0:
+                  np.random.shuffle(position_pool)  # Shuffle the pool to get random order
+              pos_idx = i % 50  # Get position index within the shuffled pool
+              x_i = position_pool[pos_idx]  # Choose the x position
+              y_i = np.random.randint(0, N_y)
+            else:
+              x_i, y_i = position_list[i]
             activity_grid = place_field_activity(N_x, N_y, pf_sigma, x_i, y_i)
-            samples[i, :mec_size] = activity_grid.flatten()
+            if binarize:
+                activity_grid = (activity_grid > 0.5).astype(float)
+            samples[i, :mec_size] = activity_grid.flatten()        
 
+        # SENSORY input
         if lec_size > 0:
-            if cue_positions is not None:
 
-                cue_i = np.where(x_i == cue_positions)[0]
-                if len(cue_i) > 0:
-                    activity_lec = fixed_cue[cue_i]
+            if IS_CUE:
+                #p = samples[i, cue_positions[lap_cues[lap_idx]]] / \
+                p = samples[i, cue_positions[lap_idx]] / \
+                    samples[i, :mec_size].max()
+                alpha_samples[i] = p
+
+                if np.random.binomial(1, p):
+                    activity_lec = fixed_cue[lap_cues[lap_idx].astype(int)]
                 else:
+                    #activity_lec = np.zeros((lec_size))
+                    #lec_idx = np.random.choice(range(lec_size),
+                    #                           replace=False, size=K)
+                    #activity_lec[lec_idx] = 1
+
                     activity_lec = np.zeros((lec_size))
                     lec_idx = np.random.choice(range(lec_size),
                                                replace=False, size=K)
                     activity_lec[lec_idx] = 1
-
-                # if x_i == cue_position:
-                #     activity_lec = fixed_cue
-                # else:
-                #     activity_lec = np.zeros((lec_size))
-                #     lec_idx = np.random.choice(range(lec_size), replace=False, size=K)
-                #     activity_lec[lec_idx] = 1
-
-                samples[i, mec_size:] = sen_list[i] if sen_list is not None else activity_lec
-
-    samples = samples.astype(np.float32)
-
-    return samples
-
-
-def sparse_stimulus_generator_sensory_2(num_stimuli: int, K : int,
-                                      mec_size: int,  lec_size: int,
-                                      N_x : int, N_y : int,
-                                      pf_sigma: int,
-                                      num_cues: int=1,
-                                      position_list=None,
-                                      cue_positions=None,
-                                      sen_list=None,
-                                      plot: bool=False) -> np.ndarray:
-
-    """
-    This function generates random z patterns with a certain
-    degree of sparsity
-
-    Parameters
-    ----------
-    N : int
-        Number of samples
-    K : int
-        Number of active units
-    size : int, optional
-        Size of the z patterns, by default 10
-    plot : bool, optional
-        Whether to plot the z patterns.
-        Default False
-
-    Returns
-    -------
-    samples : np.ndarray
-        z patterns
-    """
-
-    def place_field_activity(N_x, N_y, sigma, xi, yi):
-        """
-        Computes place field activity for each cell on an NxN grid for a given location (xi, yi).
-        """
-
-        def circular_distance(x1, x2, N):
-            """
-            Computes the minimum circular distance in the x-direction (wraps around the boundaries).
-            """
-            return np.minimum(np.abs(x1 - x2), N - np.abs(x1 - x2))
-
-        # Create a grid of size NxN with place cells at each position
-        x = np.linspace(0, N_x-1, N_x)
-        y = np.linspace(0, N_y-1, N_y)
-        X, Y = np.meshgrid(x, y)
-        # Calculate the squared Euclidean distance between (xi, yi) and each place cell location
-        dist_squared = circular_distance(X, xi, N_x) ** 2 + (Y - yi) ** 2
-
-        # Compute Gaussian activity for each place cell
-        activity = np.exp(-dist_squared / (2 * sigma ** 2))
-        return activity
-
-    def place_tuning(x, c, sigma):
-        return np.exp(-((x - c) ** 2) / (2 * sigma ** 2))
-
-    samples = np.zeros((num_stimuli, mec_size + lec_size))
-
-    if lec_size > 0:
-        fixed_cue = np.zeros((num_cues, lec_size))
-        for k in range(num_cues):
-            cue_idx = np.random.choice(range(lec_size), replace=False, size=K)
-            fixed_cue[k, cue_idx] = 1
-
-    for i in range(num_stimuli):
-
-        if mec_size > 0:
-            x_i, y_i = (position_list[i] if position_list is not None \
-                                else (np.random.randint(0, N_x), np.random.randint(0, N_y)))
-            activity_grid = place_field_activity(N_x, N_y, pf_sigma, x_i, y_i)
-            samples[i, :mec_size] = activity_grid.flatten()
-
-        if lec_size > 0:
-            if cue_positions is not None:
-
-                cue_i = np.where(x_i == cue_positions)[0]
-                if len(cue_i) > 0:
-                    activity_lec = fixed_cue[cue_i]
-                else:
-                    activity_lec = np.zeros((lec_size))
+            else:
+                if IS_CUE:
                     lec_idx = np.random.choice(range(lec_size),
                                                replace=False, size=K)
                     activity_lec[lec_idx] = 1
 
-                # if x_i == cue_position:
-                #     activity_lec = fixed_cue
-                # else:
-                #     activity_lec = np.zeros((lec_size))
-                #     lec_idx = np.random.choice(range(lec_size), replace=False, size=K)
-                #     activity_lec[lec_idx] = 1
-
-                samples[i, mec_size:] = sen_list[i] if sen_list is not None else activity_lec
-
-    samples = samples.astype(np.float32)
-
-    return samples
+                else:
+                    activity_lec = np.zeros((lec_size))
+                    lec_idx = np.random.choice(range(lec_size),
+                                           replace=False, size=K)
+                    activity_lec[lec_idx] = 1
 
 
+            samples[i, mec_size:] = sen_list[i] if sen_list is not None else activity_lec
+
+    samples = samples.astype(np.float32) # [ 00000 |      ]
+
+    return samples, lap_cues, alpha_samples
+
+
+def get_track_input(tp: dict, network_params: dict):
+
+  position_list = [(x, 0) for lap in range(tp["num_laps"]) for x in range(tp["length"])]
+
+  if tp["reward"] == "random":
+    reward_list = None
+  if tp["cue"] == "random":
+    cue_list = None
+
+  sen_list = None
+
+  track_input, lap_cues, alpha_samples = sparse_stimulus_generator_sensory(num_stimuli=tp["num_laps"]*tp["length"],
+                                                  K = network_params["K_lec"],
+                                                  mec_size=network_params["dim_mec"],
+                                                  lec_size=network_params["dim_lec"],
+                                                  N_x=network_params["mec_N_x"],
+                                                  N_y=network_params["mec_N_y"],
+                                                  pf_sigma=network_params["mec_sigma"],
+                                                  lap_length=track_params["length"],
+                                                  num_laps=track_params["num_laps"],
+                                                  num_cues=network_params["num_cues"],
+                                                  position_list=position_list,
+                                                  cue_positions=tp["cue_position"],
+                                                  sen_list=None,
+                                                  plot=False)
+  return track_input, lap_cues, alpha_samples
 
 
 """ training """
@@ -475,10 +460,11 @@ def reconstruct_data(data: np.ndarray, model: object, num: int=5,
     """
 
     # Convert numpy array to torch tensor
-    print(f"data: {data.shape}")
-    print(f"num: {num}")
-    data_tensor = torch.tensor(data[:num],
-                               dtype=torch.float32)
+    if not isinstance(data, torch.Tensor):
+        data_tensor = torch.tensor(data[:num],
+                                   dtype=torch.float32)
+    else:
+        data_tensor = data[:num].clone().detach()
 
     # Create a dataset and data loader
     dataset = TensorDataset(data_tensor)
@@ -592,8 +578,9 @@ def testing(data: np.ndarray, model: object,
     return loss / len(dataloader), model
 
 
-def testing_mod_lr(data: np.ndarray, model: object,
+def testing_mod(data: np.ndarray, model: object,
                    alpha_samples: np.ndarray,
+                   alpha_baseline: float=0.1,
                    criterion: object=MSELoss(),
                    column: bool=False,
                    use_tensor: bool=False,
@@ -633,14 +620,15 @@ def testing_mod_lr(data: np.ndarray, model: object,
     loss = 0.
     acc_matrix = torch.zeros(len(dataloader), len(dataloader))
 
-    alpha = model.alpha
+    alpha = model._alpha
+    logger("testing...")
 
     with torch.no_grad():
 
-        for i, batch in enumerate(dataloader):
+        for i, batch in utils.tqdm_enumerate(dataloader):
             x = batch[0] if not column else batch[0].reshape(-1, 1)
 
-            new_alpha = np.maximum(0.1, lr * alpha_samples[i])
+            new_alpha = np.maximum(alpha_baseline, alpha * alpha_samples[i])
 
             # Forward pass
             model.set_alpha(alpha=new_alpha)
@@ -800,7 +788,8 @@ def train_for_accuracy(alpha: float,
 
     # get weights from the autoencoder
     if kwargs.get("use_bias", True):
-        W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
+        W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(
+                                                        bias=True)
     else:
         W_ei_ca1, W_ca1_eo = autoencoder.get_weights(bias=False)
         B_ei_ca1 = None
@@ -884,8 +873,169 @@ def train_for_accuracy(alpha: float,
     return outputs, model, complete_dataset
 
 
+def train_for_accuracy_lec(num_rep: int,
+                       num_samples: int,
+                       complete_dataset: object=None,
+                       alpha: float=None,
+                       **kwargs) -> np.ndarray:
+
+    """
+    trainings for a given alpha (already set in the model)
+
+    Parameters
+    ----------
+    alpha : float
+        learning rate
+    num_rep : int
+        number of repetitions
+    num_samples : int
+        number of samples
+    complete_dataset : object
+        data. Default None
+    **kwargs
+        idx : int
+            index of the autoencoder to load.
+            Default 0.
+        use_bias : bool
+            use bias. Default True.
+        shuffled : bool
+            shuffled the IS. Default False.
+        verbose : bool
+            verbose. Default False.
+        binarize : bool
+            binarize the activity. Default False.
+
+    Returns
+    -------
+    np.ndarray
+        outputs
+    """
+
+    verbose = kwargs.get("verbose", False)
+
+    # --- load autoencoder
+    info, autoencoder = models.load_session(
+        idx=kwargs.get("idx", 0), verbose=verbose)
+
+    # information
+    if "network_params" not in info:
+        raise ValueError("network_params not found in the info file")
+
+    network_params = info["network_params"]
+
+    # get parameters
+    W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(
+                                bias=kwargs.get("use_bias", True))
+
+    if verbose:
+        logger(f"{autoencoder=}")
+        logger("<<< Loaded session >>>")
+
+    # --- make model
+
+    # get weights from the autoencoder
+    if kwargs.get("use_bias", True):
+        W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
+    else:
+        W_ei_ca1, W_ca1_eo = autoencoder.get_weights(bias=False)
+        B_ei_ca1 = None
+        B_ca1_eo = None
+
+    # make model
+    model = models.MTL(W_ei_ca1=W_ei_ca1,
+            W_ca1_eo=W_ca1_eo,
+            B_ei_ca1=B_ei_ca1,
+            B_ca1_eo=B_ca1_eo,
+            dim_ca3=network_params["dim_ca3"],
+            K_lat=network_params["K_ca1"],
+            K_out=network_params["K_eo"],
+            K_ca3=network_params["K_ca3"],
+            beta=network_params["beta_ca1"],
+            alpha=network_params["alpha"] if alpha is None else alpha,
+            identity_IS=False,
+            random_IS=kwargs.get("shuffled", False))
+
+    if verbose:
+        logger(f"%MTL: {model}")
+
+    #
+    outputs = np.zeros((num_rep, num_samples, num_samples))
+
+    if complete_dataset is None:
+        complete_dataset = []
+        is_dataset = False
+    else:
+        is_dataset = True
+
+    for l in tqdm(range(num_rep)):
+
+        # --- make new data
+        if is_dataset:
+            datasets = complete_dataset[l]
+        else:
+            stimuli, _, _ = sparse_stimulus_generator_sensory(
+                                num_stimuli=num_samples,
+                                K = network_params["K_lec"],
+                                mec_size=network_params["dim_mec"],
+                                lec_size=network_params["dim_lec"],
+                                N_x=network_params["mec_N_x"],
+                                N_y=network_params["mec_N_y"],
+                                pf_sigma=network_params["mec_sigma"],
+                                lap_length=network_params["mec_N_x"],
+                                num_laps=None,
+                                num_cues=None,
+                                position_list=None,
+                                cue_positions=None,
+                                sen_list=None,
+                                plot=False,
+                                binarize=kwargs.get("binarize", False))
+            datasets = []
+            for k in range(num_samples):
+                data = torch.tensor(stimuli[:k+1], dtype=torch.float32)
+                dataloader = DataLoader(TensorDataset(data),
+                                        batch_size=1,
+                                        shuffle=False)
+                datasets += [dataloader]
+            complete_dataset += [datasets]
+
+        # --- run new repetition
+        for i in tqdm(range(num_samples), disable=True):
+
+            # reset the model
+            model.reset()
+
+            # train a dataset with pattern index 0.. i
+            model.eval()
+            with torch.no_grad():
+
+                # one pattern at a time
+                for batch in datasets[i]:
+                    # forward
+                    _ = model(batch[-1].reshape(-1, 1))
+
+            # --- test a dataset with pattern index 0.. i 
+            model.pause_lr()
+            model.eval()
+            with torch.no_grad():
+                # one pattern at a time
+                for j, batch in enumerate(datasets[i]):
+                    x = batch[-1].reshape(-1, 1)
+
+                    # forward
+                    y = model(x)
+
+                    # record : cosine similarity
+                    value = (y.T @ x) / \
+                        (torch.norm(x) * torch.norm(y))
+
+                    outputs[l, i, j] = (value.item() - 0.2) / 0.8
+
+    return outputs, model, complete_dataset
+
+
 def train_for_reconstruction(alpha: float,
                              num_samples: int,
+                             use_lec: bool=False,
                              **kwargs) -> np.ndarray:
 
     """
@@ -897,12 +1047,16 @@ def train_for_reconstruction(alpha: float,
         learning rate
     num_samples : int
         number of samples
+    use_lec: bool
+        use LEC. Default True.
     **kwargs
         idx : int
             index of the autoencoder to load.
             Default 0.
         use_bias : bool
             use bias. Default True.
+        binarize : bool
+            binarize the activity. Default False.
 
     Returns
     -------
@@ -910,24 +1064,43 @@ def train_for_reconstruction(alpha: float,
         outputs
     """
 
-    _, model, complete_dataset = train_for_accuracy(alpha=alpha,
-                        num_rep=1,
-                        num_samples=num_samples,
-                        idx=kwargs.get("idx", 0),
-                        use_bias=kwargs.get("use_bias", True))
+    if use_lec:
+        logger("using LEC data")
+        _, model, complete_dataset = train_for_accuracy_lec(alpha=alpha,
+                            num_rep=1,
+                            num_samples=num_samples,
+                            idx=kwargs.get("idx", 0),
+                            use_bias=kwargs.get("use_bias", True),
+                            binarize=kwargs.get("binarize", False))
 
-    _, model_rnd, _ = train_for_accuracy(alpha=alpha,
-                        num_rep=1,
-                        num_samples=num_samples,
-                        idx=kwargs.get("idx", 0),
-                        use_bias=kwargs.get("use_bias", True),
-                        shuffled=True,
-                        complete_dataset=complete_dataset)
+        _, model_rnd, _ = train_for_accuracy_lec(alpha=alpha,
+                            num_rep=1,
+                            num_samples=num_samples,
+                            idx=kwargs.get("idx", 0),
+                            use_bias=kwargs.get("use_bias", True),
+                            shuffled=True,
+                            complete_dataset=complete_dataset,
+                            binarize=kwargs.get("binarize", False))
+    else:
+        _, model, complete_dataset = train_for_accuracy(alpha=alpha,
+                            num_rep=1,
+                            num_samples=num_samples,
+                            idx=kwargs.get("idx", 0),
+                            use_bias=kwargs.get("use_bias", True))
+
+        _, model_rnd, _ = train_for_accuracy(alpha=alpha,
+                            num_rep=1,
+                            num_samples=num_samples,
+                            idx=kwargs.get("idx", 0),
+                            use_bias=kwargs.get("use_bias", True),
+                            shuffled=True,
+                            complete_dataset=complete_dataset)
 
     data = complete_dataset[-1][-1].dataset.tensors[0]
     num = len(data)
 
-    # reconstruct data
+    # --- reconstruct data
+    #
     model.pause_lr()
     out_mtl, latent_mtl = reconstruct_data(
                      data=data,
@@ -937,6 +1110,7 @@ def train_for_reconstruction(alpha: float,
                      plot=False)
     rec_loss = np.mean((data.numpy() - out_mtl)**2).item()
 
+    #
     model_rnd.pause_lr()
     out_mtl_rnd, latent_mtl_rnd = reconstruct_data(
                      data=data,
@@ -947,10 +1121,26 @@ def train_for_reconstruction(alpha: float,
     rec_loss_rnd = np.mean(
         (data.numpy() - out_mtl_rnd)**2).item()
 
+    # --- load autoencoder
+    _, autoencoder = models.load_session(
+        idx=kwargs.get("idx", 0), verbose=False)
+
+    logger.debug(f"{len(data)=}, {len(data[0])=}")
+    logger.debug(f"{data.shape=}")
+    out_mtl_ae, latent_mtl_ae = reconstruct_data(
+                     data=data,
+                     num=num,
+                     model=autoencoder,
+                     column=False,
+                     plot=False)
+    rec_loss_rnd = np.mean(
+        (data.numpy() - out_mtl_rnd)**2).item()
+
     record = {
         "data": data.numpy(),
         "out_mtl": out_mtl,
         "out_mtl_rnd": out_mtl_rnd,
+        "out_ae": out_mtl_ae,
         "rec_loss": rec_loss,
         "rec_loss_rnd": rec_loss_rnd
     }
@@ -1164,6 +1354,13 @@ def setup_logger(name: str="MAIN",
     return LoggerWrapper(logger)
 
 
+def tqdm_enumerate(iter, **tqdm_kwargs):
+    i = 0
+    for y in tqdm(iter, **tqdm_kwargs):
+        yield i, y
+        i += 1
+
+
 def calc_capacity(outputs: np.ndarray,
                   threshold: float,
                   nsmooth: int=20,
@@ -1221,30 +1418,6 @@ def calc_capacity(outputs: np.ndarray,
 
     return idx
 
-
-def get_track_input(tp: dict, network_params: dict):
-  position_list = [(x, 0) for lap in range(tp["num_laps"]) for x in range(tp["length"])]
-
-  if tp["reward"] == "random":
-    reward_list = None
-  if tp["cue"] == "random":
-    cue_list = None
-
-  sen_list = None
-
-  track_input = sparse_stimulus_generator_sensory(num_stimuli=tp["num_laps"]*tp["length"],
-                                                  K = network_params["K_lec"],
-                                                  mec_size=network_params["dim_mec"],
-                                                  lec_size=network_params["dim_lec"],
-                                                  N_x=network_params["mec_N_x"],
-                                                  N_y=network_params["mec_N_y"],
-                                                  pf_sigma=network_params["mec_sigma"],
-                                                  num_cues=network_params["num_cues"],
-                                                  position_list=position_list,
-                                                  cue_positions=tp["cue_position"],
-                                                  sen_list=None,
-                                                  plot=False)
-  return track_input
 
 
 """ visualization """
