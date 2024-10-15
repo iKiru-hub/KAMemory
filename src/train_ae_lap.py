@@ -43,8 +43,8 @@ network_params["dim_eo"] = network_params["dim_ei"]
 
 network_params["K_lec"] = 5
 network_params["K_ei"] = 10
-network_params["K_ca3"] = 15
-network_params["K_ca1"] = 15
+network_params["K_ca3"] = 25
+network_params["K_ca1"] = 25
 network_params["K_eo"] = network_params["K_ei"]
 
 network_params["beta_ei"] = 150

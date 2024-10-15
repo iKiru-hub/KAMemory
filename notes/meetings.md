@@ -115,3 +115,36 @@ plot difference between IS-indexed (normal) and CA1-indexed (bad)
 
 
 accuracy plot with lec data is weird
+
+
+
+---
+colorbars
+*figure d*
+- initial weight
+xlabels: 
+- ECin
+- ECout (IS for ECin)
+- ECout (IS random)
+
+figure f:
+- axylines for separating the neuronal groups
+- axvlines same color as in figure c
+
+figure e:
+- ca1 tuning merged 
+
+figure c:
+- add labels 'space', 'sensory', ...
+
+
+
+---
+##### MORE TODO
+
+@kiru
+- [ ] **author list**
+
+
+
+
