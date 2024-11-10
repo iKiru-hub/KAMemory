@@ -1643,10 +1643,6 @@ def sparsemoid(z: torch.Tensor, K: int,
         alpha = z_sorted[:, K-1: K+1]
         alpha = alpha.mean(axis=1).reshape(-1, 1)
 
-    # if flag:
-    #     print(f"alpha: {alpha.T} {alpha.shape}")
-    #     print("sorted ", z_sorted.shape, z_sorted)
-
     # apply
     z = beta * (z - alpha)
     return torch.sigmoid(z)
