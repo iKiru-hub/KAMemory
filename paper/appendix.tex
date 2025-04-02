@@ -1,0 +1,35 @@
+
+
+
+\section{Appendix}\label{appendix}
+
+\begin{algorithm}\label{app:sparsemoid}
+\caption{Sparsemoid Activation Function}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Tensor $z$, Integer $K$, Parameter $\beta$, Boolean $flag$
+\State \textbf{Output:} Transformed tensor $z$
+
+\If{$K > 0$}
+    \State Sort $z$ in descending order along dimension 1:
+    \[
+    z_{\text{sorted}} \leftarrow \text{sort}(z, \text{descending})
+    \]
+    \State Extract the $(K-1)$-th and $K$-th elements along dimension 1:
+    \[
+    \alpha \leftarrow z_{\text{sorted}}[:, K-1:K+1]
+    \]
+    \State Compute the mean of $\alpha$ along axis 1:
+    \[
+    \alpha \leftarrow \text{mean}(\alpha, \text{axis}=1) \text{ reshaped to } (-1,1)
+    \]
+\EndIf
+
+\State Apply the transformation:
+\[
+z \leftarrow \beta \cdot (z - \alpha)
+\]
+
+\State \textbf{Return} $\sigma(z) = \frac{1}{1 + e^{-z}}$ (Sigmoid activation)
+
+\end{algorithmic}
+\end{algorithm}
