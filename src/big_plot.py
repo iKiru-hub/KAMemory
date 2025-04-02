@@ -18,7 +18,7 @@ except ModuleNotFoundError:
 
 """ settings """
 
-info, autoencoder = load_session(idx=2)
+info, autoencoder = load_session(idx=-1)
 
 dim_ei = info["dim_ei"]
 dim_ca3 = info["dim_ca3"]
@@ -28,7 +28,8 @@ dim_eo = info["dim_eo"]
 K_lat = info["K_lat"]
 beta = info["beta"]
 K = info["K"]
-K_ca3 = 22
+K_ca3 = 10
+# best_alpha = 0.208
 best_alpha = 0.208
 
 use_bias = True
@@ -37,12 +38,11 @@ logger("{use_bias=}")
 logger(f"{K=}, {K_lat=}, {beta=}, {best_alpha=}")
 
 # get weights from the autoencoder
-# get weights from the autoencoder
 if use_bias:
     W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(
                     bias=True)
 else:
-    W_ei_ca1, W_ca1_eo = autoencoder.get_weights(bias=False)
+    W_ei_ca1, W_ca1_eo, _, _ = autoencoder.get_weights(bias=False)
     B_ei_ca1, B_ca1_eo = None, None
 
 logger("<<< Loaded session >>>")
@@ -50,8 +50,8 @@ logger("<<< Loaded session >>>")
 
 """ data """
 
-num_samples = 100
-num_rep = 500
+num_samples = 5
+num_rep = 20
 datasets = []
 
 stimuli = utils.sparse_stimulus_generator(N=num_samples,
@@ -80,7 +80,7 @@ for k in range(num_samples):
 
 """ run """
 
-num_alphas = 1
+num_alphas = 5
 if num_alphas < 2:
     alphas = [best_alpha]
 else:
@@ -147,7 +147,8 @@ for l in tqdm(range(num_rep)):
                     value = (y.T @ x) / \
                         (torch.norm(x) * torch.norm(y))
 
-                    outputs[l, h, i, j] = (value.item() - 0.2) / 0.8
+                    # outputs[l, h, i, j] = (value.item() - 0.2) / 0.8
+                    outputs[l, h, i, j] = value.item()
 
 
 """ plot """
@@ -290,6 +291,7 @@ elif plot_type == 4:
               fontsize=21, fontweight="light", pad=10)
     plt.xticks([])
     plt.yticks([])
+    plt.colorbar()
 
     plt.show()
 

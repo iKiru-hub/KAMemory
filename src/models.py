@@ -130,7 +130,7 @@ class MTL(nn.Module):
                  dim_ca3: int,
                  beta: float,
                  alpha: float=0.01,
-                 K_ca3: int=5,
+                 K_ca3: int=10,
                  identity_IS : bool=False,
                  random_IS : bool=False,
                  B_ei_ca1: torch.Tensor=None,
