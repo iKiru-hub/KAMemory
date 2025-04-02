@@ -18,7 +18,7 @@ except ModuleNotFoundError:
 
 """ settings """
 
-info, autoencoder = load_session(idx=1)
+info, autoencoder = load_session(idx=2)
 
 dim_ei = info["dim_ei"]
 dim_ca3 = info["dim_ca3"]

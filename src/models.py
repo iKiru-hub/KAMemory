@@ -7,20 +7,11 @@ from tqdm import tqdm
 import os, json
 from pprint import pprint
 
-try:
-    import utils
-except ModuleNotFoundError:
-    try:
-        import src.utils as utils
-    except ModuleNotFoundError:
-        raise ValueError("`utils` module not found")
+# local
+import utils
+from logger import logger
 
-try:
-    logger = utils.logger
-except AttributeError:
-    import warnings
-    warnings.warn("logger function not found")
-
+# cache_dir = "cache"
 cache_dir = "cache"
 cache_dir_2 = "src/cache"
 
@@ -225,7 +216,7 @@ class MTL(nn.Module):
 
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}," + \
             f" dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, " + \
-            f" bias={self.is_bias}" + \
+            f" bias={self.is_bias}, " + \
             f"beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, " + \
             f"K_o={self._K_out}"
 
@@ -449,7 +440,9 @@ def load_session(idx: int=None,
 
 if __name__ == "__main__":
 
-    main()
+    # main()
+
+    print("hello")
 
     # dim_ei = 100
     # dim_ca3 = 200

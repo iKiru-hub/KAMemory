@@ -147,4 +147,24 @@ figure c:
 
 
 
+--- 
+first figure, model arch.
+- a, b, | what is decodability
+
+second figure
+- show that the model works and solve the problem
+
+
+third reproducibility:
+- pc moving in space
+- over-repr. (e)
+- f) 
+
+
+fourth
+- decomposition of the memory trace
+- predictions
+
+
+
 

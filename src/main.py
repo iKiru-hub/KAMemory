@@ -6,14 +6,15 @@ import matplotlib.pyplot as plt
 
 try:
     import utils
-    from models import Autoencoder, MTL, logger, load_session
+    from models import Autoencoder, MTL, load_session
 except ModuleNotFoundError:
     try:
         import src.utils as utils
-        from src.models import Autoencoder, MTL, logger, load_session
+        from src.models import Autoencoder, MTL, load_session
     except ModuleNotFoundError:
         raise ValueError("`utils` module not found")
 
+from logger import logger
 
 
 if __name__ == "__main__":
@@ -152,7 +153,7 @@ if __name__ == "__main__":
                     K_ca3=K_ca3,
                     beta=beta,
                     alpha=alpha,
-                    shuffled_is=True)
+                    random_IS=True)
 
     logger(f"%MTL: {model}")
 
@@ -257,5 +258,6 @@ if __name__ == "__main__":
     # cbar.set_label("Error")
     # ax13.set_title("pattern - mtl")
     plt.show()
+
 
 

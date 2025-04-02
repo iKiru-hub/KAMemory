@@ -15,7 +15,7 @@ dim_ca1 = 50
 dim_eo = dim_ei
 
 # data settings
-num_samples = 20_000
+num_samples = 5_000
 K = 5
 
 training_samples = utils.sparse_stimulus_generator(N=num_samples,

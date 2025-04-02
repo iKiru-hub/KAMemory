@@ -11,20 +11,13 @@ import torch.autograd as autograd
 
 from numba import jit
 
-import logging
-try:
-    import coloredlogs
-    ISCOLORED = True
-except ModuleNotFoundError:
-    import warnings
-    ISCOLORED = False
-    warnings.warn("coloredlogs not installed")
 
 from tqdm import tqdm
 import os
 import json
 
 import models
+from logger import logger
 
 # print(f"{__name__}::{ISCOLORED=}")
 
@@ -764,6 +757,7 @@ def train_for_accuracy(alpha: float,
     info, autoencoder = models.load_session(
         idx=kwargs.get("idx", 0), verbose=verbose)
 
+
     # information
     dim_ei = info["dim_ei"]
     dim_ca3 = info["dim_ca3"]
@@ -1286,73 +1280,6 @@ def train_for_weight_plot(alpha: float,
 
 """ miscellanous """
 
-# logger
-def setup_logger(name: str="MAIN",
-                 colored: bool=ISCOLORED) -> logging.Logger:
-
-    """
-    this function sets up a logger
-
-    Parameters
-    ----------
-    name : str
-        name of the logger. Default="MAIN"
-    colored : bool
-        use colored logs. Default=True
-
-    Returns
-    -------
-    logger : object
-        logger object
-    """
-
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
-
-    # create a custom formatter
-    if colored:
-        formatter = coloredlogs.ColoredFormatter(
-            "%(asctime)s | %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S"
-        )
-
-        # create a colored stream handler with the custom formatter
-        handler = logging.StreamHandler()
-        handler.setFormatter(formatter)
-
-        # add the handler to the logger and disable propagation
-        logger.addHandler(handler)
-
-    logger.propagate = False
-
-    # wrapper class 
-    class LoggerWrapper:
-        def __init__(self, logger):
-            self.logger = logger
-
-        def __repr__(self):
-
-            self.logger.info(".")
-            return ""
-
-        def __call__(self, msg: str=""):
-            self.logger.info(msg)
-
-        def info(self, msg):
-            self.logger.info(msg)
-
-        def warning(self, msg):
-            self.logger.warning(msg)
-
-        def error(self, msg):
-            self.logger.error(msg)
-
-        def debug(self, msg, DEBUG: bool=True):
-            if DEBUG:
-                self.logger.debug(msg)
-
-    return LoggerWrapper(logger)
-
 
 def tqdm_enumerate(iter, **tqdm_kwargs):
     i = 0
@@ -1648,7 +1575,6 @@ def sparsemoid(z: torch.Tensor, K: int,
     return torch.sigmoid(z)
 
 
-logger = setup_logger("MAIN")
 
 
 if __name__ == "__main__":
@@ -1715,7 +1641,6 @@ if __name__ == "__main__":
     # --- test spars stimulus generator ---
     N = 2
     data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
-
 
 
 
