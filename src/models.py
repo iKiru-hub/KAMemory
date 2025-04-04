@@ -271,9 +271,9 @@ class MTL(nn.Module):
         x_eo = self.W_ca1_eo @ x_ca1 + self.B_ca1_eo
 
         # activation function
-        # x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
-        #                         K=self._K_out,
-        #                         beta=self._beta).reshape(-1, 1)
+        x_eo = utils.sparsemoid(x_eo.reshape(1, -1),
+                                K=self._K_out,
+                                beta=self._beta).reshape(-1, 1)
 
         self._ca1 = x_ca1
         self._ca3 = x_ca3

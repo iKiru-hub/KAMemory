@@ -28,9 +28,9 @@ dim_eo = info["dim_eo"]
 K_lat = info["K_lat"]
 beta = info["beta"]
 K = info["K"]
-K_ca3 = 10
+K_ca3 = 20
 # best_alpha = 0.208
-best_alpha = 0.208
+best_alpha = 0.408
 
 use_bias = True
 logger("{use_bias=}")
@@ -50,7 +50,7 @@ logger("<<< Loaded session >>>")
 
 """ data """
 
-num_samples = 5
+num_samples = 10
 num_rep = 20
 datasets = []
 
@@ -80,7 +80,7 @@ for k in range(num_samples):
 
 """ run """
 
-num_alphas = 5
+num_alphas = 1
 if num_alphas < 2:
     alphas = [best_alpha]
 else:
@@ -138,7 +138,7 @@ for l in tqdm(range(num_rep)):
 
                     # forward
                     y = model(x)
-                    # logger.debug(f"{x.shape}, {y.shape}")
+                    # logger.debug(f"{x.flatten().tolist()}, {y.flatten().tolist()}")
 
                     # record : cosine similarity
                     # outputs[l, h, i, j] = (y.T @ x) / \
