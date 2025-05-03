@@ -145,26 +145,37 @@ figure c:
 @kiru
 - [ ] **author list**
 
-
-
 --- 
-first figure, model arch.
-- a, b, | what is decodability
+first figure: **introduction to the question - model**
+- a) problem diagram ~neuroscience
+- b) architecture
+- c)![[error_plot.excalidraw.png]]
+- d) results with random IS
 
-second figure
-- show that the model works and solve the problem
-
+second figure: **decodability results** 
+- a) results with our IS
+- b) ![[error_plot.excalidraw.png]] w/ results
+- c)
 
 third reproducibility:
-- pc moving in space
-- over-repr. (e)
-- f) 
+- a) experimental layout
+- b) over-repr.
+- c) ca1 sorting
+- d) memory matrix | -> recency | are there experiments?
+- e) pc moving in space
 
+bonus
+- f) sparsity to tuning
 
 fourth
 - decomposition of the memory trace
 - predictions
 
 
+---
+experiments inspired by
+- btsp curve
 
+- changing the cue position
 
+- mild code refactoring

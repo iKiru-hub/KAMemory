@@ -16,7 +16,6 @@ During the entire 'lifetime' several stimuli $x$ are experienced and learnt in t
 **Decodability during learning**
 - downstream regions should maintain their interpretation of HP representations during learning
 
-
 ![[error_plot.excalidraw.png]]
 
 

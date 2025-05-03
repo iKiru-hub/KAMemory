@@ -1,10 +1,14 @@
 
-The main points are:
-- memory recall accuracy
+The main points are.
+
+**memory recall accuracy**
     - dependancy on the learning rate
     - dependancy on the internal sparsity
 
-- CA1 neuron tuning
+- link to experimental parameters and see the effects
+
+
+**CA1 neuron tuning**
     - tuning specialization spatial-nonspatial
     - experimental reproduction
 
