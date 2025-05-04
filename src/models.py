@@ -4,16 +4,18 @@ from torch import nn
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-import os, json
+import os, json, sys
 from pprint import pprint
+
+sys.path.append(os.path.join(os.getcwd().split("KAMemory")[0], "KAMemory/src"))
 
 # local
 import utils
 from logger import logger
 
 # cache_dir = "cache"
-cache_dir = "cache"
-cache_dir_2 = "src/cache"
+cache_dir = os.getcwd().split("KAMemory")[0] + "KAMemory/cache"
+cache_dir_2 = os.getcwd().split("KAMemory")[0] + "KAMemory/src/cache"
 
 
 """ Autoencoder """
@@ -220,7 +222,7 @@ class MTL(nn.Module):
             f"beta={self._beta}, alpha={self._alpha}, K_l={self._K_lat}, " + \
             f"K_o={self._K_out}"
 
-    def forward(self, x_ei: torch.Tensor, ca1: bool=False):
+    def forward(self, x_ei: torch.Tensor, ca1: bool=False, test: bool=False):
 
         """
         Forward pass
@@ -231,6 +233,8 @@ class MTL(nn.Module):
             input data
         ca1: bool
             return the data from CA1. Default is False
+        test: bool
+            Default is False
 
         Returns
         -------
@@ -263,7 +267,7 @@ class MTL(nn.Module):
                 IS = IS[torch.randperm(IS.size(0))]
 
         # weight update
-        if self.mode == "train":
+        if self.mode == "train" and not test:
             self.W_ca3_ca1 = nn.Parameter((1 - IS * self._alpha) * \
                 self.W_ca3_ca1 + self._alpha * (IS @ x_ca3.T))
 
@@ -293,12 +297,20 @@ class MTL(nn.Module):
 
         self.mode = "test"
 
+    @property
+    def testing_mode(self):
+        self.mode = "test"
+
     def resume_lr(self):
 
         """
         Resume learning rate
         """
 
+        self.mode = "train"
+
+    @property
+    def training_mode(self):
         self.mode = "train"
 
     def set_alpha(self, alpha: float):
@@ -366,6 +378,8 @@ def load_session(idx: int=None,
 
     global cache_dir
     global cache_dir_2
+
+    logger.debug(f"loading {idx=}, {cache_dir=} {cache_dir_2=} {os.getcwd()=}")
 
     # display the saved sessions
     try:

@@ -754,8 +754,9 @@ def train_for_accuracy(alpha: float,
     verbose = kwargs.get("verbose", False)
 
     # --- load autoencoder
+    logger.debug(f"{kwargs.get('idx', 0)=}")
     info, autoencoder = models.load_session(
-        idx=kwargs.get("idx", 0), verbose=verbose)
+        idx=kwargs.get("idx", 0))
 
 
     # information

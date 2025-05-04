@@ -179,3 +179,8 @@ experiments inspired by
 - changing the cue position
 
 - mild code refactoring
+
+
+
+---
+the more a neuron is spatially tuned then its spatial remapping is more pronounced
