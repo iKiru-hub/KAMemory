@@ -147,6 +147,7 @@ figure c:
 
 --- 
 first figure: **introduction to the question - model**
+gist: the IS cannot be random in BTSP
 - a) problem diagram ~neuroscience
 - b) architecture
 - c)![[error_plot.excalidraw.png]]
@@ -155,32 +156,40 @@ first figure: **introduction to the question - model**
 second figure: **decodability results** 
 - a) results with our IS
 - b) ![[error_plot.excalidraw.png]] w/ results
-- c)
+- c) memory matrix | -> recency | are there experiments?
+- d) 
 
 third reproducibility:
 - a) experimental layout
 - b) over-repr.
 - c) ca1 sorting
-- d) memory matrix | -> recency | are there experiments?
+- d) experimental layout
 - e) pc moving in space
 
 bonus
 - f) sparsity to tuning
 
-fourth
-- decomposition of the memory trace
-- predictions
-
-
 ---
 experiments inspired by
 - btsp curve
-
 - changing the cue position
-
 - mild code refactoring
-
-
 
 ---
 the more a neuron is spatially tuned then its spatial remapping is more pronounced
+
+---
++ add statistics to the reconstruction error
+
+---
+- [ ] **goal plot**
+plot that shows the similarity of activity of ca1 neurons when animal is in place 1 trial 1 and place 2 trial 2 is higher than the similarity wrt other positions, this because the cue is the same (stronger for neurons with equal or more cue tuning)
+
+- [x] **plot 2**
+- highlights overlap tuning
+- keep the sorting of trial 1 in plot of trial 2
+
+- [ ] **refactoring**
+1) .py for generating data -> folder/data.csv
+2) .ipynb for plotting from the data
+
