@@ -326,8 +326,10 @@ def sparsemoid(z: torch.Tensor, K: int,
 def cross_entropy(x: torch.Tensor, y: torch.Tensor, eps=1e-8):
     return F.binary_cross_entropy(x, y)
 
+
 def cosine_similarity_vec(x, y):
     return (y.T @ x) / (torch.norm(x) * torch.norm(y))
+
 
 def cosine_similarity_mat(matrix1: np.ndarray, matrix2: np.ndarray):
     """
@@ -955,6 +957,7 @@ def testing_mod(data: np.ndarray, model: object,
             x = batch[0] if not column else batch[0].reshape(-1, 1)
 
             new_alpha = np.maximum(alpha_baseline, alpha * alpha_samples[i])
+
 
             # Forward pass
             model.set_alpha(alpha=new_alpha)

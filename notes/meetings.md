@@ -189,7 +189,9 @@ plot that shows the similarity of activity of ca1 neurons when animal is in plac
 - highlights overlap tuning
 - keep the sorting of trial 1 in plot of trial 2
 
-- [ ] **refactoring**
+- [x] **refactoring**
 1) .py for generating data -> folder/data.csv
 2) .ipynb for plotting from the data
+
+- [ ] fix plot
 
