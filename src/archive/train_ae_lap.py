@@ -2,6 +2,8 @@ import numpy as np
 import torch
 import argparse
 from models import Autoencoder, logger
+import json
+
 import utils
 
 
@@ -155,3 +157,10 @@ with open(f"{dir_name}/info.json", "w") as f:
     json.dump(info, f)
 
 logger(f"<<< Model saved in {dir_name} >>>")
+
+
+if __name__ == "__main__":
+
+
+
+

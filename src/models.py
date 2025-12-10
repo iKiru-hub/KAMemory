@@ -4,6 +4,7 @@ from torch import nn
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import argparse
 import os, json, sys
 from pprint import pprint
 
@@ -11,14 +12,15 @@ sys.path.append(os.path.join(os.getcwd().split("KAMemory")[0], "KAMemory/src"))
 
 # local
 import utils
+import training
 from logger import logger
 
-# cache_dir = "cache"
-cache_dir = os.getcwd().split("KAMemory")[0] + "KAMemory/cache"
-cache_dir_2 = os.getcwd().split("KAMemory")[0] + "KAMemory/src/cache"
 
-
-""" Autoencoder """
+"""
+=============================================================================
+Autoencoder
+=============================================================================
+"""
 
 class Autoencoder(nn.Module):
 
@@ -55,14 +57,14 @@ class Autoencoder(nn.Module):
         self._use_bias = use_bias
 
         # Encoder
-        self.encoder = nn.Sequential(
-            nn.Linear(input_dim, encoding_dim, bias=use_bias),
-        )
+        self.encoder = nn.Sequential(nn.Linear(input_dim,
+                                               encoding_dim,
+                                               bias=use_bias),)
 
         # Decoder
-        self.decoder = nn.Sequential(
-            nn.Linear(encoding_dim, input_dim, bias=use_bias),
-        )
+        self.decoder = nn.Sequential(nn.Linear(encoding_dim,
+                                               input_dim,
+                                               bias=use_bias),)
 
     def forward(self, x: torch.Tensor, ca1: bool=False):
 
@@ -90,9 +92,7 @@ class Autoencoder(nn.Module):
         x = self.decoder(z)
         x = torch.sigmoid(10*(x-0.1))
 
-        if ca1:
-            return x, z
-
+        if ca1: return x, z
         return x
 
     def get_weights(self, bias: bool=False):
@@ -112,16 +112,16 @@ class Autoencoder(nn.Module):
         if bias and self._use_bias:
             ei_ca1_b = self.encoder[0].bias.data.reshape(-1, 1)
             ca1_eo_b = self.decoder[0].bias.data.reshape(-1, 1)
-
             return ei_ca1, ca1_eo, ei_ca1_b, ca1_eo_b
 
         return ei_ca1, ca1_eo, None, None
 
 
-""" Main model """
-
-
-Kis = 50
+"""
+=============================================================================
+MTL MODEL
+=============================================================================
+"""
 
 class MTL(nn.Module):
 
@@ -215,7 +215,6 @@ class MTL(nn.Module):
         self.recordings["W_ca3_ca1"] = []
 
     def __repr__(self):
-
         return f"MTL(dim_ei={self._dim_ei}, dim_ca1={self._dim_ca1}," + \
             f" dim_ca3={self.W_ei_ca3.shape[0]}, dim_eo={self._dim_eo}, " + \
             f" bias={self.is_bias}, " + \
@@ -283,17 +282,14 @@ class MTL(nn.Module):
         self._ca3 = x_ca3
         self._eo = x_eo
 
+        # --
         self.record(x_ei, IS)
-        if ca1:
-            return x_eo, x_ca1
 
+        if ca1: return x_eo, x_ca1
         return x_eo
 
     def pause_lr(self):
-
-        """
-        Pause learning rate
-        """
+        """ Pause learning rate """
 
         self.mode = "test"
 
@@ -302,10 +298,7 @@ class MTL(nn.Module):
         self.mode = "test"
 
     def resume_lr(self):
-
-        """
-        Resume learning rate
-        """
+        """ Resume learning rate """
 
         self.mode = "train"
 
@@ -314,10 +307,7 @@ class MTL(nn.Module):
         self.mode = "train"
 
     def set_alpha(self, alpha: float):
- 
-        """
-        Set the learning rate
-        """
+        """ Set the learning rate """
 
         self._alpha = alpha
 
@@ -348,15 +338,18 @@ class MTL(nn.Module):
 
 
 
-""" load AE and info """
+"""
+=============================================================================
+Local utils
+=============================================================================
+"""
 
 
 def load_session(idx: int=None,
                  verbose: bool=True) -> tuple:
 
     """
-    Load the training information and
-    the autoencoder model from the saved
+    Load the training information and the autoencoder model from the saved
     sessions
 
     Parameters
@@ -376,24 +369,17 @@ def load_session(idx: int=None,
         autoencoder model
     """
 
-    global cache_dir
-    global cache_dir_2
-
-    logger.debug(f"loading {idx=}, {cache_dir=} {cache_dir_2=} {os.getcwd()=}")
-
     # display the saved sessions
     try:
-        try:
-            ae_sessions = [f for f in os.listdir(cache_dir) if "ae" in f]
-        except FileNotFoundError:
-            cache_dir = cache_dir_2
-            ae_sessions = [f for f in os.listdir(cache_dir) if "ae" in f]
+        ae_sessions = [f for f in os.listdir(utils.AE_PATH) if "ae" in f]
     except FileNotFoundError:
-        raise ValueError(f"nor {cache_dir} neither {cache_dir_2} found")
+        logger.error(f"import error, maybe wrong path?\n" + \
+                     f"current: {os.getcwd()}\nqueried: {utils.AE_PATH}")
 
     if len(ae_sessions) == 0:
         raise ValueError("No saved sessions found")
 
+    # -- select autoencoder
     if idx is None or idx < 0:
 
         logger("Saved sessions:")
@@ -405,11 +391,10 @@ def load_session(idx: int=None,
     elif verbose:
         logger(f"Pre-selected session: [{idx}]")
 
-    # load the session
+    # -- load selected session
     session = ae_sessions[idx]
-    with open(f"{cache_dir}/{session}/info.json", "r") as f:
+    with open(f"{utils.AE_PATH}/{session}/info.json", "r") as f:
         info = json.load(f)
-
 
     if "network_params" in info:
         input_dim = info["network_params"]["dim_ei"]
@@ -428,9 +413,7 @@ def load_session(idx: int=None,
             logger.warning("bias not found in the info file, set to True")
             bias = True
 
-    logger.debug(f"{bias=}")
-
-    # load the model
+    # -- declare autoencoder
     model = Autoencoder(input_dim=input_dim,
                         encoding_dim=encoding_dim,
                         activation=None,
@@ -438,65 +421,96 @@ def load_session(idx: int=None,
                         beta=beta,
                         use_bias=bias)
 
-    model.load_state_dict(
-        torch.load(f"{cache_dir}/{session}/autoencoder.pt"))
-        # torch.load(f"{cache_dir}/{session}/autoencoder.pt",
-        #            weights_only=True))
+    model.load_state_dict(torch.load(f"{utils.AE_PATH}/{session}/autoencoder.pt"))
 
     if verbose:
-        logger("info:")
+        logger("Retrieved autoencoder hyper-parameters and session:")
         pprint(info)
 
     return info, model
 
 
+def local_main():
+
+    """ local testing function """
+
+    dim_ei = 100
+    dim_ca3 = 200
+    dim_ca1 = 150
+    dim_eo = 100
+    K_lat = 10
+    K_out = 11
+    K_ca3 = 11
+    beta = 10.
+    alpha=0.1
+
+    model = MTL(W_ei_ca1=torch.randn(dim_ca1, dim_ei),
+                W_ca1_eo=torch.randn(dim_eo, dim_ca1),
+                K_lat=K_lat,
+                K_out=K_out,
+                K_ca3=K_ca3,
+                beta=beta,
+                alpha=alpha,
+                dim_ca3=dim_ca3)
+
+    input_data = torch.randn(dim_ei, 1)  # Batch size of 1 for simplicity
+
+    with torch.no_grad():
+        output_data = model(input_data)
+
+    logger(f"input shape: {input_data.shape}")
+    logger(f"input shape: {output_data.shape}")
+
+    # Generate some random data
+    N = 10
+    size = 50
+
+    heads = 3
+    variance = 0.05
+    higher_heads = heads 
+    higher_variance = 0.075
+
+    samples = utils.stimulus_generator(N, size, heads, variance,
+                                       higher_heads=higher_heads,
+                                       higher_variance=higher_variance,
+                                       plot=False)
+
+    # make model
+    model = Autoencoder(input_dim=size, encoding_dim=10)
+
+    # train model
+    epochs = 2e3
+    loss, model = training.train_autoencoder(samples, samples, model, epochs=int(epochs),
+                                             batch_size=5, learning_rate=1e-3)
+    logger(f"autoencoder loss: {loss:.3f}")
+
+    # reconstruct data
+    training.reconstruct_data(samples, num=5, model=model)
 
 
 if __name__ == "__main__":
 
-    # main()
+    # -- fetch user arguments
+    parser = argparse.ArgumentParser(description="loading Autoencoder")
+    parser.add_argument('--idx', type=int,
+                        help='session index',
+                        default=-1)
+    parser.add_argument('--simulate', action='store_true',
+                        help='verbose', default=False)
+    args = parser.parse_args()
 
-    print("hello")
+    logger(f"-- @{__file__} --")
 
-    # dim_ei = 100
-    # dim_ca3 = 200
-    # dim_ca1 = 150
-    # dim_eo = 100
+    # ---
 
-    # model = MTL(W_ei_ca1=torch.randn(dim_ca1, dim_ei),
-    #             W_ca1_eo=torch.randn(dim_eo, dim_ca1),
-    #             dim_ca3=dim_ca3, lr=0.9)
+    # train and test the autoencoder and the model
+    if args.simulate:
+        local_main()
 
-    # input_data = torch.randn(dim_ei, 1)  # Batch size of 1 for simplicity
+    # check session loading 
+    else:
+        idx = None if args.idx < 0 else args.idx
+        info, model = load_session(idx=idx, verbose=True)
 
-    # with torch.no_grad():
-    #     output_data = model(input_data)
 
-    # print(input_data.shape)
-    # print(output_data.shape)
-
-    # # Generate some random data
-    # N = 100
-    # size = 50
-
-    # heads = 3
-    # variance = 0.05
-    # higher_heads = heads 
-    # higher_variance = 0.075
-
-    # samples = utils.stimulus_generator(N, size, heads, variance,
-    #                              higher_heads=higher_heads,
-    #                              higher_variance=higher_variance,
-    #                              plot=False)
-
-    # # make model
-    # model = Autoencoder(input_dim=size, encoding_dim=10)
-
-    # # train model
-    # epochs = 2e3
-    # model = train_autoencoder(samples, model, epochs=int(epochs),
-    #                           batch_size=5, learning_rate=1e-3)
-
-    # # reconstruct data
-    # reconstruct_data(samples, num=5, model=model)
 
