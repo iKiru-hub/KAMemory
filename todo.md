@@ -9,9 +9,9 @@
 
 ## plots
 **1**
-- [ ] group distance plot + statistical tests
+- [1] group distance plot + statistical tests
 
 **2**
-- [ ] scatter plot accuracy vs ca1-is similarity
+- [2] scatter plot accuracy vs ca1-is similarity
 
 
