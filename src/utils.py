@@ -504,6 +504,34 @@ def sparse_stimulus_generator_sensory(num_stimuli: int, K : int,
 
 
 
+def make_equal_tuning(n: int, nj: int):
+
+    i1 = np.arange(n).tolist()
+    u1 = np.ones(n) * nj
+    w12 = []
+
+    for i in range(n):
+        if len(i1) >= nj:
+            j2 = np.random.choice(i1, replace=False, size=nj)
+        else:
+            j2 = np.random.choice(i1, replace=False, size=len(i1))
+        w12 += [j2.tolist()]
+
+        # update
+        to_del = []
+        for _j in j2:
+            u1[_j] -= 1
+            if u1[_j] == 0:
+                to_del += [_j]
+                for k, _i in enumerate(i1):
+                    if _i == _j:
+                        del i1[k]
+                        break
+
+    return w12
+
+
+
 if __name__ == "__main__":
 
 
@@ -566,8 +594,19 @@ if __name__ == "__main__":
     # plt.show()
 
     # --- test spars stimulus generator ---
-    N = 2
-    data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
+    # N = 2
+    # data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
+
+
+    n = 10
+    nj = 4
+    w = make_equal_tuning(n, nj)
+    print(f"{n=} {nj=}\n{w=}")
+
+    z = np.zeros(n)
+    for wi in w:
+        z[wi] += 1
+    print(z)
 
 
 
