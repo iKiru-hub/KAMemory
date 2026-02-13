@@ -3,16 +3,13 @@ import numpy as np
 import argparse
 
 import matplotlib.pyplot as plt
+import os, sys
+sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 
-try:
-    import utils
-    from models import Autoencoder, MTL, load_session
-except ModuleNotFoundError:
-    try:
-        import src.utils as utils
-        from src.models import Autoencoder, MTL, load_session
-    except ModuleNotFoundError:
-        raise ValueError("`utils` module not found")
+import utils
+import training as tr
+import visualization as vis
+from models import Autoencoder, MTL, load_session
 
 from logger import logger
 
@@ -104,7 +101,7 @@ if __name__ == "__main__":
     # train autoencoder
     if not args.load:
         epochs = 1_000
-        loss_ae, autoencoder = utils.train_autoencoder(
+        loss_ae, autoencoder = tr.train_autoencoder(
                         training_data=training_samples,
                         test_data=test_samples,
                         model=autoencoder,
@@ -113,7 +110,7 @@ if __name__ == "__main__":
         logger(f"<<< Autoencoder trained [loss={loss_ae:.4f}] >>>")
 
     # reconstruct data
-    out_ae, latent_ae = utils.reconstruct_data(
+    out_ae, latent_ae = tr.reconstruct_data(
                                     data=training_sample_btsp,
                                     num=num_btsp_samples,
                                     model=autoencoder,
@@ -168,10 +165,10 @@ if __name__ == "__main__":
         #                              model=model_rnd,
         #                              column=True)
 
-        loss_mtl, _ = utils.testing(data=training_sample_btsp,
+        loss_mtl, _ = tr.testing(data=training_sample_btsp,
                                     model=model,
                                     column=True)
-        loss_mtl_rnd, _ = utils.testing(data=training_sample_btsp,
+        loss_mtl_rnd, _ = tr.testing(data=training_sample_btsp,
                                         model=model_rnd,
                                         column=True)
         logger(f"<<< MTL trained [{loss_mtl:.3f}] >>>")
@@ -179,7 +176,7 @@ if __name__ == "__main__":
 
     # reconstruct data
     model.pause_lr()
-    out_mtl, latent_mtl = utils.reconstruct_data(
+    out_mtl, latent_mtl = tr.reconstruct_data(
                      data=training_sample_btsp,
                      num=num_btsp_samples,
                      model=model,
@@ -188,7 +185,7 @@ if __name__ == "__main__":
     rec_loss = np.mean((training_sample_btsp - out_mtl)**2).item()
 
     model_rnd.pause_lr()
-    out_mtl_rnd, latent_mtl_rnd = utils.reconstruct_data(
+    out_mtl_rnd, latent_mtl_rnd = tr.reconstruct_data(
                      data=training_sample_btsp,
                      num=num_btsp_samples,
                      model=model_rnd,
@@ -226,7 +223,7 @@ if __name__ == "__main__":
 
     is_squash = False
 
-    utils.plot_squashed_data(data=training_sample_btsp,
+    vis.plot_squashed_data(data=training_sample_btsp,
                              ax=ax12,
                              title="Patterns",
                              squash=is_squash,
@@ -234,11 +231,11 @@ if __name__ == "__main__":
     # utils.plot_squashed_data(data=out_ae, ax=ax22,
     #                          title="Autoencoder",
     #                          squash=is_squash)
-    utils.plot_squashed_data(data=out_mtl_rnd, ax=ax22,
+    vis.plot_squashed_data(data=out_mtl_rnd, ax=ax22,
                              title=f"shuffled $IS$ - reconstruction loss={rec_loss_rnd:.3f}",
                              squash=is_squash,
                              proper_title=True)
-    utils.plot_squashed_data(data=out_mtl, ax=ax32,
+    vis.plot_squashed_data(data=out_mtl, ax=ax32,
                              title=f"$IS$ - reconstruction loss={rec_loss:.3f}",
                              squash=is_squash,
                              proper_title=True)

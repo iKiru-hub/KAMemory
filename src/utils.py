@@ -13,8 +13,9 @@ import torch.nn.functional as F
 from numba import jit
 
 from tqdm import tqdm
-import os
+import os, sys
 import json
+sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 
 import models
 import visualization
@@ -530,6 +531,27 @@ def make_equal_tuning(n: int, nj: int):
 
     return w12
 
+def test_equal_tuning(n: int=5, nj: int=2):
+
+    c = np.arange(n)
+    w = make_equal_tuning(n, nj)
+
+    # results
+    print(f"{n=} {nj=}\n{w=}")
+    z = np.zeros(n)
+    for wi in w: z[wi] += 1
+    print(z)
+
+    # plot
+    fig, ax = plt.subplots()
+    for i in range(n):
+        plt.scatter(i, 1, s=200, color="black")
+        plt.scatter(i, 0, s=200, color="black")
+        for wj in w[i]:
+            plt.plot([i, wj], [1, 0], color="grey")
+
+    plt.axis('off')
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -597,16 +619,7 @@ if __name__ == "__main__":
     # N = 2
     # data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
 
-
-    n = 10
-    nj = 4
-    w = make_equal_tuning(n, nj)
-    print(f"{n=} {nj=}\n{w=}")
-
-    z = np.zeros(n)
-    for wi in w:
-        z[wi] += 1
-    print(z)
+    test_equal_tuning(n=10, nj=3)
 
 
 

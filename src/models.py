@@ -5,10 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import argparse
-import os, json, sys
+import os, sys, json
 from pprint import pprint
 
-sys.path.append(os.path.join(os.getcwd().split("KAMemory")[0], "KAMemory/src"))
+sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 
 # local
 import utils
@@ -16,11 +16,9 @@ import training
 from logger import logger
 
 
-"""
-=============================================================================
-Autoencoder
-=============================================================================
-"""
+# =============================================================================
+# Autoencoder
+# =============================================================================
 
 class Autoencoder(nn.Module):
 
@@ -117,11 +115,9 @@ class Autoencoder(nn.Module):
         return ei_ca1, ca1_eo, None, None
 
 
-"""
-=============================================================================
-MTL MODEL
-=============================================================================
-"""
+# =============================================================================
+# MTL MODEL
+# =============================================================================
 
 class MTL(nn.Module):
 
@@ -184,8 +180,10 @@ class MTL(nn.Module):
         self._alpha = alpha
 
         # Initialize weight matrices for each layer
-        self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
-                                                 self._dim_ei) / dim_ca3)
+        # self.W_ei_ca3 = nn.Parameter(torch.randn(dim_ca3,
+        #                                          self._dim_ei) / dim_ca3)
+        self.W_ei_ca3 = nn.Parameter(torch.Tensor(
+                        utils.make_equal_tuning(dim_ca3, self._dim_ei)) / dim_ca3)
         self.W_ei_ca1 = nn.Parameter(W_ei_ca1)
         self.W_ca3_ca1 = nn.Parameter(torch.zeros(self._dim_ca1, dim_ca3))
         self.W_ca1_eo = nn.Parameter(W_ca1_eo)
@@ -336,13 +334,9 @@ class MTL(nn.Module):
         self.recordings["W_ca3_ca1"] = []
 
 
-
-
-"""
-=============================================================================
-Local utils
-=============================================================================
-"""
+# =============================================================================
+# Local utils
+# =============================================================================
 
 
 def load_session(idx: int=None,

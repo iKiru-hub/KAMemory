@@ -13,9 +13,10 @@ import torch.nn.functional as F
 from numba import jit
 
 from tqdm import tqdm
-import os
+import os, sys
 import json
 
+sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 import models
 from logger import logger
 
@@ -1450,7 +1451,6 @@ def sparse_stimulus_generator_sensory(num_stimuli: int, K : int,
     samples = samples.astype(np.float32) # [ 00000 |      ]
 
     return samples, lap_cues, alpha_samples
-
 
 
 def get_track_input(track_params: dict, network_params: dict, cue_duration: int=1):

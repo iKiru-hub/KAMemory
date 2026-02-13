@@ -1,10 +1,11 @@
 import numpy as np
 import torch
 from models import Autoencoder, logger
-import os, json
+import os, sys, json
 from pprint import pprint
 import argparse
 
+sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 import utils
 import training
 

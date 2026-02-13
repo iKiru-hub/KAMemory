@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
+import os, sys
 
+sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 
 # ==============================================================================
 
