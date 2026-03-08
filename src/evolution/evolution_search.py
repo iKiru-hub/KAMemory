@@ -32,6 +32,7 @@ index=4 : alpha
 """
 
 COLORS = ("red", "black", "blue", "green", "orange", "brown")
+GENOME_KEYS = ("K_lat", "K_ca3", "K_out", "beta", "alpha")
 
 # --------------------------------------------------
 # --------------------------------------------------
@@ -41,11 +42,12 @@ def fit_population(population: list, datasets: list, settings: dict):
 
 
 def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
-         save: bool=False):
+         sigma: float=20., save: bool=False):
 
     # -- settings
     settings = load_autoencoder(index=0)
     settings["num_samples"] = num_samples
+    settings["sigma"] = sigma
     datasets = make_datasets(num_samples=num_samples, num_reps=num_reps,
                              dim_ei=settings["dim_ei"], K=int(settings["K"]))
 
@@ -53,7 +55,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     name = f"run_{len(os.listdir('logs/'))}"
     name += f"_{time.localtime().tm_mday}{time.localtime().tm_mon}"
     name += f"_{time.localtime().tm_hour}{time.localtime().tm_min}"
-    info = {"genome": [],
+    info = {"genome": {},
             "fitness": 0.,
             "dim_ei": settings["dim_ei"],
             "dim_ca1": settings["dim_ca1"],
@@ -113,6 +115,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
             record[l][_d] += [_pop]
 
     # -- run
+    best_fitness = 0.
+    best_genome = []
     for gen in range(ngen):
 
         for lin in range(num_lineages):
@@ -120,6 +124,11 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
             fitness = fit_population(population, datasets, settings)
             _fitness = -1.*np.log(np.array(fitness))
             logger(f"gen={gen+1} | [{lin}] fitness={np.max(_fitness):.3f}")
+
+            # record best genome
+            if best_fitness < _fitness.max():
+                best_fitness = _fitness.max()
+                best_genome = population[np.argmax(_fitness)]
 
             # logs
             record[lin]["fitness"] += [_fitness]
@@ -159,8 +168,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
 
         # save
         if save:
-            info["genome"] = population[np.argmax(_fitness)]
-            info["fitness"] = np.max(_fitness)
+            info["genome"] = {_n: _g for _n, _g in zip(GENOME_KEYS, best_genome)}
+            info["fitness"] = best_fitness
             save_genome(info=info, name=name)
 
 

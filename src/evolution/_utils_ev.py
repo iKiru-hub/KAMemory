@@ -54,10 +54,58 @@ def load_autoencoder(index: int=0) -> dict:
             "B_ei_ca1": B_ei_ca1, "B_ca1_eo": B_ca1_eo}
 
 
+def exp_eval(data: np.ndarray, sigma: float):
+
+    """
+    evaluation of the results as weighted average
+    with explonential weights
+
+    Parameters
+    ----------
+    data: np.ndarray
+        shape (num_stimuli, num_stimuli)
+    sigma: float
+        standard deviation of the exponential kernel
+
+    Return
+    ------
+    float
+    """
+
+    n = len(data)
+    out = np.zeros(n)
+    for r in range(n):
+        denom = 0.
+        for c in range(r, -1, -1):
+            w = np.exp(-((c-r)/sigma)**2)
+            out[r] += w * np.clip(data[r, c], 0., 1.)
+            denom += w
+
+        out[r] = out[r] / denom
+
+    return out
+
 def evaluate_genome(genome: list, datasets: list, settings: dict):
 
-    """ evaluation of a genome """
+    """
+    evaluation of a genome
 
+    Parameters
+    ----------
+    genome: list
+        parameters for the model to evolve
+    datasets: list
+        list of Dataloader objects
+    settings: dict
+        autoencoder weights and run parameters
+
+    Return
+    ------
+    float: accuracy
+    """
+
+    assert "sigma" in tuple(settings.keys()), "no" + \
+        " 'sigma' provided in settings"
     num_samples = settings["num_samples"]
     W_ei_ca1 = settings["W_ei_ca1"]
     W_ca1_eo = settings["W_ca1_eo"]
@@ -109,17 +157,24 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
                     value = (y.T @ x) / (torch.norm(x) * torch.norm(y))
                     accuracy[l, i, j] = (value.item() - 0.2) / 0.8
 
-    result = accuracy.mean(axis=0).mean().item()
-    if np.isnan(result): result = 0.
+    result = accuracy.mean(axis=0)
+    if np.any(np.isnan(result)):
+        return 0.
 
-    return result
+    return exp_eval(data=result, sigma=settings["sigma"]).mean()
 
 def save_genome(info: dict, name: str):
+
+    """ save an evolved genome """
+
     with open(f"logs/{name}.json", "w") as f:
         json.dump(info, f)
 
 
 def load_genome(index: int):
+
+    """ load an evolved and saved genome """
+
     name = ""
     path = os.path.abspath(__file__).split("src")[0] + \
         "src/evolution/logs"
