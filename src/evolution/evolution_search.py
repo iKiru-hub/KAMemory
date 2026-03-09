@@ -11,9 +11,17 @@ import utils
 from logger import logger
 from _utils_ev import *
 
-sys.path.append(os.getcwd().split("doki")[0] + \
-    "doki/side_lab/evolution_cpp/core/cpp1/build")
-import evolution as ev
+try:
+    sys.path.append(os.getcwd().split("doki")[0] + \
+        "doki/side_lab/evolution_cpp/core/cpp1/build")
+    import evolution as ev
+except ModuleNotFoundError:
+    try:
+        sys.path.append(os.getcwd().split("lab")[0] + \
+            "lab/studio/navigator/core/cpp1/build")
+        import evolution as ev
+    except ModuleNotFoundError:
+        raise ModuleNotFoundError("not found at all")
 
 
 """
@@ -33,6 +41,7 @@ index=4 : alpha
 
 COLORS = ("red", "black", "blue", "green", "orange", "brown")
 GENOME_KEYS = ("K_lat", "K_ca3", "K_out", "beta", "alpha")
+SIGMA = 35
 
 # --------------------------------------------------
 # --------------------------------------------------
@@ -42,12 +51,12 @@ def fit_population(population: list, datasets: list, settings: dict):
 
 
 def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
-         sigma: float=20., save: bool=False):
+         save: bool=False):
 
     # -- settings
     settings = load_autoencoder(index=0)
     settings["num_samples"] = num_samples
-    settings["sigma"] = sigma
+    settings["sigma"] = SIGMA
     datasets = make_datasets(num_samples=num_samples, num_reps=num_reps,
                              dim_ei=settings["dim_ei"], K=int(settings["K"]))
 
@@ -83,7 +92,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     # plot
     fig, ax = plt.subplots()
     fig2, ax2 = plt.subplots(dim, num_lineages, sharex=True, sharey=True)
-    record = {"fitness": []}
+    record = {"fitness": [], "sigma": SIGMA}
     for _d in range(dim): record[_d] = []
 
     logger(f"NPOP={npop}")
@@ -146,7 +155,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
             for h in range(num_lineages):
                 for x, g in enumerate(np.array(record[h]["fitness"])):
                     ax.scatter([x]*len(population), g, s=30, color=record[h]["color"],
-                               marker="x", alpha=0.5)
+                               marker="x", alpha=0.1)
                 ax.plot(range(len(record[h]["history"])), record[h]["history"], color=record[h]["color"], lw=2)
             ax.set_xlabel("generations")
             ax.set_ylabel("fitness")
@@ -170,6 +179,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
         if save:
             info["genome"] = {_n: _g for _n, _g in zip(GENOME_KEYS, best_genome)}
             info["fitness"] = best_fitness
+            info["record"] = record
             save_genome(info=info, name=name)
 
 

@@ -176,6 +176,8 @@ def sparsemoid(z: torch.Tensor, K: int,
 
         alpha = z_sorted[:, K-1: K+1]
         alpha = alpha.mean(axis=1).reshape(-1, 1)
+    else:
+        alpha = 0.
 
     # apply
     z = beta * (z - alpha)
@@ -504,7 +506,6 @@ def sparse_stimulus_generator_sensory(num_stimuli: int, K : int,
     return samples, lap_cues, alpha_samples
 
 
-
 def make_equal_tuning(n: int, nj: int):
 
     i1 = np.arange(n).tolist()
@@ -530,6 +531,7 @@ def make_equal_tuning(n: int, nj: int):
                         break
 
     return w12
+
 
 def test_equal_tuning(n: int=5, nj: int=2):
 
