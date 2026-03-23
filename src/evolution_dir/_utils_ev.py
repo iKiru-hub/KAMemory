@@ -11,6 +11,10 @@ import models
 import utils
 
 
+MAX_VAL = 1e4
+MIN_VAL = 1
+
+
 """ data """
 
 def make_datasets(num_samples: int=200, num_reps: int=2, dim_ei: int=50, K: int=10):
@@ -43,13 +47,16 @@ def load_autoencoder(index: int=0) -> dict:
     """ load the session of an autoencoder with its metadata """
 
     info, autoencoder = models.load_session(idx=index, verbose=False)
+    info = info["network_params"]
 
     # get parameters
     W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
 
+    print(info)
+
     return {"dim_ei": info["dim_ei"],
             "dim_ca1": info["dim_ca1"], "dim_eo": info["dim_eo"],
-            "K": info["K"],
+            "K": info["K_ei"],
             "W_ei_ca1": W_ei_ca1, "W_ca1_eo": W_ca1_eo,
             "B_ei_ca1": B_ei_ca1, "B_ca1_eo": B_ca1_eo}
 
@@ -127,11 +134,12 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
                                B_ei_ca1=B_ei_ca1,
                                B_ca1_eo=B_ca1_eo,
                                dim_ca3=settings["dim_ei"],
-                               K_lat=int(max((1, 10*genome[0]))),
-                               K_ca3=int(max((1, 10*genome[1]))),
-                               K_out=int(max((1, 10*genome[2]))),
-                               beta=abs(100*genome[3]),
-                               alpha=np.clip(genome[4], 0.01, 0.99))
+                               K_lat=int(np.clip(10*genome[0], MIN_VAL, MAX_VAL)),
+                               K_ca3=int(np.clip(10*genome[1], MIN_VAL, MAX_VAL)),
+                               K_out=int(np.clip(10*genome[2], MIN_VAL, MAX_VAL)),
+                               beta=abs(float(np.clip(100*genome[3],
+                                                      MIN_VAL, MAX_VAL))),
+                               alpha=float(np.clip(genome[4], 0.01, 0.99)))
 
             # train a dataset with pattern index 0.. i
             model.eval()
