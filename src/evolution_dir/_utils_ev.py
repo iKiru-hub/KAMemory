@@ -46,7 +46,7 @@ def load_autoencoder(index: int=0) -> dict:
 
     """ load the session of an autoencoder with its metadata """
 
-    info, autoencoder = models.load_session(idx=index, verbose=False)
+    info, autoencoder = models.load_session(idx=index, verbose=True)
     # info = info["network_params"]
 
     # get parameters

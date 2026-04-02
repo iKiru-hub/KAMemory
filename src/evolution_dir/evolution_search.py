@@ -308,6 +308,9 @@ if __name__ == "__main__":
     parser.add_argument('--reps', type=int,
                         help='number of repetitions',
                         default=1)
+    parser.add_argument('--index', type=int,
+                        help='index of the autoencoder',
+                        default=1)
     parser.add_argument('--lineages', type=int,
                         help='number of lineages',
                         default=2)
@@ -315,7 +318,9 @@ if __name__ == "__main__":
 
 
     main(npop=args.pop, ngen=args.gen, num_samples=int(args.samples),
-         num_reps=args.reps, save=args.save, num_lineages=args.lineages)
+         num_reps=args.reps, save=args.save,
+         load_index=args.index,
+         num_lineages=args.lineages)
 
     logger("[done]")
 
