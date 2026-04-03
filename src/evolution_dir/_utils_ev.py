@@ -196,7 +196,8 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
 
                     # record : cosine similarity
                     value = (y.T @ x) / (torch.norm(x) * torch.norm(y))
-                    accuracy[l, i, j] = (value.item() - 0.2) / 0.8
+                    # accuracy[l, i, j] = (value.item() - 0.2) / 0.8
+                    accuracy[l, i, j] = value.item()
 
     result = accuracy.mean(axis=0)
     if np.any(np.isnan(result)):

@@ -45,59 +45,68 @@ GENOME_CONFIGS = {
     "K_lat" : {"active": False,
                "color": "red",
                "init": 15,
-               "init": 15,
+               "var": 5,
                "min": 10,
                "max": 100},
     "K_out" : {"active": False,
                "color": "blue",
                "init": 5,
+               "var": 1,
                "min": 10,
                "max": 100},
     "K_ca3" : {"active": True,
                "color": "black",
                "init": 15,
+               "var": 5,
                "scale": 10,
                "min": 1,
                "max": 50},
     "beta_eo"  : {"active": True,
                   "color": "green",
                   "init": 20,
+                  "var": 8,
                   "scale": 100,
                   "min": 0,
                   "max": 400},
     "beta_is"  : {"active": True,
                   "color": "green",
                   "init": 20.,
+                  "var": 8.,
                   "scale": 100,
                   "min": 0,
                   "max": 400},
     "beta_ca1"  : {"active": True,
                    "color": "green",
                    "init": 100,
+                   "var": 10,
                    "scale": 100,
                    "min": 0,
                    "max": 400},
     "beta_ca3"  : {"active": True,
                    "color": "green",
                    "init": 100,
+                   "var": 10,
                    "scale": 100,
                    "min": 0,
                    "max": 400},
     "alpha" : {"active": True,
                "color": "orange",
                "init": 0.1,
+               "var": 0.1,
                "scale": 1.,
                "min": 0,
                "max": 1},
     "num_swaps_ca1": {"active": False,
                       "color": "purple",
                       "init": 1.,
+                      "var": 2.,
                       "scale": 1.,
                       "min": 1,
                       "max": 50},
     "num_swaps_ca3": {"active": False,
                       "color": "purple",
                       "init": 1.,
+                      "var": 2.,
                       "scale": 1.,
                       "min": 1,
                       "max": 10}
@@ -129,10 +138,10 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     settings["num_samples"] = num_samples
     settings["sigma"] = SIGMA
     settings["genome_configs"] = GENOME_CONFIGS
-    for k, v in settings["genome_configs"].items():
-        settings["genome_configs"][k]["var"] = np.sqrt(
-                settings["genome_configs"][k]["max"] - \
-                settings["genome_configs"][k]["min"])
+    # for k, v in settings["genome_configs"].items():
+    #     settings["genome_configs"][k]["var"] = np.sqrt(
+    #             settings["genome_configs"][k]["max"] - \
+    #             settings["genome_configs"][k]["min"])
 
     # -- dataset
     if K_data == -1:
@@ -174,12 +183,13 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     means = []
     variances = []
     for k, v in settings["genome_configs"].items():
-        means += [v["init"]]
-        variances += [v["var"]]
+        means += [float(v["init"])]
+        variances += [float(v["var"])]
 
     # space = [[0.5, 0.5]] * 3
     # space += [[0.5, 0.5], [0.4, 0.4]]
 
+    logger.debug(f"{variances=}")
     evolution = ev.Evolution(settings_ev, means, variances)
 
     # plot
@@ -264,9 +274,17 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
                 for h in range(num_lineages):
                     ax2[k][h].clear()
                     ax2[k][h].grid()
-                    for x, g in enumerate(np.array(record[h][k])):
-                        ax2[k][h].scatter([x]*len(g), g, s=30, c=record[h]['fitness'][x],
-                                       cmap="Blues_r", alpha=0.8)
+                    # for x, g in enumerate(np.array(record[h][k])):
+                        # ax2[k][h].scatter([x]*len(g), g, s=30, c=record[h]['fitness'][x],
+                        #                cmap="Blues_r", alpha=0.8)
+                        # ax2[k][h].scatter([x], g.mean(), s=40, color="blue")
+                        # ax2[k][h].plot([x, x], [g.mean()+g.var(), g.mean()-g.var()], "b-")
+
+                    x_range = range(len(record[h][k]))
+                    mean = np.array(record[h][k]).mean(axis=1)
+                    std = np.array(record[h][k]).std(axis=1)
+                    ax2[k][h].fill_between(x_range, mean - std, mean + std, alpha=0.1, color="blue")
+                    ax2[k][h].plot(x_range, mean, "-o", color="blue", alpha=0.8)
                     # ax2[k][h].set_ylim(minv, maxv)
                     # ax2[k][h].set_ylabel(f"gene {k}")
                     if h == 0: ax2[k][h].set_ylabel(f"{gene_names[k]}")
