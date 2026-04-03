@@ -46,13 +46,11 @@ def load_autoencoder(index: int=0) -> dict:
 
     """ load the session of an autoencoder with its metadata """
 
-    info, autoencoder = models.load_session(idx=index, verbose=True)
+    info, autoencoder = models.load_session(idx=index, verbose=False)
     # info = info["network_params"]
 
     # get parameters
     W_ei_ca1, W_ca1_eo, B_ei_ca1, B_ca1_eo = autoencoder.get_weights(bias=True)
-
-    print(info)
 
     return {"dim_ei": info["dim_ei"], "dim_ca1": info["dim_ca1"],
             "dim_eo": info["dim_eo"], "K_out": info["K"], "K_lat": info["K_lat"],

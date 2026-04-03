@@ -11,8 +11,6 @@ import utils
 from logger import logger
 from _utils_ev import *
 
-print(os.getcwd())
-
 if "doki" in os.getcwd():
     sys.path.append(os.getcwd().split("doki")[0] + \
         "doki/side_lab/evolution_cpp/core/cpp1/build")
