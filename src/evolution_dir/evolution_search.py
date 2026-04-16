@@ -92,7 +92,7 @@ GENOME_CONFIGS = {
     "alpha" : {"active": True,
                "color": "orange",
                "init": 0.1,
-               "var": 0.1,
+               "var": 0.05,
                "scale": 1.,
                "min": 0,
                "max": 1},
@@ -283,8 +283,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
                     x_range = range(len(record[h][k]))
                     mean = np.array(record[h][k]).mean(axis=1)
                     std = np.array(record[h][k]).std(axis=1)
-                    ax2[k][h].fill_between(x_range, mean - std, mean + std, alpha=0.1, color="blue")
-                    ax2[k][h].plot(x_range, mean, "-o", color="blue", alpha=0.8)
+                    ax2[k][h].fill_between(x_range, mean - std, mean + std, alpha=0.2, color="blue")
+                    ax2[k][h].plot(x_range, mean, "-|", color="blue", alpha=0.8)
                     # ax2[k][h].set_ylim(minv, maxv)
                     # ax2[k][h].set_ylabel(f"gene {k}")
                     if h == 0: ax2[k][h].set_ylabel(f"{gene_names[k]}")
