@@ -155,11 +155,14 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     name += f"_{time.localtime().tm_hour}{time.localtime().tm_min}"
     info = {"genome": {},
             "fitness": 0.,
-            "dim_ei": settings["dim_ei"],
-            "dim_ca1": settings["dim_ca1"],
-            "dim_eo": settings["dim_eo"],
-            "dim_ca3": settings["genome_configs"]["K_ca3"]["max"],
-            "K": settings["K_lat"]}
+            "settings": settings,
+            "notes": "'K' is settings['K_lat'], " + \
+                "'dim_ca3 is settings['genome_configs']['K_ca3']['max']"}
+            # "dim_ei": settings["dim_ei"],
+            # "dim_ca1": settings["dim_ca1"],
+            # "dim_eo": settings["dim_eo"],
+            # "dim_ca3": settings["genome_configs"]["K_ca3"]["max"],
+            # "K": settings["K_lat"]}
 
     # -- evolution setup
     dim = 0

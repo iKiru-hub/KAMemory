@@ -90,7 +90,7 @@ def exp_eval(data: np.ndarray, sigma: float):
     return out
 
 
-def _configure_genome(genome: list, genome_configs: dict):
+def configure_genome(genome: list, genome_configs: dict):
 
     result = {}
     idx = 0
@@ -157,22 +157,22 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
             #                    alpha=float(np.clip(genome[4], 0.01, 0.99)))
 
             # make model
-            params = _configure_genome(genome=genome, genome_configs=genome_configs)
+            params = configure_genome(genome=genome, genome_configs=genome_configs)
             model = models.MTLev(W_ei_ca1=W_ei_ca1,
-                               W_ca1_eo=W_ca1_eo,
-                               K_lat=params["K_lat"],
-                               K_out=params["K_out"],
-                               K_ca3=params["K_ca3"],
-                               dim_ca3=genome_configs["K_ca3"]["max"],
-                               beta_eo=params["beta_eo"],
-                               beta_is=params["beta_is"],
-                               beta_ca1=params["beta_ca1"],
-                               beta_ca3=params["beta_ca3"],
-                               alpha=params["alpha"],
-                               num_swaps_ca1=params["num_swaps_ca1"],
-                               num_swaps_ca3=params["num_swaps_ca3"],
-                               B_ei_ca1=B_ei_ca1,
-                               B_ca1_eo=B_ca1_eo)
+                                 W_ca1_eo=W_ca1_eo,
+                                 K_lat=params["K_lat"],
+                                 K_out=params["K_out"],
+                                 K_ca3=params["K_ca3"],
+                                 dim_ca3=genome_configs["K_ca3"]["max"],
+                                 beta_eo=params["beta_eo"],
+                                 beta_is=params["beta_is"],
+                                 beta_ca1=params["beta_ca1"],
+                                 beta_ca3=params["beta_ca3"],
+                                 alpha=params["alpha"],
+                                 num_swaps_ca1=params["num_swaps_ca1"],
+                                 num_swaps_ca3=params["num_swaps_ca3"],
+                                 B_ei_ca1=B_ei_ca1,
+                                 B_ca1_eo=B_ca1_eo)
 
             # train a dataset with pattern index 0.. i
             model.eval()
@@ -222,17 +222,27 @@ def load_genome(index: int=-2):
     name = ""
     path = os.path.abspath(__file__).split("KAMemory")[0] + \
         "KAMemory/src/evolution_dir/logs"
+    files = os.listdir(path)
     if index == -2:
         print("available:")
-        for k, u in enumerate(os.listdir(path)): print(f"{k}:{u}")
+        for k, u in enumerate(files): print(f"{k}:{u}")
         index = int(input(f"index: "))
-    for i, f in enumerate(os.listdir(path)):
-        if int(f.split('_')[1]) == index:
-            name = f"{path}/{f}"
-    if f == "":
+        name = f"{path}/{os.listdir(path)[index]}"
+    elif index > -1:
+        name = f"{path}/{os.listdir(path)[index]}"
+    else:
         warnings.warn("index not found")
         return None
 
+    # for i, f in enumerate(os.listdir(path)):
+    #     if int(f.split('_')[1]) == index:
+    #         name = f"{path}/{f}"
+
+    # if f == "":
+    #     warnings.warn("index not found")
+    #     return None
+
+    print(f"load {name=}")
     with open(name, "r") as f:
         file = json.load(f)
 

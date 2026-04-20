@@ -121,7 +121,7 @@ class Autoencoder(nn.Module):
 # =============================================================================
 
 
-class MTLv0(nn.Module):
+class MTL(nn.Module):
 
     def __init__(self, W_ei_ca1: torch.Tensor,
                  W_ca1_eo: torch.Tensor,
@@ -347,7 +347,7 @@ class MTLv0(nn.Module):
         self.recordings["W_ca3_ca1"] = []
 
 
-
+# -- version used in the evolution search
 class MTLev(nn.Module):
 
     def __init__(self,
