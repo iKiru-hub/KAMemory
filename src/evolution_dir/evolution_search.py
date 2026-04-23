@@ -155,14 +155,14 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     name += f"_{time.localtime().tm_hour}{time.localtime().tm_min}"
     info = {"genome": {},
             "fitness": 0.,
-            "settings": settings,
-            "notes": "'K' is settings['K_lat'], " + \
-                "'dim_ca3 is settings['genome_configs']['K_ca3']['max']"}
-            # "dim_ei": settings["dim_ei"],
-            # "dim_ca1": settings["dim_ca1"],
-            # "dim_eo": settings["dim_eo"],
-            # "dim_ca3": settings["genome_configs"]["K_ca3"]["max"],
-            # "K": settings["K_lat"]}
+            "genome_configs": GENOME_CONFIGS,
+            "dim_ei": settings["dim_ei"],
+            "dim_ca1": settings["dim_ca1"],
+            "dim_eo": settings["dim_eo"],
+            "dim_ca3": settings["genome_configs"]["K_ca3"]["max"],
+            "K": settings["K_lat"],
+            "sigma": SIGMA,
+            "notes": "idk hope it works"}
 
     # -- evolution setup
     dim = 0
@@ -218,16 +218,21 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
 
     # logs
     record = {}
+    save_record = {}
     for l in range(num_lineages):
         record[l] = {"color": COLORS[l]}
         record[l]["fitness"] = [fitness]
         record[l]["history"] = [np.mean(fitness).item()]
+        save_record[l] = {}
+        save_record[l]["fitness"] = [_fitness.tolist()]
         for _d in range(dim):
             _pop = []
             record[l][_d] = []
+            save_record[l][_d] = []
             for _ind in population:
                 _pop += [_ind[gene_idx[_d]]]
             record[l][_d] += [_pop]
+            save_record[l][_d] += [_pop]
 
     # -- run
     best_fitness = 0.
@@ -253,8 +258,10 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
                 for _ind in population:
                     _pop += [_ind[gene_idx[_d]]]
                 record[lin][_d] += [_pop]
+                save_record[lin][_d] += [_pop]
 
             record[lin]["history"] += [np.mean(_fitness.flatten()).item()]
+            save_record[lin]["fitness"] += [_fitness.tolist()]
 
             # plot
             ax.clear()
@@ -302,6 +309,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
             info["genome"] = {_n: _g for _n, _g in zip(gene_names, best_genome)}
             info["fitness"] = best_fitness
             # info["record"] = record
+            info["record"] = save_record
             save_genome(info=info, name=name)
 
 
