@@ -96,14 +96,14 @@ GENOME_CONFIGS = {
                "scale": 1.,
                "min": 0,
                "max": 1},
-    "num_swaps_ca1": {"active": False,
+    "num_swaps_ca1": {"active": True,
                       "color": "purple",
                       "init": 1.,
                       "var": 2.,
                       "scale": 1.,
                       "min": 1,
                       "max": 50},
-    "num_swaps_ca3": {"active": False,
+    "num_swaps_ca3": {"active": True,
                       "color": "purple",
                       "init": 1.,
                       "var": 2.,
@@ -121,8 +121,9 @@ def fit_population(population: list, datasets: list, settings: dict):
     fitted = []
     for ind in population:
         try:
-            fitted += [[ np.exp(-1. * np.clip(evaluate_genome(ind, datasets, settings),
-                                              0., 1.))]]
+            # fitted += [[ np.exp(-1. * np.clip(evaluate_genome(ind, datasets, settings),
+            #                                   0., 1.))]]
+            fitted += [[ evaluate_genome(ind, datasets, settings) ]]
         except Exception:
             fitted += [[0.]]
 
@@ -213,7 +214,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     # -- pre-run
     population = evolution.get_population()
     fitness = fit_population(population, datasets, settings)
-    _fitness = -1.*np.log(np.array(fitness))
+    # _fitness = -1.*np.log(np.array(fitness))
+    _fitness = np.array(fitness)
     logger(f"gen=0 | fitness={abs(np.min(fitness)):.3f}")
 
     # logs
@@ -243,7 +245,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
             population = evolution.update(fitness)
 
             fitness = fit_population(population, datasets, settings)
-            _fitness = -1.*np.log(np.array(fitness))
+            # _fitness = -1.*np.log(np.array(fitness))
+            _fitness = np.array(fitness)
             logger(f"gen={gen+1} | [{lin}] fitness={np.max(_fitness):.3f}")
 
             # record best genome
