@@ -169,7 +169,7 @@ class MTL(nn.Module):
             the size of the CA3 layer
         """
 
-        super(MTLv0, self).__init__()
+        super(MTL, self).__init__()
 
         # infer dimensions of EC input and output and CA1
         self._dim_ei = W_ei_ca1.shape[1]
@@ -974,6 +974,5 @@ if __name__ == "__main__":
     else:
         idx = None if args.idx < 0 else args.idx
         info, model = load_session(idx=idx, verbose=True)
-
 
 

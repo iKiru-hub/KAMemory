@@ -10,7 +10,17 @@ import torch.nn as nn
 import torch.autograd as autograd
 import torch.nn.functional as F
 
-from numba import jit
+try:
+    from numba import jit
+except ModuleNotFoundError:
+    def jit(*args, **kwargs):
+        if args and callable(args[0]) and len(args) == 1 and not kwargs:
+            return args[0]
+
+        def decorator(func):
+            return func
+
+        return decorator
 
 from tqdm import tqdm
 import os, sys
@@ -19,6 +29,10 @@ import json
 sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
 import models
 from logger import logger
+
+
+def tqdm_enumerate(iterable, **tqdm_kwargs):
+    return enumerate(tqdm(iterable, **tqdm_kwargs))
 
 
 
@@ -288,7 +302,7 @@ def testing_mod(data: np.ndarray, model: object,
 
     with torch.no_grad():
 
-        for i, batch in utils.tqdm_enumerate(dataloader):
+        for i, batch in tqdm_enumerate(dataloader):
             x = batch[0] if not column else batch[0].reshape(-1, 1)
 
             new_alpha = np.maximum(alpha_baseline, alpha * alpha_samples[i])
@@ -1480,5 +1494,3 @@ def get_track_input(track_params: dict, network_params: dict, cue_duration: int=
                                                   sen_list=None,
                                                   plot=False)
   return track_input, lap_cues, alpha_samples
-
-
