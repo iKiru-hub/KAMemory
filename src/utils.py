@@ -10,7 +10,17 @@ import torch.nn as nn
 import torch.autograd as autograd
 import torch.nn.functional as F
 
-from numba import jit
+try:
+    from numba import jit
+except ModuleNotFoundError:
+    def jit(*args, **kwargs):
+        if args and callable(args[0]) and len(args) == 1 and not kwargs:
+            return args[0]
+
+        def decorator(func):
+            return func
+
+        return decorator
 
 from tqdm import tqdm
 import os, sys
@@ -511,17 +521,28 @@ def make_equal_tuning(n: int, nj: int):
     i1 = np.arange(n).tolist()
     u1 = np.ones(n) * nj
     w12 = []
+    all_indices = np.arange(n)
 
     for i in range(n):
         if len(i1) >= nj:
             j2 = np.random.choice(i1, replace=False, size=nj)
         else:
-            j2 = np.random.choice(i1, replace=False, size=len(i1))
+            j2 = np.array(i1, dtype=int)
+            n_missing = nj - len(j2)
+            if n_missing > 0:
+                fill = np.random.choice(
+                    all_indices,
+                    replace=n_missing > len(all_indices),
+                    size=n_missing,
+                )
+                j2 = np.concatenate((j2, fill))
         w12 += [j2.tolist()]
 
         # update
         to_del = []
         for _j in j2:
+            if u1[_j] <= 0:
+                continue
             u1[_j] -= 1
             if u1[_j] == 0:
                 to_del += [_j]
@@ -674,8 +695,6 @@ if __name__ == "__main__":
     # data = sparse_stimulus_generator(N, K=5, size=50, plot=True)
 
     test_equal_tuning(n=10, nj=3)
-
-
 
 
 
