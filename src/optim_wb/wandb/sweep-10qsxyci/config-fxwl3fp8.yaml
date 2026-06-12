@@ -1,0 +1,16 @@
+wandb_version: 1
+
+K_ca3:
+  value: 2
+K_lat:
+  value: 4
+alpha:
+  value: 0.004302741267356858
+beta_ca1:
+  value: 86.89018418407683
+beta_ca3:
+  value: 33.9862913098123
+beta_eo:
+  value: 335.5184428409548
+beta_is:
+  value: 192.83183453141407

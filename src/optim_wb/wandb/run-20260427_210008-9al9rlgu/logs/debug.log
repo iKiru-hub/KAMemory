@@ -1,0 +1,25 @@
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_setup.py:_flush():81] Current SDK version is 0.26.1
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_setup.py:_flush():81] Configure stats pid to 125006
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_init.py:setup_run_log_directory():723] Logging user logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_210008-9al9rlgu/logs/debug.log
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_init.py:setup_run_log_directory():724] Logging internal logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_210008-9al9rlgu/logs/debug-internal.log
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():850] calling init triggers
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():855] wandb.init called with sweep_config: {'K_ca3': 32, 'K_lat': 2, 'alpha': 0.004885032010404022, 'beta_ca1': 68.31583564288852, 'beta_ca3': 13.2915165893849, 'beta_eo': 21.493128091585145, 'beta_is': 363.1642894840484}
+config: {'_wandb': {}}
+2026-04-27 21:00:08,973 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():898] starting backend
+2026-04-27 21:00:09,176 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():913] sending inform_init request
+2026-04-27 21:00:09,695 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():918] backend started and connected
+2026-04-27 21:00:09,695 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_config_callback():1415] config_cb None None {'K_ca3': 32, 'K_lat': 2, 'alpha': 0.004885032010404022, 'beta_ca1': 68.31583564288852, 'beta_ca3': 13.2915165893849, 'beta_eo': 21.493128091585145, 'beta_is': 363.1642894840484}
+2026-04-27 21:00:09,696 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():988] updated telemetry
+2026-04-27 21:00:09,699 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():1011] communicating run to backend with 90.0 second timeout
+2026-04-27 21:00:09,994 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():1056] starting run threads in backend
+2026-04-27 21:00:10,126 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_console_start():2554] atexit reg
+2026-04-27 21:00:10,126 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_redirect():2403] redirect: wrap_raw
+2026-04-27 21:00:10,127 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_redirect():2472] Wrapping output streams.
+2026-04-27 21:00:10,127 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_redirect():2495] Redirects installed.
+2026-04-27 21:00:10,128 INFO    Thread-97 (_run_job):125006 [wandb_init.py:init():1094] run started, returning control to user process
+2026-04-27 21:00:27,608 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_finish():2321] finishing run ikiru-university-of-oslo/kam_2/9al9rlgu
+2026-04-27 21:00:27,608 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_atexit_cleanup():2520] got exitcode: 0
+2026-04-27 21:00:27,608 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_restore():2502] restore
+2026-04-27 21:00:27,609 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_restore():2508] restore done
+2026-04-27 21:00:28,821 INFO    Thread-97 (_run_job):125006 [wandb_run.py:_footer_sync_info():3889] logging synced files

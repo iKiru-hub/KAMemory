@@ -1,0 +1,24 @@
+{"time":"2026-04-27T21:11:50.145484315+02:00","level":"INFO","msg":"wandb-core"}
+{"time":"2026-04-27T21:11:50.145696728+02:00","level":"INFO","msg":"stream: starting","core version":"0.26.1"}
+{"time":"2026-04-27T21:12:10.253881541+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 1.1.1.1:53: read udp 172.20.10.11:57574->1.1.1.1:53: i/o timeout"}
+{"time":"2026-04-27T21:12:32.693651942+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 1.1.1.1:53: read udp 172.20.10.11:42942->1.1.1.1:53: i/o timeout"}
+{"time":"2026-04-27T21:12:57.018302012+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 1.1.1.1:53: read udp 172.20.10.11:33334->1.1.1.1:53: i/o timeout"}
+{"time":"2026-04-27T21:13:26.942099777+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 1.1.1.1:53: read udp 172.20.10.11:45731->1.1.1.1:53: i/o timeout"}
+{"time":"2026-04-27T21:14:03.022127956+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 1.1.1.1:53: read udp 172.20.10.11:40602->1.1.1.1:53: i/o timeout"}
+{"time":"2026-04-27T21:14:56.804581783+02:00","level":"INFO","msg":"stream: created new stream","id":"x2h2c8lm"}
+{"time":"2026-04-27T21:14:56.804770045+02:00","level":"INFO","msg":"handler: started"}
+{"time":"2026-04-27T21:14:56.805052583+02:00","level":"INFO","msg":"stream: started"}
+{"time":"2026-04-27T21:14:56.805165201+02:00","level":"INFO","msg":"writer: started","stream_id":"x2h2c8lm"}
+{"time":"2026-04-27T21:14:56.805265306+02:00","level":"INFO","msg":"sender: started"}
+{"time":"2026-04-27T21:15:00.727180506+02:00","level":"INFO","msg":"filestream: sending request","total_files":1,"console_offset":0,"console_lines":1}
+{"time":"2026-04-27T21:15:17.11502478+02:00","level":"INFO","msg":"filestream: request sent","status":"200 OK"}
+{"time":"2026-04-27T21:15:17.115418879+02:00","level":"INFO","msg":"filestream: sending request","total_files":3,"history_offset":0,"history_lines":1,"events_offset":0,"events_lines":1}
+{"time":"2026-04-27T21:15:22.145332025+02:00","level":"INFO","msg":"filestream: request sent","status":"200 OK"}
+{"time":"2026-04-27T21:15:29.203278953+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-04-27T21:15:29.203341539+02:00","level":"INFO","msg":"filestream: sending request","total_files":0,"uploaded_len":5,"complete":true,"exit_code":0}
+{"time":"2026-04-27T21:15:32.92319685+02:00","level":"INFO","msg":"filestream: request sent","status":"200 OK"}
+{"time":"2026-04-27T21:15:32.923974739+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-04-27T21:15:32.926520779+02:00","level":"INFO","msg":"stream: finishing up"}
+{"time":"2026-04-27T21:15:32.926530764+02:00","level":"INFO","msg":"handler: closed"}
+{"time":"2026-04-27T21:15:32.926561344+02:00","level":"INFO","msg":"sender: closed"}
+{"time":"2026-04-27T21:15:32.926567677+02:00","level":"INFO","msg":"stream: all finished"}

@@ -1,0 +1,302 @@
+2026-04-27 17:18:28 INFO Running runs: []
+2026-04-27 17:18:29 INFO Agent received command: run
+2026-04-27 17:18:29 INFO Agent starting run with config:
+	K_ca3: 16
+	K_lat: 10
+	K_out: 43
+	alpha: 0.10167078405187946
+	beta_ca1: 202.3108838578103
+	beta_ca3: 210.3489663451505
+	beta_eo: 321.4901922111512
+	beta_is: 290.67993702006214
+2026-04-27 17:18:29 INFO About to run command: /usr/bin/env python  --K_ca3=16 --K_lat=10 --K_out=43 --alpha=0.10167078405187946 --beta_ca1=202.3108838578103 --beta_ca3=210.3489663451505 --beta_eo=321.4901922111512 --beta_is=290.67993702006214
+2026-04-27 17:29:56 ERROR Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+ValueError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 150, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 2063, in agent
+    wandb_agent.agent(
+    ~~~~~~~~~~~~~~~~~^
+        sweep_id,
+        ^^^^^^^^^
+    ...<3 lines>...
+        forward_signals=forward_signals,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 669, in agent
+    return run_agent(
+        sweep_id,
+    ...<5 lines>...
+        forward_signals=forward_signals,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 622, in run_agent
+    agent.run()
+    ~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 277, in run
+    sweep_obj = self._api.sweep(self._sweep_id, "{}")
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/internal.py", line 125, in sweep
+    return self.api.sweep(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+wandb.errors.errors.CommError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+ValueError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 150, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 2063, in agent
+    wandb_agent.agent(
+    ~~~~~~~~~~~~~~~~~^
+        sweep_id,
+        ^^^^^^^^^
+    ...<3 lines>...
+        forward_signals=forward_signals,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 669, in agent
+    return run_agent(
+        sweep_id,
+    ...<5 lines>...
+        forward_signals=forward_signals,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 622, in run_agent
+    agent.run()
+    ~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 277, in run
+    sweep_obj = self._api.sweep(self._sweep_id, "{}")
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/internal.py", line 125, in sweep
+    return self.api.sweep(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+wandb.errors.errors.CommError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+2026-04-27 17:46:39 ERROR Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+ValueError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 150, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 2063, in agent
+    wandb_agent.agent(
+    ~~~~~~~~~~~~~~~~~^
+        sweep_id,
+        ^^^^^^^^^
+    ...<3 lines>...
+        forward_signals=forward_signals,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 669, in agent
+    return run_agent(
+        sweep_id,
+    ...<5 lines>...
+        forward_signals=forward_signals,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 622, in run_agent
+    agent.run()
+    ~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 277, in run
+    sweep_obj = self._api.sweep(self._sweep_id, "{}")
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/internal.py", line 125, in sweep
+    return self.api.sweep(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+wandb.errors.errors.CommError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+ValueError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 150, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 2063, in agent
+    wandb_agent.agent(
+    ~~~~~~~~~~~~~~~~~^
+        sweep_id,
+        ^^^^^^^^^
+    ...<3 lines>...
+        forward_signals=forward_signals,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 669, in agent
+    return run_agent(
+        sweep_id,
+    ...<5 lines>...
+        forward_signals=forward_signals,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 622, in run_agent
+    agent.run()
+    ~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 277, in run
+    sweep_obj = self._api.sweep(self._sweep_id, "{}")
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/internal.py", line 125, in sweep
+    return self.api.sweep(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+wandb.errors.errors.CommError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+2026-04-27 19:01:32 ERROR Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+ValueError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 150, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 2063, in agent
+    wandb_agent.agent(
+    ~~~~~~~~~~~~~~~~~^
+        sweep_id,
+        ^^^^^^^^^
+    ...<3 lines>...
+        forward_signals=forward_signals,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 669, in agent
+    return run_agent(
+        sweep_id,
+    ...<5 lines>...
+        forward_signals=forward_signals,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 622, in run_agent
+    agent.run()
+    ~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 277, in run
+    sweep_obj = self._api.sweep(self._sweep_id, "{}")
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/internal.py", line 125, in sweep
+    return self.api.sweep(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+wandb.errors.errors.CommError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+ValueError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 150, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/cli/cli.py", line 2063, in agent
+    wandb_agent.agent(
+    ~~~~~~~~~~~~~~~~~^
+        sweep_id,
+        ^^^^^^^^^
+    ...<3 lines>...
+        forward_signals=forward_signals,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 669, in agent
+    return run_agent(
+        sweep_id,
+    ...<5 lines>...
+        forward_signals=forward_signals,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 622, in run_agent
+    agent.run()
+    ~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/wandb_agent.py", line 277, in run
+    sweep_obj = self._api.sweep(self._sweep_id, "{}")
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/internal.py", line 125, in sweep
+    return self.api.sweep(*args, **kwargs)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/apis/normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 877, in sweep
+    raise ValueError(f"Sweep {entity}/{project}/{sweep} not found")
+wandb.errors.errors.CommError: Sweep ikiru-university-of-oslo/kam_2/pppe1xnk not found
+2026-04-27 19:02:14 INFO Running runs: []
+2026-04-27 19:02:16 INFO Agent received command: run
+2026-04-27 19:02:16 INFO Agent starting run with config:
+	alpha: 0.28586337474902224
+	beta_ca1: 20.064540029794564
+	beta_ca3: 315.9366033765505
+	beta_eo: 198.958944507916
+	beta_is: 251.89546509516137
+2026-04-27 19:02:16 INFO About to run command: /usr/bin/env python  --alpha=0.28586337474902224 --beta_ca1=20.064540029794564 --beta_ca3=315.9366033765505 --beta_eo=198.958944507916 --beta_is=251.89546509516137
+2026-04-27 19:02:21 INFO Running runs: ['ono7o82j']
+2026-04-27 19:02:21 INFO Cleaning up finished run: ono7o82j
+2026-04-27 19:02:21 INFO Agent received command: run
+2026-04-27 19:02:21 INFO Agent starting run with config:
+	alpha: 0.01700103427317623
+	beta_ca1: 39.998937784723495
+	beta_ca3: 235.2886535193294
+	beta_eo: 227.55774990259584
+	beta_is: 357.8409592199557
+2026-04-27 19:02:21 INFO About to run command: /usr/bin/env python  --alpha=0.01700103427317623 --beta_ca1=39.998937784723495 --beta_ca3=235.2886535193294 --beta_eo=227.55774990259584 --beta_is=357.8409592199557
+2026-04-27 19:02:26 INFO Running runs: ['dx3put0l']
+2026-04-27 19:02:26 INFO Cleaning up finished run: dx3put0l
+2026-04-27 19:02:27 INFO Agent received command: run
+2026-04-27 19:02:27 INFO Agent starting run with config:
+	alpha: 0.22330194526616776
+	beta_ca1: 55.91228587298374
+	beta_ca3: 379.790793843013
+	beta_eo: 193.6212001741478
+	beta_is: 181.11613375948664
+2026-04-27 19:02:27 INFO About to run command: /usr/bin/env python  --alpha=0.22330194526616776 --beta_ca1=55.91228587298374 --beta_ca3=379.790793843013 --beta_eo=193.6212001741478 --beta_is=181.11613375948664
+2026-04-27 19:02:32 INFO Running runs: ['mfgz96ps']
+2026-04-27 19:02:32 ERROR Detected 3 failed runs in the first 60 seconds, shutting down.
+2026-04-27 19:02:32 INFO To disable this check set WANDB_AGENT_DISABLE_FLAPPING=true

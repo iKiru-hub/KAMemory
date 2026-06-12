@@ -44,7 +44,7 @@ SIGMA = 30
 GENOME_CONFIGS = {
     "K_lat" : {"active": False,
                "color": "red",
-               "init": 15,
+               "init": 13,
                "var": 5,
                "min": 10,
                "max": 100},
@@ -56,42 +56,42 @@ GENOME_CONFIGS = {
                "max": 100},
     "K_ca3" : {"active": True,
                "color": "black",
-               "init": 15,
+               "init": 2,
                "var": 5,
                "scale": 10,
                "min": 1,
                "max": 50},
     "beta_eo"  : {"active": True,
                   "color": "green",
-                  "init": 20,
+                  "init": 5,
                   "var": 8,
                   "scale": 100,
                   "min": 0,
                   "max": 400},
     "beta_is"  : {"active": True,
                   "color": "green",
-                  "init": 20.,
+                  "init": 14.,
                   "var": 8.,
                   "scale": 100,
                   "min": 0,
                   "max": 400},
     "beta_ca1"  : {"active": True,
                    "color": "green",
-                   "init": 100,
+                   "init": 18,
                    "var": 10,
                    "scale": 100,
                    "min": 0,
                    "max": 400},
     "beta_ca3"  : {"active": True,
                    "color": "green",
-                   "init": 100,
+                   "init": 23,
                    "var": 10,
                    "scale": 100,
                    "min": 0,
                    "max": 400},
     "alpha" : {"active": True,
                "color": "orange",
-               "init": 0.1,
+               "init": 0.088,
                "var": 0.05,
                "scale": 1.,
                "min": 0,
@@ -121,8 +121,9 @@ def fit_population(population: list, datasets: list, settings: dict):
     fitted = []
     for ind in population:
         try:
-            fitted += [[ np.exp(-1. * np.clip(evaluate_genome(ind, datasets, settings),
-                                              0., 1.))]]
+            # fitted += [[ np.exp(-1. * np.clip(evaluate_genome(ind, datasets, settings),
+            #                                   0., 1.))]]
+            fitted += [[evaluate_genome(ind, datasets, settings)]]
         except Exception:
             fitted += [[0.]]
 
@@ -213,7 +214,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
     # -- pre-run
     population = evolution.get_population()
     fitness = fit_population(population, datasets, settings)
-    _fitness = -1.*np.log(np.array(fitness))
+    # _fitness = -1.*np.log(np.array(fitness))
+    _fitness = fitness
     logger(f"gen=0 | fitness={abs(np.min(fitness)):.3f}")
 
     # logs
@@ -224,7 +226,8 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
         record[l]["fitness"] = [fitness]
         record[l]["history"] = [np.mean(fitness).item()]
         save_record[l] = {}
-        save_record[l]["fitness"] = [_fitness.tolist()]
+        # save_record[l]["fitness"] = [_fitness.tolist()]
+        save_record[l]["fitness"] = [fitness]
         for _d in range(dim):
             _pop = []
             record[l][_d] = []
@@ -236,6 +239,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
 
     # -- run
     best_fitness = 0.
+    best_index = -1
     best_genome = []
     for gen in range(ngen):
 
@@ -243,16 +247,20 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
             population = evolution.update(fitness)
 
             fitness = fit_population(population, datasets, settings)
-            _fitness = -1.*np.log(np.array(fitness))
-            logger(f"gen={gen+1} | [{lin}] fitness={np.max(_fitness):.3f}")
+            # _fitness = -1.*np.log(np.array(fitness))
+            _fitness = fitness
+            logger(f"gen={gen+1} | [{lin}] fitness={np.max(fitness):.3f}")
 
             # record best genome
-            if best_fitness < _fitness.max():
-                best_fitness = _fitness.max()
-                best_genome = population[np.argmax(_fitness)]
+            if best_fitness < np.max(_fitness):
+                best_fitness = np.max(_fitness)
+                # best_genome = population[np.argmax(_fitness)]
+                best_genome = population[np.argmax(fitness)]
+                best_index = np.argmax(fitness)
 
             # logs
-            record[lin]["fitness"] += [_fitness]
+            # record[lin]["fitness"] += [_fitness]
+            record[lin]["fitness"] += [fitness]
             for _d in range(dim):
                 _pop = []
                 for _ind in population:
@@ -260,8 +268,9 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
                 record[lin][_d] += [_pop]
                 save_record[lin][_d] += [_pop]
 
-            record[lin]["history"] += [np.mean(_fitness.flatten()).item()]
-            save_record[lin]["fitness"] += [_fitness.tolist()]
+            record[lin]["history"] += [np.mean(np.array(_fitness).flatten()).item()]
+            # save_record[lin]["fitness"] += [_fitness.tolist()]
+            save_record[lin]["fitness"] += [fitness]
 
             # plot
             ax.clear()
@@ -307,6 +316,7 @@ def main(npop: int, ngen: int, num_samples: int=200, num_reps: int=1,
         # save
         if save:
             info["genome"] = {_n: _g for _n, _g in zip(gene_names, best_genome)}
+            info["best_index"] = best_index
             info["fitness"] = best_fitness
             # info["record"] = record
             info["record"] = save_record

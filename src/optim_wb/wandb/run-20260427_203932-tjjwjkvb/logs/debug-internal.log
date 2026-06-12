@@ -1,0 +1,19 @@
+{"time":"2026-04-27T20:39:32.247591206+02:00","level":"INFO","msg":"wandb-core"}
+{"time":"2026-04-27T20:39:32.247770503+02:00","level":"INFO","msg":"stream: starting","core version":"0.26.1"}
+{"time":"2026-04-27T20:39:32.969774162+02:00","level":"INFO","msg":"stream: created new stream","id":"tjjwjkvb"}
+{"time":"2026-04-27T20:39:32.96989924+02:00","level":"INFO","msg":"handler: started"}
+{"time":"2026-04-27T20:39:32.970116375+02:00","level":"INFO","msg":"stream: started"}
+{"time":"2026-04-27T20:39:32.970229803+02:00","level":"INFO","msg":"writer: started","stream_id":"tjjwjkvb"}
+{"time":"2026-04-27T20:39:32.970282666+02:00","level":"INFO","msg":"sender: started"}
+{"time":"2026-04-27T20:39:33.480949983+02:00","level":"INFO","msg":"filestream: sending request","total_files":1,"console_offset":0,"console_lines":1}
+{"time":"2026-04-27T20:39:34.182400038+02:00","level":"INFO","msg":"filestream: request sent","status":"200 OK"}
+{"time":"2026-04-27T20:39:48.4813795+02:00","level":"INFO","msg":"filestream: sending request","total_files":2,"events_offset":0,"events_lines":1,"console_offset":0,"console_lines":1,"uploaded_len":2}
+{"time":"2026-04-27T20:39:48.800703744+02:00","level":"INFO","msg":"filestream: request sent","status":"200 OK"}
+{"time":"2026-04-27T20:39:49.54879935+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-04-27T20:39:49.548889683+02:00","level":"INFO","msg":"filestream: sending request","total_files":2,"history_offset":0,"history_lines":1,"uploaded_len":3,"complete":true,"exit_code":0}
+{"time":"2026-04-27T20:39:50.151955999+02:00","level":"INFO","msg":"filestream: request sent","status":"200 OK"}
+{"time":"2026-04-27T20:39:50.152985515+02:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2026-04-27T20:39:50.155727634+02:00","level":"INFO","msg":"stream: finishing up"}
+{"time":"2026-04-27T20:39:50.155737157+02:00","level":"INFO","msg":"handler: closed"}
+{"time":"2026-04-27T20:39:50.155763241+02:00","level":"INFO","msg":"sender: closed"}
+{"time":"2026-04-27T20:39:50.155769807+02:00","level":"INFO","msg":"stream: all finished"}

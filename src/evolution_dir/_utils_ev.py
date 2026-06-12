@@ -96,7 +96,7 @@ def configure_genome(genome: list, genome_configs: dict):
     idx = 0
     for i, (param, conf) in enumerate(genome_configs.items()):
         if conf["active"]:
-            result[param] = np.clip(genome[idx], conf["min"], conf["max"])
+            result[param] = float(np.clip(genome[idx], conf["min"], conf["max"]))
             idx += 1
         else:
             result[param] = conf["init"]
@@ -144,19 +144,6 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
         for i in tqdm(range(num_samples), disable=True):
 
             # make model
-            # model = models.MTL(W_ei_ca1=W_ei_ca1,
-            #                    W_ca1_eo=W_ca1_eo,
-            #                    B_ei_ca1=B_ei_ca1,
-            #                    B_ca1_eo=B_ca1_eo,
-            #                    dim_ca3=settings["dim_ei"],
-            #                    K_lat=int(np.clip(10*genome[0], MIN_VAL, MAX_VAL)),
-            #                    K_ca3=int(np.clip(10*genome[1], MIN_VAL, MAX_VAL)),
-            #                    K_out=int(np.clip(10*genome[2], MIN_VAL, MAX_VAL)),
-            #                    beta=abs(float(np.clip(100*genome[3],
-            #                                           MIN_VAL, MAX_VAL))),
-            #                    alpha=float(np.clip(genome[4], 0.01, 0.99)))
-
-            # make model
             params = configure_genome(genome=genome, genome_configs=genome_configs)
             model = models.MTLev(W_ei_ca1=W_ei_ca1,
                                  W_ca1_eo=W_ca1_eo,
@@ -187,6 +174,7 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
             model.pause_lr()
             model.eval()
             with torch.no_grad():
+
                 # one pattern at a time
                 for j, batch in enumerate(datasets[l][i]):
                     x = batch[0].reshape(-1, 1)
@@ -195,16 +183,16 @@ def evaluate_genome(genome: list, datasets: list, settings: dict):
                     y = model(x)
 
                     # record : cosine similarity
-                    value = (y.T @ x) / (torch.norm(x) * torch.norm(y))
-                    # accuracy[l, i, j] = (value.item() - 0.2) / 0.8
-                    accuracy[l, i, j] = value.item()
+                    accuracy[l, i, j] = ((y.T @ x) / (torch.norm(x) * \
+                        torch.norm(y))).item()
 
     result = accuracy.mean(axis=0)
     if np.any(np.isnan(result)):
         return 0.
 
-    score = exp_eval(data=result, sigma=settings["sigma"]).mean()
-    return score
+
+    # apply an exponential filter such to prioritize recent memories
+    return exp_eval(data=result, sigma=settings["sigma"]).mean()
 
 
 def save_genome(info: dict, name: str):

@@ -1,0 +1,60 @@
+_wandb:
+    value:
+        cli_version: 0.26.1
+        e:
+            ib269bh6l4t5izuq72qu8f6mote1d9sl:
+                args:
+                    - --sweep-id
+                    - ikiru-university-of-oslo/kam_2/10qsxyci
+                    - --count
+                    - "128"
+                codePath: src/optim_wb/param_search.py
+                codePathLocal: param_search.py
+                cpu_count: 6
+                cpu_count_logical: 12
+                disk:
+                    /:
+                        total: "32935567360"
+                        used: "22211207168"
+                email: krubeal.danieli@ibv.uio.no
+                executable: /home/doki/main_lab/envs/kamc/bin/python3
+                git:
+                    commit: aa2275543b541cc79b62c5e2284f6d3566c92432
+                    remote: git@github.com:iKiru-hub/KAMemory.git
+                host: debian
+                memory:
+                    total: "33407053824"
+                os: Linux-6.12.57+deb13-amd64-x86_64-with-glibc2.41
+                program: /home/doki/main_lab/KAMemory/src/optim_wb/param_search.py
+                python: CPython 3.13.5
+                root: /home/doki/main_lab/KAMemory/src/optim_wb
+                startedAt: "2026-04-27T18:53:15.251307Z"
+                writerId: ib269bh6l4t5izuq72qu8f6mote1d9sl
+        m: []
+        python_version: 3.13.5
+        t:
+            "1":
+                - 1
+            "2":
+                - 1
+            "3":
+                - 2
+                - 14
+            "4": 3.13.5
+            "5": 0.26.1
+            "12": 0.26.1
+            "13": linux-x86_64
+K_ca3:
+    value: 9
+K_lat:
+    value: 11
+alpha:
+    value: 0.1460871064821625
+beta_ca1:
+    value: 149.56932585220756
+beta_ca3:
+    value: 26.04463882851839
+beta_eo:
+    value: 271.6504917113091
+beta_is:
+    value: 278.3458166647174

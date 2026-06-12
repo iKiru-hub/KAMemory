@@ -1,0 +1,22 @@
+[32m2026-04-27 18:53:41[0m | [33mbias not found in the info file, set to True[0m
+[34m[1mwandb[0m: Ctrl + C detected. Stopping sweep.
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/agents/pyagent.py", line 304, in _run_job
+    self._function()
+    ~~~~~~~~~~~~~~^^
+  File "/home/doki/main_lab/KAMemory/src/optim_wb/param_search.py", line 201, in main
+    accuracy = run_model(NUM_REPS, NUM_SAMPLES, parameters, settings)
+  File "/home/doki/main_lab/KAMemory/src/optim_wb/param_search.py", line 149, in run_model
+    _ = model(batch[0].reshape(-1, 1))
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/doki/main_lab/KAMemory/src/models.py", line 503, in forward
+    x_ca1 = utils.get_sample_from_num_swaps(x_0=x_ca1,
+                                            num_swaps=self._num_swaps_ca1)
+  File "/home/doki/main_lab/KAMemory/src/utils.py", line 576, in get_sample_from_num_swaps
+    off_index = (x_0 ==0).nonzero().squeeze(1)
+                ~~~~~~~~~~~~~~~~~^^
+Exception

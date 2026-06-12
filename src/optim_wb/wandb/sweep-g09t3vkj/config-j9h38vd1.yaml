@@ -1,0 +1,12 @@
+wandb_version: 1
+
+alpha:
+  value: 0.22590200663492965
+beta_ca1:
+  value: 61.58184041741666
+beta_ca3:
+  value: 79.48623934729912
+beta_eo:
+  value: 205.82940428422145
+beta_is:
+  value: 58.9845854068833

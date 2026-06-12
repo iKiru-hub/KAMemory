@@ -1,0 +1,34 @@
+{
+  "os":  "Linux-6.12.57+deb13-amd64-x86_64-with-glibc2.41",
+  "python":  "CPython 3.13.5",
+  "startedAt":  "2026-04-27T17:40:07.513833Z",
+  "args":  [
+    "--sweep-id",
+    "ikiru-university-of-oslo/kam_2/g09t3vkj",
+    "--count",
+    "96"
+  ],
+  "program":  "/home/doki/main_lab/KAMemory/src/optim_wb/param_search.py",
+  "codePath":  "src/optim_wb/param_search.py",
+  "codePathLocal":  "param_search.py",
+  "git":  {
+    "remote":  "git@github.com:iKiru-hub/KAMemory.git",
+    "commit":  "aa2275543b541cc79b62c5e2284f6d3566c92432"
+  },
+  "email":  "krubeal.danieli@ibv.uio.no",
+  "root":  "/home/doki/main_lab/KAMemory/src/optim_wb",
+  "host":  "debian",
+  "executable":  "/home/doki/main_lab/envs/kamc/bin/python3",
+  "cpu_count":  6,
+  "cpu_count_logical":  12,
+  "disk":  {
+    "/":  {
+      "total":  "32935567360",
+      "used":  "22210621440"
+    }
+  },
+  "memory":  {
+    "total":  "33407053824"
+  },
+  "writerId":  "us2phhsvtbw9gzrxj4k83l65mkvtc3l7"
+}

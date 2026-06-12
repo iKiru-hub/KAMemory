@@ -1,0 +1,122 @@
+2026-04-27 18:53:40,583 INFO    Thread-62 (_run_job):111040 [wandb_setup.py:_flush():81] Current SDK version is 0.26.1
+2026-04-27 18:53:40,583 INFO    Thread-62 (_run_job):111040 [wandb_setup.py:_flush():81] Configure stats pid to 111040
+2026-04-27 18:53:40,583 INFO    Thread-62 (_run_job):111040 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-04-27 18:53:40,584 INFO    Thread-62 (_run_job):111040 [wandb_init.py:setup_run_log_directory():723] Logging user logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_185340-ydo9efsd/logs/debug.log
+2026-04-27 18:53:40,584 INFO    Thread-62 (_run_job):111040 [wandb_init.py:setup_run_log_directory():724] Logging internal logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_185340-ydo9efsd/logs/debug-internal.log
+2026-04-27 18:53:40,584 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():850] calling init triggers
+2026-04-27 18:53:40,585 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():855] wandb.init called with sweep_config: {'alpha': 0.2760396092713342, 'beta_ca1': 78.36456140538814, 'beta_ca3': 90.56158158669108, 'beta_eo': 19.145223264430243, 'beta_is': 389.2012228049327}
+config: {'_wandb': {}}
+2026-04-27 18:53:40,585 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():898] starting backend
+2026-04-27 18:53:40,793 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():913] sending inform_init request
+2026-04-27 18:53:41,260 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():918] backend started and connected
+2026-04-27 18:53:41,261 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_config_callback():1415] config_cb None None {'alpha': 0.2760396092713342, 'beta_ca1': 78.36456140538814, 'beta_ca3': 90.56158158669108, 'beta_eo': 19.145223264430243, 'beta_is': 389.2012228049327}
+2026-04-27 18:53:41,262 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():988] updated telemetry
+2026-04-27 18:53:41,275 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():1011] communicating run to backend with 90.0 second timeout
+2026-04-27 18:53:41,567 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():1056] starting run threads in backend
+2026-04-27 18:53:41,688 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_console_start():2554] atexit reg
+2026-04-27 18:53:41,688 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_redirect():2403] redirect: wrap_raw
+2026-04-27 18:53:41,688 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_redirect():2472] Wrapping output streams.
+2026-04-27 18:53:41,689 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_redirect():2495] Redirects installed.
+2026-04-27 18:53:41,689 INFO    Thread-62 (_run_job):111040 [wandb_init.py:init():1094] run started, returning control to user process
+2026-04-27 18:53:44,945 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_finish():2321] finishing run ikiru-university-of-oslo/kam_2/ydo9efsd
+2026-04-27 18:53:44,945 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_atexit_cleanup():2520] got exitcode: 1
+2026-04-27 18:53:44,945 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_restore():2502] restore
+2026-04-27 18:53:44,945 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_restore():2508] restore done
+2026-04-27 18:53:45,680 INFO    wandb-AsyncioManager-main:111040 [service_client.py:_forward_responses():134] Reached EOF.
+2026-04-27 18:53:45,680 INFO    wandb-AsyncioManager-main:111040 [mailbox.py:close():155] Closing mailbox, abandoning 2 handles.
+2026-04-27 18:53:45,682 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_restore():2502] restore
+2026-04-27 18:53:45,682 INFO    Thread-62 (_run_job):111040 [wandb_run.py:_restore():2508] restore done
+2026-04-27 18:53:45,682 ERROR   Thread-62 (_run_job):111040 [wandb_run.py:_atexit_cleanup():2540] Problem finishing run
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/agents/pyagent.py", line 304, in _run_job
+    self._function()
+    ~~~~~~~~~~~~~~^^
+  File "/home/doki/main_lab/KAMemory/src/optim_wb/param_search.py", line 201, in main
+    accuracy = run_model(NUM_REPS, NUM_SAMPLES, parameters, settings)
+  File "/home/doki/main_lab/KAMemory/src/optim_wb/param_search.py", line 149, in run_model
+    _ = model(batch[0].reshape(-1, 1))
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/doki/main_lab/KAMemory/src/models.py", line 503, in forward
+    x_ca1 = utils.get_sample_from_num_swaps(x_0=x_ca1,
+                                            num_swaps=self._num_swaps_ca1)
+  File "/home/doki/main_lab/KAMemory/src/utils.py", line 576, in get_sample_from_num_swaps
+    off_index = (x_0 ==0).nonzero().squeeze(1)
+                ~~~~~~~~~~~~~~~~~^^
+Exception
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/agents/pyagent.py", line 314, in _run_job
+    raise _JobError(f"Run threw exception: {str(e)}") from e
+wandb.agents.pyagent._JobError: Run threw exception: 
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/wandb_run.py", line 2531, in _atexit_cleanup
+    self._on_finish()
+    ~~~~~~~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/wandb_run.py", line 2748, in _on_finish
+    wait_with_progress(
+    ~~~~~~~~~~~~~~~~~~^
+        exit_handle,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        ),
+        ^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 24, in wait_with_progress
+    return wait_all_with_progress(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        [handle],
+        ^^^^^^^^^
+        timeout=timeout,
+        ^^^^^^^^^^^^^^^^
+        display_progress=display_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )[0]
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 78, in wait_all_with_progress
+    return asyncer.run(progress_loop_with_timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 137, in run
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 223, in _wrap
+    return await fn()
+           ^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 73, in progress_loop_with_timeout
+    return await _wait_handles_async(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 96, in _wait_handles_async
+    async with asyncio_compat.open_task_group() as task_group:
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/contextlib.py", line 221, in __aexit__
+    await anext(self.gen)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_compat.py", line 241, in open_task_group
+    await task_group._wait_all(race=race, timeout=exit_timeout)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_compat.py", line 181, in _wait_all
+    raise exc
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 94, in wait_single
+    results[index] = await handle.wait_async(timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/mailbox_handle.py", line 126, in wait_async
+    response = await self._handle.wait_async(timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/response_handle.py", line 124, in wait_async
+    raise HandleAbandonedError()
+wandb.sdk.mailbox.mailbox_handle.HandleAbandonedError

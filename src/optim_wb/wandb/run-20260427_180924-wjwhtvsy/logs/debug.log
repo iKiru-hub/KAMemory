@@ -1,0 +1,150 @@
+2026-04-27 18:09:24,864 INFO    Thread-45 (_run_job):106306 [wandb_setup.py:_flush():81] Current SDK version is 0.26.1
+2026-04-27 18:09:24,864 INFO    Thread-45 (_run_job):106306 [wandb_setup.py:_flush():81] Configure stats pid to 106306
+2026-04-27 18:09:24,865 INFO    Thread-45 (_run_job):106306 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-04-27 18:09:24,865 INFO    Thread-45 (_run_job):106306 [wandb_init.py:setup_run_log_directory():723] Logging user logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_180924-wjwhtvsy/logs/debug.log
+2026-04-27 18:09:24,865 INFO    Thread-45 (_run_job):106306 [wandb_init.py:setup_run_log_directory():724] Logging internal logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_180924-wjwhtvsy/logs/debug-internal.log
+2026-04-27 18:09:24,865 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():850] calling init triggers
+2026-04-27 18:09:24,865 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():855] wandb.init called with sweep_config: {'alpha': 0.9917004370198512, 'beta_ca1': 95.91732768425226, 'beta_ca3': 31.488081356232133, 'beta_eo': 1.0492265987248397, 'beta_is': 56.96433244498198}
+config: {'_wandb': {}}
+2026-04-27 18:09:24,865 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():898] starting backend
+2026-04-27 18:09:25,068 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():913] sending inform_init request
+2026-04-27 18:09:25,676 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():918] backend started and connected
+2026-04-27 18:09:25,677 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_config_callback():1415] config_cb None None {'alpha': 0.9917004370198512, 'beta_ca1': 95.91732768425226, 'beta_ca3': 31.488081356232133, 'beta_eo': 1.0492265987248397, 'beta_is': 56.96433244498198}
+2026-04-27 18:09:25,677 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():988] updated telemetry
+2026-04-27 18:09:25,684 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():1011] communicating run to backend with 90.0 second timeout
+2026-04-27 18:09:25,980 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():1056] starting run threads in backend
+2026-04-27 18:09:26,149 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_console_start():2554] atexit reg
+2026-04-27 18:09:26,149 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_redirect():2403] redirect: wrap_raw
+2026-04-27 18:09:26,149 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_redirect():2472] Wrapping output streams.
+2026-04-27 18:09:26,149 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_redirect():2495] Redirects installed.
+2026-04-27 18:09:26,150 INFO    Thread-45 (_run_job):106306 [wandb_init.py:init():1094] run started, returning control to user process
+2026-04-27 18:09:43,881 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_finish():2321] finishing run ikiru-university-of-oslo/kam_2/wjwhtvsy
+2026-04-27 18:09:43,882 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_atexit_cleanup():2520] got exitcode: 0
+2026-04-27 18:09:43,882 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_restore():2502] restore
+2026-04-27 18:09:43,883 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_restore():2508] restore done
+2026-04-27 18:10:33,034 INFO    Thread-1 (_heartbeat):106306 [retry.py:__call__():167] [no run ID] Retry attempt failed:
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+        (self._dns_host, self.port),
+    ...<2 lines>...
+        socket_options=self.socket_options,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 977, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+        conn,
+    ...<10 lines>...
+        **response_kw,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ~~~~~~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connection.py", line 211, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='api.wandb.ai', port=443): Failed to resolve 'api.wandb.ai' ([Errno -3] Temporary failure in name resolution)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/requests/adapters.py", line 644, in send
+    resp = conn.urlopen(
+        method=request.method,
+    ...<9 lines>...
+        chunked=chunked,
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+        method, url, error=new_e, _pool=self, _stacktrace=sys.exc_info()[2]
+    )
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/urllib3/util/retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.wandb.ai', port=443): Max retries exceeded with url: /graphql (Caused by NameResolutionError("HTTPSConnection(host='api.wandb.ai', port=443): Failed to resolve 'api.wandb.ai' ([Errno -3] Temporary failure in name resolution)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/retry.py", line 160, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/internal/internal_api.py", line 379, in execute
+    return self.client.execute(*args, **kwargs)  # type: ignore
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 52, in execute
+    result = self._get_result(document, *args, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 60, in _get_result
+    return self.transport.execute(document, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/gql_request.py", line 70, in execute
+    request = self.session.post(self.url, **post_args)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/requests/sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/requests/adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='api.wandb.ai', port=443): Max retries exceeded with url: /graphql (Caused by NameResolutionError("HTTPSConnection(host='api.wandb.ai', port=443): Failed to resolve 'api.wandb.ai' ([Errno -3] Temporary failure in name resolution)"))
+2026-04-27 18:31:21,164 INFO    wandb-AsyncioManager-main:106306 [service_client.py:_forward_responses():134] Reached EOF.
+2026-04-27 18:31:21,164 INFO    wandb-AsyncioManager-main:106306 [mailbox.py:close():155] Closing mailbox, abandoning 2 handles.
+2026-04-27 18:31:21,166 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_restore():2502] restore
+2026-04-27 18:31:21,167 INFO    Thread-45 (_run_job):106306 [wandb_run.py:_restore():2508] restore done
+2026-04-27 18:31:21,167 ERROR   Thread-45 (_run_job):106306 [wandb_run.py:_atexit_cleanup():2540] Problem finishing run
+Traceback (most recent call last):
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/wandb_run.py", line 2531, in _atexit_cleanup
+    self._on_finish()
+    ~~~~~~~~~~~~~~~^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/wandb_run.py", line 2748, in _on_finish
+    wait_with_progress(
+    ~~~~~~~~~~~~~~~~~~^
+        exit_handle,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        ),
+        ^^
+    )
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 24, in wait_with_progress
+    return wait_all_with_progress(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        [handle],
+        ^^^^^^^^^
+        timeout=timeout,
+        ^^^^^^^^^^^^^^^^
+        display_progress=display_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )[0]
+    ^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/mailbox/wait_with_progress.py", line 78, in wait_all_with_progress
+    return asyncer.run(progress_loop_with_timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 137, in run
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 451, in result
+    self._condition.wait(timeout)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.13/threading.py", line 359, in wait
+    waiter.acquire()
+    ~~~~~~~~~~~~~~^^
+Exception

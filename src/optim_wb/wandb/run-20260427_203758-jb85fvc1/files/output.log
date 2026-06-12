@@ -1,0 +1,37 @@
+[32m2026-04-27 20:37:59[0m | [33mbias not found in the info file, set to True[0m
+Exception in thread ChkStopThr:
+Traceback (most recent call last):
+  File [35m"/usr/lib/python3.13/threading.py"[0m, line [35m1043[0m, in [35m_bootstrap_inner[0m
+    [31mself.run[0m[1;31m()[0m
+    [31m~~~~~~~~[0m[1;31m^^[0m
+  File [35m"/usr/lib/python3.13/threading.py"[0m, line [35m994[0m, in [35mrun[0m
+    [31mself._target[0m[1;31m(*self._args, **self._kwargs)[0m
+    [31m~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/wandb_run.py"[0m, line [35m320[0m, in [35mcheck_stop_status[0m
+    [31mself._loop_check_status[0m[1;31m([0m
+    [31m~~~~~~~~~~~~~~~~~~~~~~~[0m[1;31m^[0m
+        [1;31mlock=self._stop_status_lock,[0m
+        [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+    ...<3 lines>...
+        [1;31mprocess=_process_stop_status,[0m
+        [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+    [1;31m)[0m
+    [1;31m^[0m
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/wandb_run.py"[0m, line [35m236[0m, in [35m_loop_check_status[0m
+    local_handle = request()
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/interface/interface.py"[0m, line [35m978[0m, in [35mdeliver_stop_status[0m
+    return [31mself._deliver_stop_status[0m[1;31m(status)[0m
+           [31m~~~~~~~~~~~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^[0m
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/interface/interface_shared.py"[0m, line [35m469[0m, in [35m_deliver_stop_status[0m
+    return [31mself._deliver[0m[1;31m(record)[0m
+           [31m~~~~~~~~~~~~~[0m[1;31m^^^^^^^^[0m
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/interface/interface_sock.py"[0m, line [35m50[0m, in [35m_deliver[0m
+    return [31mself._asyncer.run[0m[1;31m(lambda: self.deliver_async(record))[0m
+           [31m~~~~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py"[0m, line [35m134[0m, in [35mrun[0m
+    future = self._schedule(fn, daemon=False)
+  File [35m"/home/doki/main_lab/envs/kamc/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py"[0m, line [35m199[0m, in [35m_schedule[0m
+    raise AlreadyJoinedError(
+    ...<2 lines>...
+    )
+[1;35mwandb.sdk.lib.asyncio_manager.AlreadyJoinedError[0m: [35mCannot schedule tasks after join(). Did you call wandb.teardown()?[0m
