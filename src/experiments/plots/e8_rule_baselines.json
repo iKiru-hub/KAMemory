@@ -1,0 +1,669 @@
+{
+  "alignment_checks": {
+    "delta": {
+      "aligned_exceeds_fixed": true,
+      "decoder_rescues_fixed": true,
+      "rescue_matches_aligned": true
+    },
+    "hebbian": {
+      "aligned_exceeds_fixed": true,
+      "decoder_rescues_fixed": true,
+      "rescue_matches_aligned": true
+    },
+    "target_gated": {
+      "aligned_exceeds_fixed": true,
+      "decoder_rescues_fixed": true,
+      "rescue_matches_aligned": true
+    }
+  },
+  "alignment_summary": {
+    "delta": {
+      "aligned": {
+        "ci95_high": 0.5088830313284063,
+        "ci95_low": 0.45498451280717855,
+        "mean": 0.4819337720677924,
+        "sd": 0.061490179234692126
+      },
+      "decoder_rescue": {
+        "ci95_high": 0.5088830358080336,
+        "ci95_low": 0.4549845161043806,
+        "mean": 0.4819337759562071,
+        "sd": 0.06149018058366328
+      },
+      "fixed_permutation": {
+        "ci95_high": 0.02356741889894365,
+        "ci95_low": 0.0009453137959666204,
+        "mean": 0.012256366347455135,
+        "sd": 0.025808451430817104
+      }
+    },
+    "hebbian": {
+      "aligned": {
+        "ci95_high": 0.2144415439146245,
+        "ci95_low": 0.16963570372690356,
+        "mean": 0.19203862382076403,
+        "sd": 0.051116787984048936
+      },
+      "decoder_rescue": {
+        "ci95_high": 0.214441541320326,
+        "ci95_low": 0.16963568290513215,
+        "mean": 0.19203861211272907,
+        "sd": 0.051116808778879856
+      },
+      "fixed_permutation": {
+        "ci95_high": 0.014736560786236972,
+        "ci95_low": -0.01508118656811643,
+        "mean": -0.0001723128909397291,
+        "sd": 0.03401760715318813
+      }
+    },
+    "target_gated": {
+      "aligned": {
+        "ci95_high": 0.5362986279392364,
+        "ci95_low": 0.4996230280376873,
+        "mean": 0.5179608279884619,
+        "sd": 0.04184139515073903
+      },
+      "decoder_rescue": {
+        "ci95_high": 0.5362986336116847,
+        "ci95_low": 0.4996230326120764,
+        "mean": 0.5179608331118806,
+        "sd": 0.04184139640346099
+      },
+      "fixed_permutation": {
+        "ci95_high": 0.020053798808385544,
+        "ci95_low": -0.006180132393981871,
+        "mean": 0.006936833207201837,
+        "sd": 0.029929006880380787
+      }
+    }
+  },
+  "checkpoint_info": {
+    "K": 5,
+    "K_lat": 18,
+    "beta": 54,
+    "date": "01/04/2025 23:56:04",
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "dim_ei": 50,
+    "dim_eo": 50,
+    "epochs": 2000,
+    "loss_ae": 0.0,
+    "num_samples": 5000
+  },
+  "configuration": {
+    "ca3_active": 22,
+    "capacity_threshold": 0.7777777777777778,
+    "checkpoint": "ae_8",
+    "config": "/Users/doki/exit/KAMemory/src/configs/rule_baselines.json",
+    "deterministic": true,
+    "dev_num_seeds": 8,
+    "dev_seed_start": 1700,
+    "device": "cpu",
+    "endpoint_patterns": 28,
+    "eval_seed_start": 1900,
+    "immediate_recall_tolerance": 0.02,
+    "learning_rates": [
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.35,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "num_patterns": 60,
+    "num_seeds": 20,
+    "output_dir": "/Users/doki/exit/KAMemory/src/experiments/plots",
+    "reference_learning_rate": 0.35,
+    "tuning_num_patterns": 40
+  },
+  "experiment": "E8_rule_specific_baselines",
+  "network_parameters": {
+    "beta": 54.0,
+    "ca1_active": 18,
+    "ca3_active": 22,
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "input_active": 5,
+    "input_dim": 50,
+    "output_active": 5
+  },
+  "outputs": {
+    "figure_pdf": "/Users/doki/exit/KAMemory/src/experiments/plots/e8_rule_baselines.pdf",
+    "figure_png": "/Users/doki/exit/KAMemory/src/experiments/plots/e8_rule_baselines.png",
+    "metrics_json": "/Users/doki/exit/KAMemory/src/experiments/plots/e8_rule_baselines.json",
+    "raw_npz": "/Users/doki/exit/KAMemory/src/experiments/plots/e8_rule_baselines.npz"
+  },
+  "paired_effect_summary": {
+    "target_gated_minus_delta": {
+      "early_immediate_recall": {
+        "ci95_high": 0.01938198588089742,
+        "ci95_low": -0.01899122975067891,
+        "mean": 0.00019537806510925294,
+        "sd": 0.043778121769113366
+      },
+      "half_life": {
+        "ci95_high": -8.62655230367105,
+        "ci95_low": -13.473447696328952,
+        "mean": -11.05,
+        "sd": 5.529585498884495
+      },
+      "immediate_recall": {
+        "ci95_high": 0.1703915188932649,
+        "ci95_low": 0.15233618515489186,
+        "mean": 0.16136385202407838,
+        "sd": 0.02059844571196299
+      },
+      "integrated_recall": {
+        "ci95_high": -0.03539229212562714,
+        "ci95_low": -0.05240077795226898,
+        "mean": -0.04389653503894806,
+        "sd": 0.019404148215669832
+      },
+      "load_capacity": {
+        "ci95_high": 4.164881065169592,
+        "ci95_low": 1.9351189348304079,
+        "mean": 3.05,
+        "sd": 2.5438263760679396
+      }
+    },
+    "target_gated_minus_hebbian": {
+      "early_immediate_recall": {
+        "ci95_high": 0.025198734761853237,
+        "ci95_low": -0.0066174039856386375,
+        "mean": 0.0092906653881073,
+        "sd": 0.03629747399028411
+      },
+      "half_life": {
+        "ci95_high": -0.41027636125110534,
+        "ci95_low": -2.089723638748895,
+        "mean": -1.25,
+        "sd": 1.9159991209755154
+      },
+      "immediate_recall": {
+        "ci95_high": 0.6384601756622913,
+        "ci95_low": 0.620889638395059,
+        "mean": 0.6296749070286751,
+        "sd": 0.0200453651687371
+      },
+      "integrated_recall": {
+        "ci95_high": 0.3056983535911096,
+        "ci95_low": 0.2909805434022891,
+        "mean": 0.29833944849669936,
+        "sd": 0.016790828603133478
+      },
+      "load_capacity": {
+        "ci95_high": 0.30004715725936326,
+        "ci95_low": -3.2000471572593634,
+        "mean": -1.45,
+        "sd": 3.9930861300634706
+      }
+    }
+  },
+  "paired_effects": {
+    "target_gated_minus_delta": {
+      "early_immediate_recall": [
+        -0.08072161674499512,
+        -0.025033116340637207,
+        0.04448622465133667,
+        -0.007349908351898193,
+        -0.03487473726272583,
+        0.008510112762451172,
+        0.0,
+        0.04196453094482422,
+        0.04444169998168945,
+        -0.016760170459747314,
+        -0.04367876052856445,
+        0.04455137252807617,
+        -0.04336655139923096,
+        0.0,
+        -2.002716064453125e-05,
+        0.08967781066894531,
+        0.06425255537033081,
+        -0.0002828836441040039,
+        -0.023103833198547363,
+        -0.05878514051437378
+      ],
+      "half_life": [
+        -6,
+        -6,
+        -10,
+        -6,
+        -16,
+        -13,
+        -5,
+        -20,
+        -15,
+        -8,
+        -11,
+        -6,
+        -4,
+        -19,
+        -12,
+        -11,
+        -15,
+        -2,
+        -18,
+        -18
+      ],
+      "immediate_recall": [
+        0.18778181076049805,
+        0.1552765965461731,
+        0.1503063440322876,
+        0.17942547798156738,
+        0.1629919409751892,
+        0.11952340602874756,
+        0.15713435411453247,
+        0.14325255155563354,
+        0.17493081092834473,
+        0.14090818166732788,
+        0.15962517261505127,
+        0.12217944860458374,
+        0.17512208223342896,
+        0.16126829385757446,
+        0.1522875428199768,
+        0.1632135510444641,
+        0.18322962522506714,
+        0.1577933430671692,
+        0.18122035264968872,
+        0.19980615377426147
+      ],
+      "integrated_recall": [
+        -0.030009806156158447,
+        -0.03902474045753479,
+        -0.04276922345161438,
+        -0.02487283945083618,
+        -0.0785885751247406,
+        -0.062037527561187744,
+        -0.018518000841140747,
+        -0.06750699877738953,
+        -0.05267319083213806,
+        -0.06851577758789062,
+        -0.04556205868721008,
+        -0.03882122039794922,
+        -0.014858394861221313,
+        -0.0656764805316925,
+        -0.06471097469329834,
+        -0.0451982319355011,
+        -0.04328504204750061,
+        -0.014485836029052734,
+        -0.03896823525428772,
+        -0.021847546100616455
+      ],
+      "load_capacity": [
+        4,
+        0,
+        3,
+        0,
+        2,
+        7,
+        4,
+        0,
+        5,
+        2,
+        7,
+        2,
+        4,
+        0,
+        7,
+        0,
+        4,
+        0,
+        4,
+        6
+      ]
+    },
+    "target_gated_minus_hebbian": {
+      "early_immediate_recall": [
+        -0.044444262981414795,
+        -0.03448307514190674,
+        0.04444253444671631,
+        8.285045623779297e-06,
+        0.0012264251708984375,
+        0.044084250926971436,
+        1.1920928955078125e-06,
+        0.0,
+        0.08683139085769653,
+        -0.016760170459747314,
+        -0.04354894161224365,
+        0.04443389177322388,
+        0.0009211301803588867,
+        -0.005728244781494141,
+        0.006816387176513672,
+        0.0656023621559143,
+        0.05651670694351196,
+        2.086162567138672e-05,
+        -1.1920928955078125e-07,
+        -0.020127296447753906
+      ],
+      "half_life": [
+        0,
+        -3,
+        -2,
+        1,
+        -3,
+        2,
+        -1,
+        1,
+        1,
+        -4,
+        0,
+        -1,
+        0,
+        -4,
+        0,
+        -4,
+        -1,
+        -2,
+        -4,
+        -1
+      ],
+      "immediate_recall": [
+        0.6310368478298187,
+        0.6119085848331451,
+        0.6348192393779755,
+        0.6592532694339752,
+        0.6520176529884338,
+        0.6316609084606171,
+        0.6298792064189911,
+        0.6376810073852539,
+        0.6231728792190552,
+        0.6081933677196503,
+        0.6212360560894012,
+        0.6530782878398895,
+        0.614894688129425,
+        0.6025338470935822,
+        0.6333425939083099,
+        0.6385598182678223,
+        0.636053591966629,
+        0.6375860571861267,
+        0.6590134799480438,
+        0.577576756477356
+      ],
+      "integrated_recall": [
+        0.27448830008506775,
+        0.29798926413059235,
+        0.28548428416252136,
+        0.3264579698443413,
+        0.27986811101436615,
+        0.3097894489765167,
+        0.3039580434560776,
+        0.3370240330696106,
+        0.28357750177383423,
+        0.2798099219799042,
+        0.29936689138412476,
+        0.3140671104192734,
+        0.31211550533771515,
+        0.29105162620544434,
+        0.27843810617923737,
+        0.2835530638694763,
+        0.30544613301754,
+        0.3059105724096298,
+        0.3044348359107971,
+        0.29395824670791626
+      ],
+      "load_capacity": [
+        -4,
+        -7,
+        3,
+        -7,
+        -2,
+        5,
+        -2,
+        -7,
+        2,
+        0,
+        3,
+        -2,
+        2,
+        0,
+        2,
+        1,
+        -1,
+        -8,
+        -7,
+        0
+      ]
+    }
+  },
+  "protocol": {
+    "paired_controls": "same seeds, memories, CA3 projections, storage order, content targets, initial weights, encoder, and decoder",
+    "pattern_sha256_by_evaluation_seed": [
+      "c9c83f7e8c8b2c30459bb41049b63c41ad8876c01dec687a264ef447c42a064c",
+      "a09d314115e9e50d76952a09f7b9f4ce2c262d63b4ea1682b431f14a3516098c",
+      "21485b3964545dd16b55d9fae7d92cda09b97c3cca1483eaed680de9b64ae3f7",
+      "f14fd838b05b78ee9ad624fa1418e775b3a6fbfe6d2782db60b75b9014dbdb57",
+      "7674803e38c71d1d25b292636c9b31d8c47847a86211f79949a72e831acfe790",
+      "acbf313994398ed443f87a8f85809c32e8ee5836663f5ba7712f20ddd8a67da9",
+      "b482500979b1dfae2e636f0fc6f089221d0f5f536e1bd7850818f008da0fb66f",
+      "2cc2a7564c1308155f3cec4a9fce0738141eee02f7c8afd085fe74396dcad692",
+      "c23e905e69f56afb929b9e56b4067ceb0dc3ef120daad3c77bca9d1f7b3636da",
+      "8ef0e16219221ac288e84c1b27c054f92247e5fa177bf7f7211948047dd11d76",
+      "16c13b4ddcc25d064de359024949251e465e2c0678187cb58477af0fa6878afe",
+      "24d6b367d8c4b29637fc6c44fe5202ff792d566f1d6bdfc9455e2feee543311c",
+      "0d8114bc81a1e961cc8acec9a13eda388f849a655a0fe3af89376eb1d99666e9",
+      "03546934d527d5a656c472ac017f7cb321823778747c642125614643a8dd5ce9",
+      "a5c20b2d6c96f3db37630fe5b9d5f274736efe40acc397e6a46e169b019342b4",
+      "775154280ed27e3906bef01b7b1c4e845434a917574dd53b8b3a7b48ac3631c2",
+      "3cf6259121ce578da6f24b0ac95125f016f5aabb8414f1671b55f536ff26f625",
+      "115881bf9a357de541c9b5851cd21e09cbb6942ce8e3ba95a92b718f65e0333c",
+      "0df7512bb6f91faaa7a7a249bb9c53973c8c0f86ee79e13008bb145c7633c418",
+      "1c111a70e10eba3b29df3daa65a3e5b00927504f0afa93fa9163c16863a70928"
+    ],
+    "primary_endpoint": "mean chance-corrected recall over the full triangular retention matrix",
+    "rate_selection": {
+      "criterion": "match target-gated early immediate recall over loads 1-5 within tolerance, then maximize development retention-matrix mean",
+      "reference_early_immediate_recall": 0.9120021685957909,
+      "rules": {
+        "delta": {
+          "absolute_immediate_difference": 0.007346875965595245,
+          "eligible_rate_indices": [
+            3
+          ],
+          "selected_early_immediate_recall": 0.9046552926301956,
+          "selected_integrated_recall": 0.5151767507195473,
+          "selected_learning_rate": 0.2,
+          "selection_reason": "best retention among immediate-recall-matched rates"
+        },
+        "hebbian": {
+          "absolute_immediate_difference": 0.015794649720191956,
+          "eligible_rate_indices": [
+            6
+          ],
+          "selected_early_immediate_recall": 0.8962075188755989,
+          "selected_integrated_recall": 0.2507473975419998,
+          "selected_learning_rate": 0.75,
+          "selection_reason": "best retention among immediate-recall-matched rates"
+        },
+        "target_gated": {
+          "absolute_immediate_difference": 0.0,
+          "eligible_rate_indices": [
+            4
+          ],
+          "selected_early_immediate_recall": 0.9120021685957909,
+          "selected_integrated_recall": 0.5361920818686485,
+          "selected_learning_rate": 0.35,
+          "selection_reason": "prespecified validated E2 learning rate"
+        }
+      }
+    }
+  },
+  "protocol_checks": {
+    "all_alignment_checks_pass": true,
+    "all_weights_bounded": true,
+    "all_weights_finite": true,
+    "development_and_evaluation_seeds_disjoint": true,
+    "fixed_and_rescue_weights_identical_for_all_rules": true
+  },
+  "rule_summary": {
+    "delta": {
+      "early_immediate_recall": {
+        "ci95_high": 0.9296021611866758,
+        "ci95_low": 0.8760151831927492,
+        "mean": 0.9028086721897125,
+        "sd": 0.06113475790979859
+      },
+      "final_high_weight_fraction": {
+        "ci95_high": 0.0,
+        "ci95_low": 0.0,
+        "mean": 0.0,
+        "sd": 0.0
+      },
+      "final_weight_norm": {
+        "ci95_high": 1.099602617700343,
+        "ci95_low": 1.0892849069044541,
+        "mean": 1.0944437623023986,
+        "sd": 0.011770970771322081
+      },
+      "half_life": {
+        "ci95_high": 26.654182101869026,
+        "ci95_low": 21.845817898130974,
+        "mean": 24.25,
+        "sd": 5.485627153130068
+      },
+      "immediate_recall": {
+        "ci95_high": 0.7906827745071773,
+        "ci95_low": 0.7732462051280614,
+        "mean": 0.7819644898176193,
+        "sd": 0.019892527768415564
+      },
+      "integrated_recall": {
+        "ci95_high": 0.4896035575934178,
+        "ci95_low": 0.47607778071682394,
+        "mean": 0.48284066915512086,
+        "sd": 0.015430896196203376
+      },
+      "load_capacity": {
+        "ci95_high": 4.100714436948268,
+        "ci95_low": 3.099285563051732,
+        "mean": 3.6,
+        "sd": 1.142481141154959
+      },
+      "selected_learning_rate": 0.2
+    },
+    "hebbian": {
+      "early_immediate_recall": {
+        "ci95_high": 0.9169919086922683,
+        "ci95_low": 0.8704348610411606,
+        "mean": 0.8937133848667145,
+        "sd": 0.053114654785496845
+      },
+      "final_high_weight_fraction": {
+        "ci95_high": 1.0,
+        "ci95_low": 1.0,
+        "mean": 1.0,
+        "sd": 0.0
+      },
+      "final_weight_norm": {
+        "ci95_high": 50.0,
+        "ci95_low": 50.0,
+        "mean": 50.0,
+        "sd": 0.0
+      },
+      "half_life": {
+        "ci95_high": 15.320462550964473,
+        "ci95_low": 13.579537449035525,
+        "mean": 14.45,
+        "sd": 1.9861361590045288
+      },
+      "immediate_recall": {
+        "ci95_high": 0.3233640726287744,
+        "ci95_low": 0.3039427969972708,
+        "mean": 0.3136534348130226,
+        "sd": 0.022156781898878757
+      },
+      "integrated_recall": {
+        "ci95_high": 0.1470419521673972,
+        "ci95_low": 0.1341674190715497,
+        "mean": 0.14060468561947345,
+        "sd": 0.014687924071880572
+      },
+      "load_capacity": {
+        "ci95_high": 9.3057123685977,
+        "ci95_low": 6.8942876314023005,
+        "mean": 8.1,
+        "sd": 2.7510763443844266
+      },
+      "selected_learning_rate": 0.75
+    },
+    "target_gated": {
+      "early_immediate_recall": {
+        "ci95_high": 0.9220809225980849,
+        "ci95_low": 0.8839271779115586,
+        "mean": 0.9030040502548218,
+        "sd": 0.043527738120022606
+      },
+      "final_high_weight_fraction": {
+        "ci95_high": 0.0008379207346997758,
+        "ci95_low": 0.00012207926724203176,
+        "mean": 0.00048000000097090376,
+        "sd": 0.0008166684603819997
+      },
+      "final_weight_norm": {
+        "ci95_high": 24.02394912752837,
+        "ci95_low": 23.859202117588822,
+        "mean": 23.941575622558595,
+        "sd": 0.18795179250747535
+      },
+      "half_life": {
+        "ci95_high": 13.536490869509349,
+        "ci95_low": 12.86350913049065,
+        "mean": 13.2,
+        "sd": 0.7677718959499145
+      },
+      "immediate_recall": {
+        "ci95_high": 0.9480196484152208,
+        "ci95_low": 0.9386370352681745,
+        "mean": 0.9433283418416977,
+        "sd": 0.010704163675193265
+      },
+      "integrated_recall": {
+        "ci95_high": 0.44324459837984154,
+        "ci95_low": 0.434643669852504,
+        "mean": 0.4389441341161728,
+        "sd": 0.009812377988134622
+      },
+      "load_capacity": {
+        "ci95_high": 7.978385723944272,
+        "ci95_low": 5.321614276055729,
+        "mean": 6.65,
+        "sd": 3.030980386815982
+      },
+      "selected_learning_rate": 0.35
+    }
+  },
+  "rules": {
+    "delta": {
+      "depression": "error-dependent on active presynaptic synapses",
+      "equation": "W <- clip(W + eta*(c-Wk)*k^T/||k||^2, 0, 1)",
+      "information": "presynaptic CA3 activity, content target, and prediction error"
+    },
+    "hebbian": {
+      "depression": "none",
+      "equation": "W <- clip(W + eta*c*k^T, 0, 1)",
+      "information": "presynaptic CA3 activity and content target/IS"
+    },
+    "target_gated": {
+      "depression": "target-row-specific",
+      "equation": "W <- (1 - eta*c) * W + eta*c*k^T",
+      "information": "presynaptic CA3 activity and content target/IS"
+    }
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-15T07:26:11.402856+00:00"
+  },
+  "schema_version": 1
+}

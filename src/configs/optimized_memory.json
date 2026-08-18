@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "name": "optimized_memory_reference",
+  "checkpoint": "ae_8",
+  "source": "src/optim_wb/best_params.yaml",
+  "selection_basis": "explicit repository artifact named best_params; values are compatible with the canonical single-beta BTSPMemory backend",
+  "optimization_objective": "capacity at a raw-cosine threshold of 0.8",
+  "parameters": {
+    "alpha": 0.2087942893137534,
+    "beta": 54.0,
+    "ca1_active": 18,
+    "ca3_active": 22,
+    "dim_ca3": 50
+  },
+  "checkpoint_contract": {
+    "input_dim": 50,
+    "input_active": 5,
+    "output_active": 5,
+    "dim_ca1": 50,
+    "checkpoint_ca1_active": 18,
+    "checkpoint_beta": 54.0
+  },
+  "scope_note": "Archived MTLev landscapes use separate beta values for IS, CA3, CA1, and output and therefore are not ranked together with this configuration."
+}

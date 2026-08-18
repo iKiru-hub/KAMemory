@@ -1,0 +1,17 @@
+{
+  "checkpoint": "ae_factorial_paper_v1",
+  "seed_start": 2300,
+  "num_seeds": 20,
+  "train_repeats": 2,
+  "test_repeats": 2,
+  "train_free_laps": 4,
+  "test_free_laps": 4,
+  "cue_alpha": 0.1,
+  "baseline_alpha": 0.001,
+  "background_rates": [0.0, 0.01, 0.02, 0.05, 0.1, 0.2, 0.4, 0.8],
+  "background_rng_offset": 90000,
+  "fdr": 0.05,
+  "min_eta": 0.05,
+  "output_preservation_fraction": 0.8,
+  "maximum_log_or_error_for_repair": 1.0
+}

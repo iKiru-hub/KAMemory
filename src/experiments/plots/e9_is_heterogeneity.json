@@ -1,0 +1,924 @@
+{
+  "checkpoint_info": {
+    "checkpoint_contract": {
+      "loader": "kamemory.io.load_autoencoder_session",
+      "metadata_file": "info.json",
+      "network_params_embedded": true,
+      "state_dict_file": "autoencoder.pt"
+    },
+    "data": {
+      "distribution": "E3/E6/E7/E9 factorial spatial+sensory track",
+      "generator": "kamemory.data.generate_factorial_track",
+      "independent_split_rng_streams": true,
+      "samples": {
+        "test": 4000,
+        "train": 16000,
+        "validation": 2000
+      },
+      "sha256": {
+        "test": "a241b53d5898f1c4a7301a976e46917329e4525878ca81eadce55e9867775529",
+        "train": "132503d4bcf4d50016f24a0e2f3e8da1bee9553033b340d29f33943e6baed2e5",
+        "validation": "3c9201c5b8650b383093ff4838c5bd713d15049166231abeff7220121509c1a3"
+      },
+      "shape": {
+        "test": [
+          4000,
+          100
+        ],
+        "train": [
+          16000,
+          100
+        ],
+        "validation": [
+          2000,
+          100
+        ]
+      }
+    },
+    "experiment": "factorial_track_autoencoder_training",
+    "metrics": {
+      "random_initialization_test": {
+        "cosine": 0.3895112190246582,
+        "latent_active_count": 14.99975,
+        "latent_mean_activity": 0.015194100463867188,
+        "mse": 0.13346571166992188,
+        "sensory_cosine": 0.2900316066741943,
+        "sensory_mse": 0.14080812744140625,
+        "sensory_top_k_f1": 0.09965,
+        "spatial_cosine": 0.478511962890625,
+        "spatial_mse": 0.12612328857421876,
+        "spatial_peak_accuracy": 0.017,
+        "weighted_mse": 0.1334657080078125
+      },
+      "reference_checkpoint": "ae_6",
+      "reference_checkpoint_test": {
+        "cosine": 0.9328825607299804,
+        "latent_active_count": 15.0,
+        "latent_mean_activity": 0.015005757446289063,
+        "mse": 0.015883740844726563,
+        "sensory_cosine": 0.8426015396118164,
+        "sensory_mse": 0.029554019470214844,
+        "sensory_top_k_f1": 0.83485,
+        "spatial_cosine": 0.992559928894043,
+        "spatial_mse": 0.0022134631538391113,
+        "spatial_peak_accuracy": 0.46675,
+        "weighted_mse": 0.015883741312026977
+      },
+      "trained": {
+        "test": {
+          "cosine": 0.9863077850341797,
+          "latent_active_count": 15.0,
+          "latent_mean_activity": 0.015093285888671875,
+          "mse": 0.0033456220626831056,
+          "sensory_cosine": 0.9761509170532227,
+          "sensory_mse": 0.004819332313537598,
+          "sensory_top_k_f1": 0.9826,
+          "spatial_cosine": 0.9938445663452149,
+          "spatial_mse": 0.0018719116401672363,
+          "spatial_peak_accuracy": 0.52275,
+          "weighted_mse": 0.003345621976852417
+        },
+        "train": {
+          "cosine": 0.9959179077148438,
+          "latent_active_count": 15.0,
+          "latent_mean_activity": 0.01508651831817627,
+          "mse": 0.0010266520941257476,
+          "sensory_cosine": 0.9960232701301575,
+          "sensory_mse": 0.0008370933598279953,
+          "sensory_top_k_f1": 0.9994625,
+          "spatial_cosine": 0.9960895771980286,
+          "spatial_mse": 0.001216210824251175,
+          "spatial_peak_accuracy": 0.5805,
+          "weighted_mse": 0.0010266520920395852
+        },
+        "validation": {
+          "cosine": 0.987088134765625,
+          "latent_active_count": 15.0,
+          "latent_mean_activity": 0.01509369287109375,
+          "mse": 0.003159999465942383,
+          "sensory_cosine": 0.9779292144775391,
+          "sensory_mse": 0.004478775253295898,
+          "sensory_top_k_f1": 0.9861,
+          "spatial_cosine": 0.9939541168212891,
+          "spatial_mse": 0.0018412238311767578,
+          "spatial_peak_accuracy": 0.516,
+          "weighted_mse": 0.003159999542236328
+        }
+      }
+    },
+    "network_params": {
+      "K_ca1": 15,
+      "K_ca3": 15,
+      "K_ei": 10,
+      "K_eo": 10,
+      "K_lec": 5,
+      "alpha": 0.5,
+      "beta_ca1": 150.0,
+      "beta_ca3": 150.0,
+      "beta_ei": 150.0,
+      "beta_eo": 150.0,
+      "bias": false,
+      "dim_ca1": 1000,
+      "dim_ca3": 1000,
+      "dim_ei": 100,
+      "dim_eo": 100,
+      "dim_lec": 50,
+      "dim_mec": 50,
+      "mec_N_x": 50,
+      "mec_N_y": 1,
+      "mec_sigma": 4.0,
+      "num_cues": 2
+    },
+    "optimization": {
+      "best_epoch": 74,
+      "best_validation_weighted_mse": 0.003159999542236328,
+      "epochs_completed": 104,
+      "history": {
+        "train_loss": [
+          0.04659494268894195,
+          0.014821951121091843,
+          0.008907351642847061,
+          0.0067802656479179855,
+          0.005636812303215265,
+          0.004818964466452599,
+          0.0042561058513820174,
+          0.0038353553917258977,
+          0.0034429966527968646,
+          0.0031876095980405807,
+          0.0029238936211913825,
+          0.0027882657870650293,
+          0.0025773945823311805,
+          0.0024363533742725848,
+          0.002331434555351734,
+          0.002176101190969348,
+          0.0020884677981957795,
+          0.0020184632781893013,
+          0.001903716979548335,
+          0.0018466723207384349,
+          0.0017914286516606808,
+          0.0017205482106655836,
+          0.001673559594899416,
+          0.0016157196611166,
+          0.001607736499980092,
+          0.0015648622643202542,
+          0.0015416804952546955,
+          0.0015131232254207135,
+          0.0015039163753390312,
+          0.0015015742238610984,
+          0.0014927177410572767,
+          0.0014738264102488756,
+          0.0014444392686709761,
+          0.0014307948714122175,
+          0.0014428261881694199,
+          0.001442801959812641,
+          0.0014125959239900112,
+          0.0014013827946037054,
+          0.0013900607004761695,
+          0.0013858478851616382,
+          0.0014165058555081487,
+          0.0014098996911197901,
+          0.001429313788190484,
+          0.0014347767876461148,
+          0.001495292581617832,
+          0.0014473996236920358,
+          0.0014442668743431567,
+          0.0014286564327776433,
+          0.001464503586292267,
+          0.0014621234945952893,
+          0.001398877144791186,
+          0.001391699812375009,
+          0.0013166806735098362,
+          0.0013338675647974014,
+          0.0013452997505664826,
+          0.0013214649939909577,
+          0.001351695690304041,
+          0.0014225211013108492,
+          0.001401613298803568,
+          0.0013214855771511793,
+          0.0013357656691223383,
+          0.001312950385734439,
+          0.0012674895655363798,
+          0.0012596895787864923,
+          0.001274258210323751,
+          0.0012402933109551667,
+          0.0011869408898055552,
+          0.0011627988619729876,
+          0.0011306193340569735,
+          0.0011504780044779182,
+          0.0011514583602547646,
+          0.0011136544430628418,
+          0.0011095238253474235,
+          0.0011331793013960123,
+          0.0011467902967706323,
+          0.0011171056255698203,
+          0.0011274322243407368,
+          0.0011311135129071772,
+          0.0011437215879559516,
+          0.0011490614116191865,
+          0.0011522496417164802,
+          0.0011128739835694432,
+          0.0011229550652205945,
+          0.0011318045454099775,
+          0.0012069061091169715,
+          0.0012090135253965855,
+          0.001170281758531928,
+          0.001124853067100048,
+          0.0011575324181467294,
+          0.0011872944924980402,
+          0.0011958470661193132,
+          0.0012058379193767906,
+          0.001181030947715044,
+          0.001164866205304861,
+          0.0011390153327956796,
+          0.001097675104625523,
+          0.0011046970570459962,
+          0.0010623581791296601,
+          0.0011090434435755015,
+          0.0011214843653142453,
+          0.0011093636695295572,
+          0.0011103221168741583,
+          0.001051207149401307,
+          0.0010498416237533093
+        ],
+        "validation_loss": [
+          0.0224876847076416,
+          0.011065411491394042,
+          0.008287863235473633,
+          0.006983928413391113,
+          0.006211846885681153,
+          0.005665411262512207,
+          0.005286837997436523,
+          0.005065021896362305,
+          0.004776948318481446,
+          0.004561777305603027,
+          0.004394981117248535,
+          0.004338002471923828,
+          0.004209994029998779,
+          0.004069423522949219,
+          0.003998279685974121,
+          0.00392280065536499,
+          0.00393190372467041,
+          0.003830663528442383,
+          0.003710755062103272,
+          0.0038120878791809082,
+          0.0036898113822937013,
+          0.0037269855308532714,
+          0.003668546085357666,
+          0.0036786553382873537,
+          0.003593974018096924,
+          0.003663034954071045,
+          0.003567007427215576,
+          0.00351339506149292,
+          0.003533970375061035,
+          0.003508583812713623,
+          0.003594641571044922,
+          0.0034790803527832035,
+          0.0035172609329223634,
+          0.0034182238006591793,
+          0.0035752015876770018,
+          0.0034767732810974126,
+          0.003537246589660644,
+          0.0034610696220397953,
+          0.003434146919250488,
+          0.003443061466217041,
+          0.0034884712982177733,
+          0.003538708667755127,
+          0.0035350992012023927,
+          0.003368523693084717,
+          0.003518054656982422,
+          0.0034439782714843752,
+          0.003454600410461426,
+          0.003509240131378174,
+          0.0034252653694152833,
+          0.003455457363128662,
+          0.0034032192611694336,
+          0.0035123934364318845,
+          0.0034261650466918944,
+          0.0034729522895812987,
+          0.0034853986930847166,
+          0.0033976363563537598,
+          0.003480252265930176,
+          0.003486992130279541,
+          0.0034053573417663573,
+          0.0034617926216125488,
+          0.003475178413391113,
+          0.003309012222290039,
+          0.003425514488220215,
+          0.003352406406402588,
+          0.0033984279632568357,
+          0.003309235134124756,
+          0.0033469516181945805,
+          0.0033842512130737305,
+          0.0032813073539733886,
+          0.0033436756134033203,
+          0.0033770319747924806,
+          0.003408065299987793,
+          0.0032149387359619143,
+          0.003159999542236328,
+          0.0032885716819763184,
+          0.0033320129776000973,
+          0.003320369834899902,
+          0.0034142851829528807,
+          0.00344060583114624,
+          0.003364669418334961,
+          0.0033040741539001463,
+          0.0033957479476928714,
+          0.0033814795303344727,
+          0.003423758678436279,
+          0.0034664189338684086,
+          0.0033408743476867676,
+          0.0033344237327575686,
+          0.0032977498054504394,
+          0.0034335390853881837,
+          0.0034769834709167478,
+          0.003488837127685547,
+          0.0033651766967773434,
+          0.0033966327857971193,
+          0.003435412139892578,
+          0.0032975788879394527,
+          0.003399575939178467,
+          0.00330963191986084,
+          0.0034398897361755374,
+          0.003492853622436523,
+          0.0033471772766113283,
+          0.003299059066772461,
+          0.003412975387573242,
+          0.003445459499359131,
+          0.0033164405822753906
+        ]
+      }
+    },
+    "resolved_device": "cpu",
+    "runtime": {
+      "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+      "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+      "git_dirty": true,
+      "packages": {
+        "kamemory": "0.1.0",
+        "matplotlib": "3.11.1",
+        "numpy": "2.5.2",
+        "torch": "2.13.0"
+      },
+      "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+      "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+      "timestamp_utc": "2026-08-17T17:38:25.004079+00:00"
+    },
+    "schema_version": 1,
+    "settings": {
+      "dataset": {
+        "kind": "factorial_track",
+        "layouts": [
+          [
+            7,
+            19,
+            31,
+            43
+          ],
+          [
+            3,
+            15,
+            27,
+            39
+          ]
+        ],
+        "test_cue_free_laps": 4,
+        "test_repeats_per_combination": 2,
+        "test_sessions_per_layout": 2,
+        "train_cue_free_laps": 8,
+        "train_repeats_per_combination": 4,
+        "train_sessions_per_layout": 4,
+        "validation_cue_free_laps": 4,
+        "validation_repeats_per_combination": 2,
+        "validation_sessions_per_layout": 1
+      },
+      "deterministic": true,
+      "device": "cpu",
+      "evaluation": {
+        "batch_size": 512,
+        "reference_checkpoint": "ae_6"
+      },
+      "network_params": {
+        "K_ca1": 15,
+        "K_ca3": 15,
+        "K_ei": 10,
+        "K_eo": 10,
+        "K_lec": 5,
+        "alpha": 0.5,
+        "beta_ca1": 150.0,
+        "beta_ca3": 150.0,
+        "beta_ei": 150.0,
+        "beta_eo": 150.0,
+        "bias": false,
+        "dim_ca1": 1000,
+        "dim_ca3": 1000,
+        "dim_ei": 100,
+        "dim_eo": 100,
+        "dim_lec": 50,
+        "dim_mec": 50,
+        "mec_N_x": 50,
+        "mec_N_y": 1,
+        "mec_sigma": 4.0,
+        "num_cues": 2
+      },
+      "save": {
+        "directory": null,
+        "enabled": true,
+        "name": "ae_factorial_paper_v1"
+      },
+      "seed": 2026,
+      "training": {
+        "batch_size": 256,
+        "early_stopping_min_delta": 1e-06,
+        "early_stopping_patience": 30,
+        "epochs": 250,
+        "learning_rate": 0.001,
+        "log_every": 10,
+        "max_grad_norm": 5.0,
+        "num_workers": 0,
+        "sensory_loss_weight": 1.0,
+        "spatial_loss_weight": 1.0,
+        "weight_decay": 0.0
+      },
+      "verbose": true
+    }
+  },
+  "configuration": {
+    "background_rates": [
+      0.0,
+      0.01,
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.4,
+      0.8
+    ],
+    "background_rng_offset": 90000,
+    "baseline_alpha": 0.001,
+    "checkpoint": "ae_factorial_paper_v1",
+    "config": "/Users/doki/exit/KAMemory/src/configs/is_heterogeneity.json",
+    "cue_alpha": 0.1,
+    "deterministic": true,
+    "device": "cpu",
+    "fdr": 0.05,
+    "maximum_log_or_error_for_repair": 1.0,
+    "min_eta": 0.05,
+    "num_seeds": 20,
+    "output_dir": "/Users/doki/exit/KAMemory/src/experiments/plots",
+    "output_preservation_fraction": 0.8,
+    "reference": "/Users/doki/exit/KAMemory/src/experiments/reference_data/symanski_2022_ca1_profile.json",
+    "seed_start": 2300,
+    "test_free_laps": 4,
+    "test_repeats": 2,
+    "train_free_laps": 4,
+    "train_repeats": 2
+  },
+  "experiment": "E9_cue_independent_plateau_heterogeneity",
+  "hypothesis_checks": {
+    "some_background_rate_improves_conditional_prevalence_rmse": true,
+    "some_background_rate_reduces_primary_e7_error": true,
+    "some_rate_quantitatively_repairs_e7_under_prespecified_rule": false
+  },
+  "interpretation": {
+    "negative_result_rule": "If no rate meets that rule, independently timed background plateaus alone do not quantitatively repair E7 while preserving the stable readout.",
+    "positive_result_rule": "A positive result requires a nonzero rate meeting the frozen quantitative-repair rule, not merely a slightly lower odds ratio.",
+    "scope": "This tests heterogeneity in plateau timing, not a temporally explicit BTSP eligibility/instructive-trace rule."
+  },
+  "network_parameters": {
+    "beta": 150.0,
+    "bias": false,
+    "ca1_active": 15,
+    "ca3_active": 15,
+    "dim_ca1": 1000,
+    "dim_ca3": 1000,
+    "input_dim": 100,
+    "output_active": 10,
+    "place_field_sigma": 4.0,
+    "sensory_active": 5,
+    "sensory_dim": 50,
+    "spatial_dim": 50,
+    "track_length": 50
+  },
+  "outputs": {
+    "figure_pdf": "/Users/doki/exit/KAMemory/src/experiments/plots/e9_is_heterogeneity.pdf",
+    "figure_png": "/Users/doki/exit/KAMemory/src/experiments/plots/e9_is_heterogeneity.png",
+    "metrics_json": "/Users/doki/exit/KAMemory/src/experiments/plots/e9_is_heterogeneity.json",
+    "raw_npz": "/Users/doki/exit/KAMemory/src/experiments/plots/e9_is_heterogeneity.npz"
+  },
+  "pareto_background_rates": [
+    0.02,
+    0.05
+  ],
+  "protocol": {
+    "baseline": "rate zero exactly retains E3's cue-event alpha and weak continuous non-cue baseline alpha",
+    "frozen_task": "E3 two-cue x four-position factorial track with two layouts and separately generated held-out laps",
+    "functional_endpoint": "held-out EC-output cosine at cue-event rows",
+    "intervention": "independent Bernoulli strong plateau events at non-cue training bins; cue events use the coincident content code, whereas background events use a randomly row-matched code from the same bank; both use cue_alpha",
+    "pairing": "one uniform draw per seed/layout/training bin defines nested masks for every rate; one derangement defines the background signal bank for the full sweep",
+    "primary_biological_endpoint": "absolute error between mean model log odds ratio and the exact published E7 log odds ratio",
+    "quantitative_repair_rule": "absolute log-odds-ratio error is at most 1.00, conditional-prevalence RMSE improves over rate zero, and mean output cosine remains at least 0.80 of rate zero",
+    "secondary_biological_endpoint": "seed-level RMSE of spatial prevalence conditional on cue-responsive and cue-inactive status",
+    "selection": "no rate is selected or hidden; all prespecified rates and the non-dominated frontier are reported"
+  },
+  "protocol_checks": {
+    "background_events_exclude_cue_presentations": true,
+    "background_masks_are_nested": true,
+    "background_signals_are_randomly_matched_from_same_code_bank": true,
+    "batch_retrieval_matches_e3_retrieval": true,
+    "complete_prespecified_sweep_is_reported": true,
+    "cue_and_background_events_use_same_event_alpha": true,
+    "e7_mapping_and_primary_metric_are_unchanged": true,
+    "fresh_seeds_disjoint_from_e3_e6": true,
+    "rate_zero_is_original_e3_aligned_profile": true,
+    "rate_zero_weights_match_direct_e3_training": true,
+    "same_uniform_draws_define_full_sweep_within_seed": true,
+    "seed_is_inferential_unit_and_layouts_are_pooled_within_seed": true
+  },
+  "published_anchor": {
+    "conditional_spatial": [
+      0.6574074074074074,
+      0.5723270440251572
+    ],
+    "log_odds_ratio": 0.354622870344417,
+    "table": [
+      [
+        71,
+        37
+      ],
+      [
+        273,
+        204
+      ]
+    ]
+  },
+  "quantitative_repair_background_rates": [],
+  "reference": {
+    "citation": {
+      "authors": "Symanski, Bladon et al.",
+      "doi": "10.7554/eLife.79545",
+      "journal": "eLife",
+      "title": "Rhythmic coordination and ensemble dynamics in the hippocampal-prefrontal network during odor-place associative memory and decision making",
+      "url": "https://doi.org/10.7554/eLife.79545",
+      "year": 2022
+    },
+    "counts": {
+      "cue_active": {
+        "no_spatial_field": 37,
+        "spatial_field": 71,
+        "total": 108
+      },
+      "cue_inactive": {
+        "no_spatial_field": 204,
+        "spatial_field": 273,
+        "total": 477
+      }
+    },
+    "extraction": {
+      "digitized": false,
+      "location": "Figure 7\u2014figure supplement 1b caption",
+      "method": "Exact numerators and denominators transcribed from the published caption",
+      "reported_statement": "CA1 spatial-field prevalence in odor-period inactive and active cells"
+    },
+    "limitations": [
+      "The empirical task uses odors to guide choices on a T-maze, whereas the model uses two sensory patterns crossed with four positions on a linear track.",
+      "The empirical variables are spike-based significance and place-field criteria; the model uses sparse binary-like activity and factorial effect criteria.",
+      "The comparison tests the population association direction and magnitude, not neuron-by-neuron correspondence or an EC3 manipulation."
+    ],
+    "prespecification": {
+      "empirical_cue_measure": "Significant CA1 activity during the odor-sampling period",
+      "empirical_spatial_measure": "Presence of a spatial firing field during maze running",
+      "model_cue_measure": "Training-lap cue main effect passing BH-FDR and partial eta-squared >= 0.05",
+      "model_spatial_measure": "Held-out-lap position partial eta-squared >= 0.05",
+      "primary_metric": "Absolute difference between empirical and aligned-model log odds ratios",
+      "secondary_metrics": [
+        "Spatial prevalence conditional on cue status",
+        "Cue-associated spatial-prevalence risk difference"
+      ],
+      "selection_rationale": "The paper reports an exact CA1 population contingency between sensory-cue responsiveness and spatial coding, matching the two factors manipulated independently in E3/E6.",
+      "unit_of_model_inference": "Network/data seed after pooling the two prespecified cue layouts",
+      "zero_cell_rule": "Add 0.5 to all four contingency cells for odds-ratio estimation; report undefined when either cue group or spatial outcome is entirely absent"
+    },
+    "schema_version": 1
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-17T17:41:14.936416+00:00"
+  },
+  "schema_version": 1,
+  "summary_by_background_rate": {
+    "0": {
+      "background_events_per_session": [
+        0.0,
+        0.0
+      ],
+      "conditional_prevalence_rmse": [
+        0.45622888417893365,
+        0.00012463348489697397
+      ],
+      "cue_accuracy": [
+        1.0,
+        0.0
+      ],
+      "mean_log_odds_ratio": [
+        8.313898956787593,
+        0.02493762530570141
+      ],
+      "output_cosine": [
+        0.8837074125185609,
+        9.455737755197343e-05
+      ],
+      "output_retention_fraction": 1.0,
+      "pareto_frontier": false,
+      "position_accuracy": [
+        0.875,
+        0.0
+      ],
+      "primary_absolute_log_odds_ratio_error": 7.959276086443176,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9669946115825535,
+        0.00011813278470900388
+      ],
+      "spatial_given_no_cue": [
+        0.0062481292175826176,
+        0.00014174572037352646
+      ]
+    },
+    "0.01": {
+      "background_events_per_session": [
+        10.425,
+        0.7600197712109725
+      ],
+      "conditional_prevalence_rmse": [
+        0.4561271518130462,
+        0.0001069205985468621
+      ],
+      "cue_accuracy": [
+        1.0,
+        0.0
+      ],
+      "mean_log_odds_ratio": [
+        8.291359840877448,
+        0.021463319848188375
+      ],
+      "output_cosine": [
+        0.8837354460731148,
+        9.593434541152274e-05
+      ],
+      "output_retention_fraction": 1.0000317226653945,
+      "pareto_frontier": false,
+      "position_accuracy": [
+        0.8875,
+        0.016862056439486288
+      ],
+      "primary_absolute_log_odds_ratio_error": 7.936736970533031,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9669405830183821,
+        0.0001021148300547731
+      ],
+      "spatial_given_no_cue": [
+        0.006382561323524232,
+        0.00012268864439146957
+      ]
+    },
+    "0.02": {
+      "background_events_per_session": [
+        20.375,
+        1.066153810370915
+      ],
+      "conditional_prevalence_rmse": [
+        0.4561033191571138,
+        9.555519764554713e-05
+      ],
+      "cue_accuracy": [
+        1.0,
+        0.0
+      ],
+      "mean_log_odds_ratio": [
+        8.286544645010357,
+        0.019652987181113007
+      ],
+      "output_cosine": [
+        0.8837667230516673,
+        9.14104441399361e-05
+      ],
+      "output_retention_fraction": 1.0000671155772445,
+      "pareto_frontier": true,
+      "position_accuracy": [
+        0.8875,
+        0.016862056439486288
+      ],
+      "primary_absolute_log_odds_ratio_error": 7.93192177466594,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9669192284210071,
+        8.36263088390096e-05
+      ],
+      "spatial_given_no_cue": [
+        0.0064092951378214805,
+        0.00011496616386153993
+      ]
+    },
+    "0.05": {
+      "background_events_per_session": [
+        50.55,
+        1.6927877350068063
+      ],
+      "conditional_prevalence_rmse": [
+        0.4560906032190234,
+        0.00041118062602206863
+      ],
+      "cue_accuracy": [
+        1.0,
+        0.0
+      ],
+      "mean_log_odds_ratio": [
+        8.276326468216684,
+        0.04643709293982983
+      ],
+      "output_cosine": [
+        0.883428523503244,
+        0.0003249344412101716
+      ],
+      "output_retention_fraction": 0.9996844102342403,
+      "pareto_frontier": true,
+      "position_accuracy": [
+        0.89375,
+        0.02006986153677357
+      ],
+      "primary_absolute_log_odds_ratio_error": 7.921703597872267,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9671162622706546,
+        0.0011583981209382635
+      ],
+      "spatial_given_no_cue": [
+        0.006542181578170808,
+        0.0002142101849926346
+      ]
+    },
+    "0.1": {
+      "background_events_per_session": [
+        99.525,
+        2.051326900479682
+      ],
+      "conditional_prevalence_rmse": [
+        0.45663073338862514,
+        0.0007448408162574012
+      ],
+      "cue_accuracy": [
+        1.0,
+        0.0
+      ],
+      "mean_log_odds_ratio": [
+        8.31220616200684,
+        0.0793952145359486
+      ],
+      "output_cosine": [
+        0.8832433771342039,
+        0.0007292300703366053
+      ],
+      "output_retention_fraction": 0.9994748992960979,
+      "pareto_frontier": false,
+      "position_accuracy": [
+        0.8875,
+        0.019060671827779724
+      ],
+      "primary_absolute_log_odds_ratio_error": 7.957583291662423,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9690292352041203,
+        0.0020315550577920025
+      ],
+      "spatial_given_no_cue": [
+        0.006730133001193743,
+        0.0002459644608101309
+      ]
+    },
+    "0.2": {
+      "background_events_per_session": [
+        195.9,
+        3.6172768472255044
+      ],
+      "conditional_prevalence_rmse": [
+        0.4597004081652421,
+        0.0010657573472178936
+      ],
+      "cue_accuracy": [
+        0.996875,
+        0.0061249999999999985
+      ],
+      "mean_log_odds_ratio": [
+        8.607044349945117,
+        0.14032821841011386
+      ],
+      "output_cosine": [
+        0.878382440470159,
+        0.0022604147869711437
+      ],
+      "output_retention_fraction": 0.9939742815631412,
+      "pareto_frontier": false,
+      "position_accuracy": [
+        0.896875,
+        0.034733607928587575
+      ],
+      "primary_absolute_log_odds_ratio_error": 8.252421479600699,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9794681697463206,
+        0.0031529468913145866
+      ],
+      "spatial_given_no_cue": [
+        0.0076260806391009696,
+        0.00037245876352926595
+      ]
+    },
+    "0.4": {
+      "background_events_per_session": [
+        392.025,
+        5.0685869462384625
+      ],
+      "conditional_prevalence_rmse": [
+        0.4629312708354414,
+        0.0008159310791354774
+      ],
+      "cue_accuracy": [
+        0.984375,
+        0.01216914103053509
+      ],
+      "mean_log_odds_ratio": [
+        9.275927877858953,
+        0.24386864813415884
+      ],
+      "output_cosine": [
+        0.8370514510665089,
+        0.010041507424123275
+      ],
+      "output_retention_fraction": 0.947204288669388,
+      "pareto_frontier": false,
+      "position_accuracy": [
+        0.884375,
+        0.04808479181557687
+      ],
+      "primary_absolute_log_odds_ratio_error": 8.921305007514537,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9923027320536418,
+        0.002370035944559749
+      ],
+      "spatial_given_no_cue": [
+        0.009806927586243377,
+        0.0010798541900815272
+      ]
+    },
+    "0.8": {
+      "background_events_per_session": [
+        787.475,
+        3.742194817567837
+      ],
+      "conditional_prevalence_rmse": [
+        0.46261685275793524,
+        0.0010916817811261652
+      ],
+      "cue_accuracy": [
+        0.896875,
+        0.05048849367351984
+      ],
+      "mean_log_odds_ratio": [
+        9.716989589706596,
+        0.26188780334364076
+      ],
+      "output_cosine": [
+        0.6687580539139499,
+        0.023552905277420478
+      ],
+      "output_retention_fraction": 0.7567641104288052,
+      "pareto_frontier": false,
+      "position_accuracy": [
+        0.896875,
+        0.046413216626641794
+      ],
+      "primary_absolute_log_odds_ratio_error": 9.362366719362178,
+      "quantitative_repair": false,
+      "spatial_given_cue": [
+        0.9981085443657708,
+        0.0013036853830906755
+      ],
+      "spatial_given_no_cue": [
+        0.013809779794196606,
+        0.0016391398714715895
+      ]
+    }
+  }
+}

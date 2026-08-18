@@ -1,0 +1,195 @@
+{
+  "checkpoint_lineage": {
+    "figure_4": {
+      "checkpoint": "ae_factorial_paper_v1",
+      "checkpoint_files": [
+        {
+          "path": "src/data/autoencoders/ae_factorial_paper_v1/autoencoder.pt",
+          "sha256": "a695a069b52401c4dd5226fc9dfa65744d40bc94a21041b2d30e4a136cbd5bcd"
+        },
+        {
+          "path": "src/data/autoencoders/ae_factorial_paper_v1/info.json",
+          "sha256": "73d917cb4e8791d9dc6bf8e0f27ecd8be7e002d1a7c9a06e30f3c929eb4b0013"
+        }
+      ],
+      "stimulus_distribution": "E3/E6/E7/E9 factorial spatial+sensory track"
+    },
+    "figures_1_to_3": {
+      "checkpoint": "ae_8",
+      "checkpoint_files": [
+        {
+          "path": "src/data/autoencoders/ae_8/autoencoder.pt",
+          "sha256": "13fbe8d3765ccf2fbc80f0c20753ad5b2e7ce3c353aab7d35fee86db50b7b0cb"
+        },
+        {
+          "path": "src/data/autoencoders/ae_8/info.json",
+          "sha256": "69676cd8af8a6e8a8718e2eca3ee3a922988e76127137eaafa45ff206ea49694"
+        }
+      ],
+      "stimulus_distribution": "exactly K-hot 50-dimensional sparse patterns"
+    }
+  },
+  "command": ".venv/kamvenv/bin/python article/figures/make_main_figures.py",
+  "figures": [
+    {
+      "figure": 1,
+      "inputs": [
+        {
+          "path": "src/experiments/plots/e1_alignment.npz",
+          "sha256": "e9cd000d41495412c1145bedba9e92b082951b95326b0bcf1528d1e79757d922"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "article/figures/figure_1_model_and_rule.png",
+          "sha256": "0ec071b8e21238695b28a6bbe1e4644d525748452067d412f70f1e1ab9d4816a"
+        },
+        {
+          "path": "article/figures/figure_1_model_and_rule.pdf",
+          "sha256": "96d86a8256c8dbe6a10e6072fe7ccf7a2ea012bc672a3e7d44a148b44885cdc2"
+        },
+        {
+          "path": "article/figures/figure_1_model_and_rule.svg",
+          "sha256": "f46ff617d1a4f59e879f2c789833458c8b43b98b0322d0625c26295817478ab9"
+        }
+      ],
+      "representative": {
+        "memory_index": 6,
+        "seed": 507,
+        "seed_index": 7
+      },
+      "source_data": {
+        "path": "article/figures/figure_1_source_data.csv",
+        "sha256": "8ed0b68410f155d599852c11252418bc4b80bdfe427b6a3f36f35a3c5582a681"
+      }
+    },
+    {
+      "figure": 2,
+      "inputs": [
+        {
+          "path": "src/experiments/plots/e1_alignment.npz",
+          "sha256": "e9cd000d41495412c1145bedba9e92b082951b95326b0bcf1528d1e79757d922"
+        },
+        {
+          "path": "src/experiments/plots/e4_sensitivity.npz",
+          "sha256": "11acb40fb5c7d61255c7c042d7e2786b8bbcc1d3e4773163aac215eb3bed6f91"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "article/figures/figure_2_alignment_causality.png",
+          "sha256": "77d14198d7527d6252d5d7a22404b11452d5e7039a1299bd58c5e1b085e94450"
+        },
+        {
+          "path": "article/figures/figure_2_alignment_causality.pdf",
+          "sha256": "b93d82e91567dcadf3ec5078221bbb410af14ca75dc765c68e75cb4734f5abc6"
+        },
+        {
+          "path": "article/figures/figure_2_alignment_causality.svg",
+          "sha256": "fce5080ff250453c8aa987b2b985dadd6cd88602fec5b4c240ff7fafa8dc5a25"
+        }
+      ],
+      "source_data": {
+        "path": "article/figures/figure_2_source_data.csv",
+        "sha256": "49884fd2fa0b4c60a33b2000d6121731d2679a72f60d0ee504005635ed6e8ee2"
+      }
+    },
+    {
+      "figure": 3,
+      "inputs": [
+        {
+          "path": "src/experiments/plots/e2a_retention.npz",
+          "sha256": "e2070d8238dee2b64274ce823d60a2882cea47e941c98bd3310f3877c5a60df7"
+        },
+        {
+          "path": "src/experiments/plots/e2b_degraded_cues.npz",
+          "sha256": "18b3be650f18a88b62fd4c1d9a803be12080c4dc8efdf3c4911e362eb219345b"
+        },
+        {
+          "path": "src/experiments/plots/e5_interference_analysis.npz",
+          "sha256": "c68d9e160a18b450a9dd2d8c657897fae99a2eacaf8ce161be64326441a2a894"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "article/figures/figure_3_memory_and_interference.png",
+          "sha256": "02462a17faa8212a3f12a1c27b8930f8d774051bfa3599c9076d316129aeef49"
+        },
+        {
+          "path": "article/figures/figure_3_memory_and_interference.pdf",
+          "sha256": "ad44d2664803b27a10f94aac502ec9e1d56f3d93b52bf5d8c8f38486cad1baa5"
+        },
+        {
+          "path": "article/figures/figure_3_memory_and_interference.svg",
+          "sha256": "bb2f4cf66be1e49c7cdd206c198e73187bb19dea6656c9add76412939ab075ad"
+        }
+      ],
+      "source_data": {
+        "path": "article/figures/figure_3_source_data.csv",
+        "sha256": "1e2abe6d022aa0ddcb835cfb6d907008b8c0233a5420f4400d215f8998782412"
+      }
+    },
+    {
+      "figure": 4,
+      "inputs": [
+        {
+          "path": "src/experiments/plots/e6_ca1_mixed_selectivity.npz",
+          "sha256": "f15c0d5e005df31c85c171d325a324355c4277551e50bc1e9095f63bf6a6e3d3"
+        },
+        {
+          "path": "src/experiments/plots/e7_ca1_data_comparison.npz",
+          "sha256": "d7215746774acc933970e7c4de673893448ec78883ef8e5e37673c4a1b41c86e"
+        },
+        {
+          "path": "src/experiments/plots/e9_is_heterogeneity.npz",
+          "sha256": "43df881a5850d029fd877beb5a15d1e413a1ae563a2d80873e0e15a276950a79"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "article/figures/figure_4_ca1_and_biological_boundary.png",
+          "sha256": "4690fd4d0c94a428fcfce0535cc14c3e0512c2fb113252ac2f7624a66132f742"
+        },
+        {
+          "path": "article/figures/figure_4_ca1_and_biological_boundary.pdf",
+          "sha256": "e9899510db56450f801cfad1c0b78f8cccf911114f6dbeacd7a98c268b4da518"
+        },
+        {
+          "path": "article/figures/figure_4_ca1_and_biological_boundary.svg",
+          "sha256": "6b52eba704ce570a5ea83008952ac75f4683617673e838345badce3570324aa0"
+        }
+      ],
+      "representative": {
+        "seed": 1100,
+        "selected_cell_indices": [
+          971,
+          691,
+          683,
+          679,
+          869,
+          110,
+          994,
+          380,
+          295,
+          297,
+          303,
+          317,
+          339,
+          341
+        ]
+      },
+      "source_data": {
+        "path": "article/figures/figure_4_source_data.csv",
+        "sha256": "ed344161ab26380eeb3534c5ce280595e30691a9e7c6bfb5898869f8dd5f38ac"
+      }
+    }
+  ],
+  "principles": [
+    "All quantitative panels are composed from frozen NPZ arrays.",
+    "Independent points and confidence intervals use the network/data seed.",
+    "Intervals are mean +/- 1.96 SEM across independent seeds.",
+    "No saved experiment raster panel is imported.",
+    "Figure 1 schematics reflect the implemented backend and are explicitly conceptual."
+  ],
+  "schema_version": 1
+}

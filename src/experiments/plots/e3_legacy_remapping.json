@@ -1,0 +1,320 @@
+{
+  "across_seeds": {
+    "cue_population_cosine": {
+      "mean": 0.08678448696931203,
+      "sd": 0.013190597938236303,
+      "values": [
+        0.08595158159732819,
+        0.08152078092098236,
+        0.11833439022302628,
+        0.08659746497869492,
+        0.08002233505249023,
+        0.09292210638523102,
+        0.08357800543308258,
+        0.06191813945770264,
+        0.09579174965620041,
+        0.09101176261901855,
+        0.07794508337974548,
+        0.08582044392824173
+      ]
+    },
+    "effective_change_norm": {
+      "mean": 259.1338297526042,
+      "sd": 13.181353808748517,
+      "values": [
+        270.1614074707031,
+        251.44857788085938,
+        235.88426208496094,
+        257.9958801269531,
+        254.369140625,
+        263.4025573730469,
+        254.8843536376953,
+        258.234130859375,
+        283.46600341796875,
+        241.42910766601562,
+        272.4937744140625,
+        265.8367614746094
+      ]
+    },
+    "ensemble_jaccard": {
+      "mean": 0.08939643118418417,
+      "sd": 0.013196606100870699,
+      "values": [
+        0.1,
+        0.07142857142857142,
+        0.09523809523809523,
+        0.09090909090909091,
+        0.1,
+        0.06382978723404255,
+        0.1,
+        0.07142857142857142,
+        0.0975609756097561,
+        0.09090909090909091,
+        0.10256410256410256,
+        0.08888888888888889
+      ]
+    },
+    "profile_peak1": {
+      "mean": 10.0,
+      "sd": 0.0,
+      "values": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    "profile_peak2": {
+      "mean": 30.0,
+      "sd": 0.0,
+      "values": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ]
+    },
+    "profile_shift": {
+      "mean": 20.0,
+      "sd": 0.0,
+      "values": [
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ]
+    },
+    "same_cell_count": {
+      "mean": 3.75,
+      "sd": 0.45226701686664544,
+      "values": [
+        4,
+        3,
+        4,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    "same_cell_shift_mean": {
+      "mean": 20.875,
+      "sd": 0.38843778838895565,
+      "values": [
+        21.0,
+        20.0,
+        20.75,
+        20.75,
+        21.5,
+        21.33333396911621,
+        21.0,
+        20.66666603088379,
+        20.75,
+        20.75,
+        21.25,
+        20.75
+      ]
+    },
+    "same_cell_shift_median": {
+      "mean": 21.041666666666668,
+      "sd": 0.4981024599478109,
+      "values": [
+        21.5,
+        20.0,
+        21.0,
+        21.0,
+        22.0,
+        21.0,
+        21.0,
+        21.0,
+        21.0,
+        21.0,
+        21.5,
+        20.5
+      ]
+    },
+    "same_position_cosine": {
+      "mean": 0.2854962795972824,
+      "sd": 0.025058318071864046,
+      "values": [
+        0.3048071563243866,
+        0.26924845576286316,
+        0.3083386719226837,
+        0.29662632942199707,
+        0.30394044518470764,
+        0.29522591829299927,
+        0.22065168619155884,
+        0.29048535227775574,
+        0.3044285178184509,
+        0.26775386929512024,
+        0.27070578932762146,
+        0.29374316334724426
+      ]
+    },
+    "selected_count1": {
+      "mean": 22.25,
+      "sd": 1.3568010505999362,
+      "values": [
+        21,
+        22,
+        24,
+        22,
+        21,
+        24,
+        22,
+        20,
+        24,
+        23,
+        21,
+        23
+      ]
+    },
+    "selected_count2": {
+      "mean": 23.666666666666668,
+      "sd": 1.8257418583505538,
+      "values": [
+        23,
+        23,
+        22,
+        26,
+        23,
+        26,
+        22,
+        25,
+        21,
+        25,
+        22,
+        26
+      ]
+    }
+  },
+  "checkpoint": "ae_6",
+  "checkpoint_metadata": {
+    "date": "14/10/2024 19:03:10",
+    "loss_ae": 0.00197,
+    "metadata_matches_notebook_printout": true
+  },
+  "digests": {
+    "representative_activity1": "0509f61d19f6e7cf68bd34644317c6b135d19bdd4b21459ef58de6ef0597f629",
+    "representative_activity2": "0dfab2f349f3982709b91c802ef211d1ecaf338a55174eafd248ee2d905ca06f",
+    "representative_inputs1": "b1fe6038e0cf4a264d550d38b362613976cf7ef6cbad996c2919b6a5eca71a45",
+    "representative_inputs2": "bdfda5005b19911bd9a00d20401685b1bc65a159470d6b5305b55f038e4a32a8"
+  },
+  "experiment": "E3 legacy cue-position remapping companion",
+  "notebook_visible_references": {
+    "cosine_absolute_difference": 0.0012672715973281873,
+    "cue_population_cosine": 0.08468431,
+    "interpretation": "close protocol/visual reproduction; not bitwise parity because the notebook consumed undocumented global RNG state before experiment II",
+    "representative_cue_population_cosine": 0.08595158159732819,
+    "representative_selected_cell_counts": [
+      21,
+      23
+    ],
+    "selected_cell_counts": [
+      24,
+      22
+    ]
+  },
+  "parameters": {
+    "beta": 150.0,
+    "bias": false,
+    "ca1_active": 15,
+    "ca3_active": 15,
+    "dim_ca1": 1000,
+    "dim_ca3": 1000,
+    "output_active": 10,
+    "place_field_sigma": 4.0,
+    "sensory_active": 5,
+    "sensory_dim": 50,
+    "spatial_dim": 50,
+    "track_length": 50
+  },
+  "protocol": {
+    "activity_recording": "immediately before each storage update (legacy MTL order)",
+    "alpha": 0.5,
+    "alpha_baseline": 0.5,
+    "cell_selection": "mean activity at the condition's cue position > 0.001",
+    "cue_positions": [
+      10,
+      30
+    ],
+    "effective_alpha_is_constant": true,
+    "effective_input": "W_ei_ca3.T @ W_ca3_ca1.T",
+    "num_laps": 100,
+    "paired_seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53
+    ],
+    "representative_seed": 42
+  },
+  "representative": {
+    "cue_population_cosine": 0.08595158159732819,
+    "effective_change_norm": 270.1614074707031,
+    "ensemble_jaccard": 0.1,
+    "profile_peak1": 10,
+    "profile_peak2": 30,
+    "profile_shift": 20.0,
+    "same_cell_count": 4,
+    "same_cell_shift_mean": 21.0,
+    "same_cell_shift_median": 21.5,
+    "same_position_cosine": 0.3048071563243866,
+    "selected_count1": 21,
+    "selected_count2": 23
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-14T19:13:25.202768+00:00"
+  },
+  "schema_version": 1,
+  "source_notebook": "notebooks/lab_fig_c1.ipynb, experiment II",
+  "status": "protocol reproduction; prior notebook arrays were not saved for bitwise comparison"
+}

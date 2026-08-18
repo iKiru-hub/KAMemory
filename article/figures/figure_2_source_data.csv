@@ -1,0 +1,341 @@
+figure,panel,series,seed,x,value,detail
+2,B,aligned,500,28,0.5715338914167314,seed mean across memories
+2,C,aligned,500,28,0.6142857142857144,seed mean across memories
+2,B,aligned,501,28,0.4910293138615551,seed mean across memories
+2,C,aligned,501,28,0.5428571428571429,seed mean across memories
+2,B,aligned,502,28,0.5925571911391759,seed mean across memories
+2,C,aligned,502,28,0.6285714285714287,seed mean across memories
+2,B,aligned,503,28,0.5857639380154156,seed mean across memories
+2,C,aligned,503,28,0.6214285714285716,seed mean across memories
+2,B,aligned,504,28,0.5956177932638971,seed mean across memories
+2,C,aligned,504,28,0.6285714285714288,seed mean across memories
+2,B,aligned,505,28,0.49104493749993183,seed mean across memories
+2,C,aligned,505,28,0.5285714285714287,seed mean across memories
+2,B,aligned,506,28,0.47759400727308055,seed mean across memories
+2,C,aligned,506,28,0.5214285714285715,seed mean across memories
+2,B,aligned,507,28,0.5305585950046044,seed mean across memories
+2,C,aligned,507,28,0.5714285714285715,seed mean across memories
+2,B,aligned,508,28,0.5331450364009928,seed mean across memories
+2,C,aligned,508,28,0.5785714285714286,seed mean across memories
+2,B,aligned,509,28,0.5486723140828192,seed mean across memories
+2,C,aligned,509,28,0.5928571428571429,seed mean across memories
+2,B,aligned,510,28,0.5242439470593893,seed mean across memories
+2,C,aligned,510,28,0.5642857142857144,seed mean across memories
+2,B,aligned,511,28,0.5361099874749232,seed mean across memories
+2,C,aligned,511,28,0.5785714285714286,seed mean across memories
+2,B,aligned,512,28,0.5670945262388577,seed mean across memories
+2,C,aligned,512,28,0.6071428571428573,seed mean across memories
+2,B,aligned,513,28,0.5223083542216392,seed mean across memories
+2,C,aligned,513,28,0.5642857142857144,seed mean across memories
+2,B,aligned,514,28,0.4816678703304321,seed mean across memories
+2,C,aligned,514,28,0.5357142857142858,seed mean across memories
+2,B,aligned,515,28,0.4566396766504835,seed mean across memories
+2,C,aligned,515,28,0.5071428571428572,seed mean across memories
+2,B,aligned,516,28,0.5837773376750567,seed mean across memories
+2,C,aligned,516,28,0.6214285714285716,seed mean across memories
+2,B,aligned,517,28,0.49767455815278466,seed mean across memories
+2,C,aligned,517,28,0.5428571428571429,seed mean across memories
+2,B,aligned,518,28,0.5659616169711901,seed mean across memories
+2,C,aligned,518,28,0.6000000000000002,seed mean across memories
+2,B,aligned,519,28,0.5137848005366062,seed mean across memories
+2,C,aligned,519,28,0.5571428571428572,seed mean across memories
+2,B,fixed_permutation,500,28,-0.02444100601299056,seed mean across memories
+2,C,fixed_permutation,500,28,0.07857142857142858,seed mean across memories
+2,B,fixed_permutation,501,28,-0.006958515515244022,seed mean across memories
+2,C,fixed_permutation,501,28,0.09285714285714289,seed mean across memories
+2,B,fixed_permutation,502,28,0.05027973751621318,seed mean across memories
+2,C,fixed_permutation,502,28,0.14285714285714288,seed mean across memories
+2,B,fixed_permutation,503,28,0.0011227956166945396,seed mean across memories
+2,C,fixed_permutation,503,28,0.10000000000000002,seed mean across memories
+2,B,fixed_permutation,504,28,0.05021845870850702,seed mean across memories
+2,C,fixed_permutation,504,28,0.14285714285714288,seed mean across memories
+2,B,fixed_permutation,505,28,-0.04623755708484252,seed mean across memories
+2,C,fixed_permutation,505,28,0.057142857142857155,seed mean across memories
+2,B,fixed_permutation,506,28,-0.0382682167370542,seed mean across memories
+2,C,fixed_permutation,506,28,0.0642857142857143,seed mean across memories
+2,B,fixed_permutation,507,28,-0.02157272622467222,seed mean across memories
+2,C,fixed_permutation,507,28,0.0785714285714286,seed mean across memories
+2,B,fixed_permutation,508,28,-0.015958163560434387,seed mean across memories
+2,C,fixed_permutation,508,28,0.07142857142857144,seed mean across memories
+2,B,fixed_permutation,509,28,0.008237314442723789,seed mean across memories
+2,C,fixed_permutation,509,28,0.1,seed mean across memories
+2,B,fixed_permutation,510,28,-0.02067346977865108,seed mean across memories
+2,C,fixed_permutation,510,28,0.0785714285714286,seed mean across memories
+2,B,fixed_permutation,511,28,0.0010430105555319681,seed mean across memories
+2,C,fixed_permutation,511,28,0.10000000000000002,seed mean across memories
+2,B,fixed_permutation,512,28,0.054009284379588914,seed mean across memories
+2,C,fixed_permutation,512,28,0.14285714285714288,seed mean across memories
+2,B,fixed_permutation,513,28,0.025247183360894106,seed mean across memories
+2,C,fixed_permutation,513,28,0.12142857142857146,seed mean across memories
+2,B,fixed_permutation,514,28,0.014798787050231691,seed mean across memories
+2,C,fixed_permutation,514,28,0.11428571428571431,seed mean across memories
+2,B,fixed_permutation,515,28,-0.03712754636605242,seed mean across memories
+2,C,fixed_permutation,515,28,0.0642857142857143,seed mean across memories
+2,B,fixed_permutation,516,28,0.06399838515523233,seed mean across memories
+2,C,fixed_permutation,516,28,0.1571428571428572,seed mean across memories
+2,B,fixed_permutation,517,28,-0.04327340390607369,seed mean across memories
+2,C,fixed_permutation,517,28,0.0642857142857143,seed mean across memories
+2,B,fixed_permutation,518,28,-0.005187843400139643,seed mean across memories
+2,C,fixed_permutation,518,28,0.09285714285714287,seed mean across memories
+2,B,fixed_permutation,519,28,0.027910188894718645,seed mean across memories
+2,C,fixed_permutation,519,28,0.12142857142857146,seed mean across memories
+2,B,decoder_rescue,500,28,0.5715338452940896,seed mean across memories
+2,C,decoder_rescue,500,28,0.6142857142857144,seed mean across memories
+2,B,decoder_rescue,501,28,0.49102929638077825,seed mean across memories
+2,C,decoder_rescue,501,28,0.5428571428571429,seed mean across memories
+2,B,decoder_rescue,502,28,0.592557189956544,seed mean across memories
+2,C,decoder_rescue,502,28,0.6285714285714287,seed mean across memories
+2,B,decoder_rescue,503,28,0.5857639468851544,seed mean across memories
+2,C,decoder_rescue,503,28,0.6214285714285716,seed mean across memories
+2,B,decoder_rescue,504,28,0.5956177974031085,seed mean across memories
+2,C,decoder_rescue,504,28,0.6285714285714288,seed mean across memories
+2,B,decoder_rescue,505,28,0.49104491621255875,seed mean across memories
+2,C,decoder_rescue,505,28,0.5285714285714287,seed mean across memories
+2,B,decoder_rescue,506,28,0.47759400039900574,seed mean across memories
+2,C,decoder_rescue,506,28,0.5214285714285715,seed mean across memories
+2,B,decoder_rescue,507,28,0.5305586204311891,seed mean across memories
+2,C,decoder_rescue,507,28,0.5714285714285715,seed mean across memories
+2,B,decoder_rescue,508,28,0.5331450165919093,seed mean across memories
+2,C,decoder_rescue,508,28,0.5785714285714286,seed mean across memories
+2,B,decoder_rescue,509,28,0.5486722992999212,seed mean across memories
+2,C,decoder_rescue,509,28,0.5928571428571429,seed mean across memories
+2,B,decoder_rescue,510,28,0.5242439387809663,seed mean across memories
+2,C,decoder_rescue,510,28,0.5642857142857144,seed mean across memories
+2,B,decoder_rescue,511,28,0.5361100016626797,seed mean across memories
+2,C,decoder_rescue,511,28,0.5785714285714286,seed mean across memories
+2,B,decoder_rescue,512,28,0.5670945351085965,seed mean across memories
+2,C,decoder_rescue,512,28,0.6071428571428573,seed mean across memories
+2,B,decoder_rescue,513,28,0.522308311646893,seed mean across memories
+2,C,decoder_rescue,513,28,0.5642857142857144,seed mean across memories
+2,B,decoder_rescue,514,28,0.4816678514083227,seed mean across memories
+2,C,decoder_rescue,514,28,0.5357142857142858,seed mean across memories
+2,B,decoder_rescue,515,28,0.4566396828593007,seed mean across memories
+2,C,decoder_rescue,515,28,0.5071428571428572,seed mean across memories
+2,B,decoder_rescue,516,28,0.5837772962829424,seed mean across memories
+2,C,decoder_rescue,516,28,0.6214285714285716,seed mean across memories
+2,B,decoder_rescue,517,28,0.4976745529602917,seed mean across memories
+2,C,decoder_rescue,517,28,0.5428571428571429,seed mean across memories
+2,B,decoder_rescue,518,28,0.5659616228843493,seed mean across memories
+2,C,decoder_rescue,518,28,0.6000000000000002,seed mean across memories
+2,B,decoder_rescue,519,28,0.513784827128499,seed mean across memories
+2,C,decoder_rescue,519,28,0.5571428571428572,seed mean across memories
+2,B,random_matched,500,28,-0.012947640594928672,seed mean across memories
+2,C,random_matched,500,28,0.08571428571428573,seed mean across memories
+2,B,random_matched,501,28,0.028355000157692677,seed mean across memories
+2,C,random_matched,501,28,0.12142857142857147,seed mean across memories
+2,B,random_matched,502,28,0.024998556230794767,seed mean across memories
+2,C,random_matched,502,28,0.12142857142857146,seed mean across memories
+2,B,random_matched,503,28,0.03266272510755612,seed mean across memories
+2,C,random_matched,503,28,0.12857142857142861,seed mean across memories
+2,B,random_matched,504,28,0.001614722490129551,seed mean across memories
+2,C,random_matched,504,28,0.10000000000000005,seed mean across memories
+2,B,random_matched,505,28,0.0359320038841129,seed mean across memories
+2,C,random_matched,505,28,0.1285714285714286,seed mean across memories
+2,B,random_matched,506,28,0.025324865854248386,seed mean across memories
+2,C,random_matched,506,28,0.12142857142857146,seed mean across memories
+2,B,random_matched,507,28,0.00798691816735859,seed mean across memories
+2,C,random_matched,507,28,0.10714285714285716,seed mean across memories
+2,B,random_matched,508,28,-0.0015929227609771549,seed mean across memories
+2,C,random_matched,508,28,0.1,seed mean across memories
+2,B,random_matched,509,28,0.09256795805880487,seed mean across memories
+2,C,random_matched,509,28,0.17857142857142863,seed mean across memories
+2,B,random_matched,510,28,-0.030655846769819094,seed mean across memories
+2,C,random_matched,510,28,0.07142857142857144,seed mean across memories
+2,B,random_matched,511,28,0.015424010901313174,seed mean across memories
+2,C,random_matched,511,28,0.11428571428571432,seed mean across memories
+2,B,random_matched,512,28,-0.009393250099263908,seed mean across memories
+2,C,random_matched,512,28,0.09285714285714286,seed mean across memories
+2,B,random_matched,513,28,-0.014413370830472286,seed mean across memories
+2,C,random_matched,513,28,0.08571428571428573,seed mean across memories
+2,B,random_matched,514,28,0.07698233244850725,seed mean across memories
+2,C,random_matched,514,28,0.16428571428571434,seed mean across memories
+2,B,random_matched,515,28,-0.031166208847026842,seed mean across memories
+2,C,random_matched,515,28,0.07142857142857144,seed mean across memories
+2,B,random_matched,516,28,0.010185004541884004,seed mean across memories
+2,C,random_matched,516,28,0.10714285714285718,seed mean across memories
+2,B,random_matched,517,28,0.013341638976329766,seed mean across memories
+2,C,random_matched,517,28,0.11428571428571431,seed mean across memories
+2,B,random_matched,518,28,0.03453200238488071,seed mean across memories
+2,C,random_matched,518,28,0.12142857142857147,seed mean across memories
+2,B,random_matched,519,28,0.018717764194193652,seed mean across memories
+2,C,random_matched,519,28,0.11428571428571431,seed mean across memories
+2,B,no_plasticity,500,28,0.005640010247358099,seed mean across memories
+2,C,no_plasticity,500,28,0.0785714285714286,seed mean across memories
+2,B,no_plasticity,501,28,0.0005947211010072942,seed mean across memories
+2,C,no_plasticity,501,28,0.09285714285714287,seed mean across memories
+2,B,no_plasticity,502,28,-0.054519709135684755,seed mean across memories
+2,C,no_plasticity,502,28,0.03571428571428572,seed mean across memories
+2,B,no_plasticity,503,28,0.009767459515604145,seed mean across memories
+2,C,no_plasticity,503,28,0.08571428571428573,seed mean across memories
+2,B,no_plasticity,504,28,0.06025890667464524,seed mean across memories
+2,C,no_plasticity,504,28,0.13571428571428573,seed mean across memories
+2,B,no_plasticity,505,28,0.009701498917055445,seed mean across memories
+2,C,no_plasticity,505,28,0.09285714285714287,seed mean across memories
+2,B,no_plasticity,506,28,0.009139921203429343,seed mean across memories
+2,C,no_plasticity,506,28,0.09285714285714287,seed mean across memories
+2,B,no_plasticity,507,28,0.012094617215870313,seed mean across memories
+2,C,no_plasticity,507,28,0.1,seed mean across memories
+2,B,no_plasticity,508,28,-0.012631913692299379,seed mean across memories
+2,C,no_plasticity,508,28,0.07142857142857144,seed mean across memories
+2,B,no_plasticity,509,28,0.02171519403863284,seed mean across memories
+2,C,no_plasticity,509,28,0.10000000000000002,seed mean across memories
+2,B,no_plasticity,510,28,-0.005960667186180165,seed mean across memories
+2,C,no_plasticity,510,28,0.0785714285714286,seed mean across memories
+2,B,no_plasticity,511,28,0.010376274915567283,seed mean across memories
+2,C,no_plasticity,511,28,0.08571428571428574,seed mean across memories
+2,B,no_plasticity,512,28,0.0006510007131307944,seed mean across memories
+2,C,no_plasticity,512,28,0.08571428571428573,seed mean across memories
+2,B,no_plasticity,513,28,0.02067619413996691,seed mean across memories
+2,C,no_plasticity,513,28,0.09285714285714287,seed mean across memories
+2,B,no_plasticity,514,28,0.03367944078589004,seed mean across memories
+2,C,no_plasticity,514,28,0.12142857142857147,seed mean across memories
+2,B,no_plasticity,515,28,0.009699997873718122,seed mean across memories
+2,C,no_plasticity,515,28,0.09285714285714287,seed mean across memories
+2,B,no_plasticity,516,28,0.0021310018981614705,seed mean across memories
+2,C,no_plasticity,516,28,0.0785714285714286,seed mean across memories
+2,B,no_plasticity,517,28,0.05462867378013297,seed mean across memories
+2,C,no_plasticity,517,28,0.1285714285714286,seed mean across memories
+2,B,no_plasticity,518,28,-0.00582535252056366,seed mean across memories
+2,C,no_plasticity,518,28,0.07142857142857144,seed mean across memories
+2,B,no_plasticity,519,28,-0.009804760491360436,seed mean across memories
+2,C,no_plasticity,519,28,0.07857142857142858,seed mean across memories
+2,E,fixed_decoder,1100,0.0,0.6173608303070068,fraction coordinates permuted
+2,E,fixed_decoder,1100,0.1,0.5264021754264832,fraction coordinates permuted
+2,E,fixed_decoder,1100,0.25,0.4301014542579651,fraction coordinates permuted
+2,E,fixed_decoder,1100,0.5,0.2445245385169983,fraction coordinates permuted
+2,E,fixed_decoder,1100,0.75,0.06884385645389557,fraction coordinates permuted
+2,E,fixed_decoder,1100,1.0,0.009349163621664047,fraction coordinates permuted
+2,E,matched_decoder,1100,1.0,0.6173608899116516,full permutation rescue
+2,E,fixed_decoder,1101,0.0,0.6526877880096436,fraction coordinates permuted
+2,E,fixed_decoder,1101,0.1,0.564597487449646,fraction coordinates permuted
+2,E,fixed_decoder,1101,0.25,0.4246828854084015,fraction coordinates permuted
+2,E,fixed_decoder,1101,0.5,0.23438888788223267,fraction coordinates permuted
+2,E,fixed_decoder,1101,0.75,0.09987999498844147,fraction coordinates permuted
+2,E,fixed_decoder,1101,1.0,0.017311301082372665,fraction coordinates permuted
+2,E,matched_decoder,1101,1.0,0.6526877880096436,full permutation rescue
+2,E,fixed_decoder,1102,0.0,0.598280131816864,fraction coordinates permuted
+2,E,fixed_decoder,1102,0.1,0.4915231168270111,fraction coordinates permuted
+2,E,fixed_decoder,1102,0.25,0.48353976011276245,fraction coordinates permuted
+2,E,fixed_decoder,1102,0.5,0.22699202597141266,fraction coordinates permuted
+2,E,fixed_decoder,1102,0.75,0.08053635060787201,fraction coordinates permuted
+2,E,fixed_decoder,1102,1.0,0.022381741553544998,fraction coordinates permuted
+2,E,matched_decoder,1102,1.0,0.598280131816864,full permutation rescue
+2,E,fixed_decoder,1103,0.0,0.6123830080032349,fraction coordinates permuted
+2,E,fixed_decoder,1103,0.1,0.5029690861701965,fraction coordinates permuted
+2,E,fixed_decoder,1103,0.25,0.4335632622241974,fraction coordinates permuted
+2,E,fixed_decoder,1103,0.5,0.21469765901565552,fraction coordinates permuted
+2,E,fixed_decoder,1103,0.75,0.13177558779716492,fraction coordinates permuted
+2,E,fixed_decoder,1103,1.0,0.004187146667391062,fraction coordinates permuted
+2,E,matched_decoder,1103,1.0,0.6123830080032349,full permutation rescue
+2,E,fixed_decoder,1104,0.0,0.6610962748527527,fraction coordinates permuted
+2,E,fixed_decoder,1104,0.1,0.5796029567718506,fraction coordinates permuted
+2,E,fixed_decoder,1104,0.25,0.4729854464530945,fraction coordinates permuted
+2,E,fixed_decoder,1104,0.5,0.28140994906425476,fraction coordinates permuted
+2,E,fixed_decoder,1104,0.75,0.08663500845432281,fraction coordinates permuted
+2,E,fixed_decoder,1104,1.0,0.010476935654878616,fraction coordinates permuted
+2,E,matched_decoder,1104,1.0,0.6610962152481079,full permutation rescue
+2,E,fixed_decoder,1105,0.0,0.6313208937644958,fraction coordinates permuted
+2,E,fixed_decoder,1105,0.1,0.5309349298477173,fraction coordinates permuted
+2,E,fixed_decoder,1105,0.25,0.4735208749771118,fraction coordinates permuted
+2,E,fixed_decoder,1105,0.5,0.2689836323261261,fraction coordinates permuted
+2,E,fixed_decoder,1105,0.75,0.03029092215001583,fraction coordinates permuted
+2,E,fixed_decoder,1105,1.0,-0.007019438780844212,fraction coordinates permuted
+2,E,matched_decoder,1105,1.0,0.6313208937644958,full permutation rescue
+2,E,fixed_decoder,1106,0.0,0.6176116466522217,fraction coordinates permuted
+2,E,fixed_decoder,1106,0.1,0.5309255123138428,fraction coordinates permuted
+2,E,fixed_decoder,1106,0.25,0.4105229675769806,fraction coordinates permuted
+2,E,fixed_decoder,1106,0.5,0.30515938997268677,fraction coordinates permuted
+2,E,fixed_decoder,1106,0.75,0.07877452671527863,fraction coordinates permuted
+2,E,fixed_decoder,1106,1.0,0.023086342960596085,fraction coordinates permuted
+2,E,matched_decoder,1106,1.0,0.6176117062568665,full permutation rescue
+2,E,fixed_decoder,1107,0.0,0.6585415005683899,fraction coordinates permuted
+2,E,fixed_decoder,1107,0.1,0.6033991575241089,fraction coordinates permuted
+2,E,fixed_decoder,1107,0.25,0.4912698566913605,fraction coordinates permuted
+2,E,fixed_decoder,1107,0.5,0.24469809234142303,fraction coordinates permuted
+2,E,fixed_decoder,1107,0.75,0.07079695165157318,fraction coordinates permuted
+2,E,fixed_decoder,1107,1.0,-0.051882460713386536,fraction coordinates permuted
+2,E,matched_decoder,1107,1.0,0.6585415005683899,full permutation rescue
+2,E,fixed_decoder,1108,0.0,0.6189629435539246,fraction coordinates permuted
+2,E,fixed_decoder,1108,0.1,0.5317348837852478,fraction coordinates permuted
+2,E,fixed_decoder,1108,0.25,0.4266984164714813,fraction coordinates permuted
+2,E,fixed_decoder,1108,0.5,0.3111891448497772,fraction coordinates permuted
+2,E,fixed_decoder,1108,0.75,0.04600340127944946,fraction coordinates permuted
+2,E,fixed_decoder,1108,1.0,-0.011113281361758709,fraction coordinates permuted
+2,E,matched_decoder,1108,1.0,0.6189629435539246,full permutation rescue
+2,E,fixed_decoder,1109,0.0,0.6648907661437988,fraction coordinates permuted
+2,E,fixed_decoder,1109,0.1,0.6041383743286133,fraction coordinates permuted
+2,E,fixed_decoder,1109,0.25,0.4617651402950287,fraction coordinates permuted
+2,E,fixed_decoder,1109,0.5,0.24875952303409576,fraction coordinates permuted
+2,E,fixed_decoder,1109,0.75,0.12394419312477112,fraction coordinates permuted
+2,E,fixed_decoder,1109,1.0,0.007694955915212631,fraction coordinates permuted
+2,E,matched_decoder,1109,1.0,0.6648908257484436,full permutation rescue
+2,E,fixed_decoder,1110,0.0,0.6096874475479126,fraction coordinates permuted
+2,E,fixed_decoder,1110,0.1,0.5403392314910889,fraction coordinates permuted
+2,E,fixed_decoder,1110,0.25,0.3266030251979828,fraction coordinates permuted
+2,E,fixed_decoder,1110,0.5,0.29031920433044434,fraction coordinates permuted
+2,E,fixed_decoder,1110,0.75,0.0847412720322609,fraction coordinates permuted
+2,E,fixed_decoder,1110,1.0,-0.012152954004704952,fraction coordinates permuted
+2,E,matched_decoder,1110,1.0,0.6096874475479126,full permutation rescue
+2,E,fixed_decoder,1111,0.0,0.6313136219978333,fraction coordinates permuted
+2,E,fixed_decoder,1111,0.1,0.5255941152572632,fraction coordinates permuted
+2,E,fixed_decoder,1111,0.25,0.4592019021511078,fraction coordinates permuted
+2,E,fixed_decoder,1111,0.5,0.2630380690097809,fraction coordinates permuted
+2,E,fixed_decoder,1111,0.75,0.11200430244207382,fraction coordinates permuted
+2,E,fixed_decoder,1111,1.0,-0.034837208688259125,fraction coordinates permuted
+2,E,matched_decoder,1111,1.0,0.6313136219978333,full permutation rescue
+2,E,fixed_decoder,1112,0.0,0.6084250211715698,fraction coordinates permuted
+2,E,fixed_decoder,1112,0.1,0.524682343006134,fraction coordinates permuted
+2,E,fixed_decoder,1112,0.25,0.42807579040527344,fraction coordinates permuted
+2,E,fixed_decoder,1112,0.5,0.311585009098053,fraction coordinates permuted
+2,E,fixed_decoder,1112,0.75,0.1073387935757637,fraction coordinates permuted
+2,E,fixed_decoder,1112,1.0,0.013765184208750725,fraction coordinates permuted
+2,E,matched_decoder,1112,1.0,0.6084250211715698,full permutation rescue
+2,E,fixed_decoder,1113,0.0,0.6576792597770691,fraction coordinates permuted
+2,E,fixed_decoder,1113,0.1,0.5084158182144165,fraction coordinates permuted
+2,E,fixed_decoder,1113,0.25,0.4923265278339386,fraction coordinates permuted
+2,E,fixed_decoder,1113,0.5,0.2638956904411316,fraction coordinates permuted
+2,E,fixed_decoder,1113,0.75,0.10924625396728516,fraction coordinates permuted
+2,E,fixed_decoder,1113,1.0,-0.019211599603295326,fraction coordinates permuted
+2,E,matched_decoder,1113,1.0,0.6576792597770691,full permutation rescue
+2,E,fixed_decoder,1114,0.0,0.599888265132904,fraction coordinates permuted
+2,E,fixed_decoder,1114,0.1,0.5315012335777283,fraction coordinates permuted
+2,E,fixed_decoder,1114,0.25,0.4691349267959595,fraction coordinates permuted
+2,E,fixed_decoder,1114,0.5,0.2915111184120178,fraction coordinates permuted
+2,E,fixed_decoder,1114,0.75,0.11409493535757065,fraction coordinates permuted
+2,E,fixed_decoder,1114,1.0,0.06674081087112427,fraction coordinates permuted
+2,E,matched_decoder,1114,1.0,0.5998882055282593,full permutation rescue
+2,E,fixed_decoder,1115,0.0,0.6038671135902405,fraction coordinates permuted
+2,E,fixed_decoder,1115,0.1,0.564825177192688,fraction coordinates permuted
+2,E,fixed_decoder,1115,0.25,0.4607609212398529,fraction coordinates permuted
+2,E,fixed_decoder,1115,0.5,0.1800374984741211,fraction coordinates permuted
+2,E,fixed_decoder,1115,0.75,0.101750947535038,fraction coordinates permuted
+2,E,fixed_decoder,1115,1.0,-0.015599161386489868,fraction coordinates permuted
+2,E,matched_decoder,1115,1.0,0.6038671731948853,full permutation rescue
+2,E,fixed_decoder,1116,0.0,0.5952484011650085,fraction coordinates permuted
+2,E,fixed_decoder,1116,0.1,0.5729876160621643,fraction coordinates permuted
+2,E,fixed_decoder,1116,0.25,0.41087615489959717,fraction coordinates permuted
+2,E,fixed_decoder,1116,0.5,0.25059962272644043,fraction coordinates permuted
+2,E,fixed_decoder,1116,0.75,0.07174742221832275,fraction coordinates permuted
+2,E,fixed_decoder,1116,1.0,0.01798434928059578,fraction coordinates permuted
+2,E,matched_decoder,1116,1.0,0.5952484011650085,full permutation rescue
+2,E,fixed_decoder,1117,0.0,0.5915628671646118,fraction coordinates permuted
+2,E,fixed_decoder,1117,0.1,0.5589747428894043,fraction coordinates permuted
+2,E,fixed_decoder,1117,0.25,0.3777361512184143,fraction coordinates permuted
+2,E,fixed_decoder,1117,0.5,0.2962443232536316,fraction coordinates permuted
+2,E,fixed_decoder,1117,0.75,0.16595543920993805,fraction coordinates permuted
+2,E,fixed_decoder,1117,1.0,-0.03060106374323368,fraction coordinates permuted
+2,E,matched_decoder,1117,1.0,0.5915628671646118,full permutation rescue
+2,E,fixed_decoder,1118,0.0,0.6483554840087891,fraction coordinates permuted
+2,E,fixed_decoder,1118,0.1,0.5768048763275146,fraction coordinates permuted
+2,E,fixed_decoder,1118,0.25,0.4318794310092926,fraction coordinates permuted
+2,E,fixed_decoder,1118,0.5,0.30491024255752563,fraction coordinates permuted
+2,E,fixed_decoder,1118,0.75,0.07488555461168289,fraction coordinates permuted
+2,E,fixed_decoder,1118,1.0,0.05991525948047638,fraction coordinates permuted
+2,E,matched_decoder,1118,1.0,0.6483554840087891,full permutation rescue
+2,E,fixed_decoder,1119,0.0,0.6215204000473022,fraction coordinates permuted
+2,E,fixed_decoder,1119,0.1,0.5725417733192444,fraction coordinates permuted
+2,E,fixed_decoder,1119,0.25,0.43692561984062195,fraction coordinates permuted
+2,E,fixed_decoder,1119,0.5,0.23212586343288422,fraction coordinates permuted
+2,E,fixed_decoder,1119,0.75,0.054610949009656906,fraction coordinates permuted
+2,E,fixed_decoder,1119,1.0,-0.012877552770078182,fraction coordinates permuted
+2,E,matched_decoder,1119,1.0,0.6215204000473022,full permutation rescue

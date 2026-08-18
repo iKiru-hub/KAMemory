@@ -1,9 +1,0 @@
-2026-04-27 18:01:20,116 INFO    Thread-2 (_run_job):106259 [wandb_setup.py:_flush():81] Current SDK version is 0.26.1
-2026-04-27 18:01:20,117 INFO    Thread-2 (_run_job):106259 [wandb_setup.py:_flush():81] Configure stats pid to 106259
-2026-04-27 18:01:20,117 INFO    Thread-2 (_run_job):106259 [wandb_setup.py:_flush():81] Loading settings from environment variables
-2026-04-27 18:01:20,117 INFO    Thread-2 (_run_job):106259 [wandb_init.py:setup_run_log_directory():723] Logging user logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_180120-i2b8ubf0/logs/debug.log
-2026-04-27 18:01:20,117 INFO    Thread-2 (_run_job):106259 [wandb_init.py:setup_run_log_directory():724] Logging internal logs to /home/doki/main_lab/KAMemory/src/optim_wb/wandb/run-20260427_180120-i2b8ubf0/logs/debug-internal.log
-2026-04-27 18:01:20,118 INFO    Thread-2 (_run_job):106259 [wandb_init.py:init():850] calling init triggers
-2026-04-27 18:01:20,118 INFO    Thread-2 (_run_job):106259 [wandb_init.py:init():855] wandb.init called with sweep_config: {'alpha': 0.417022004702574, 'beta_ca1': 72.0324493442158, 'beta_ca3': 0.011437481734488664, 'beta_eo': 30.233257263183976, 'beta_is': 14.675589081711305}
-config: {'_wandb': {}}
-2026-04-27 18:01:20,118 INFO    Thread-2 (_run_job):106259 [wandb_init.py:init():898] starting backend

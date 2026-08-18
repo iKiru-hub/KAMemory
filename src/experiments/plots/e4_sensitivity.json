@@ -1,0 +1,375 @@
+{
+  "checkpoint_info": {
+    "K": 5,
+    "K_lat": 18,
+    "beta": 54,
+    "date": "01/04/2025 23:56:04",
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "dim_ei": 50,
+    "dim_eo": 50,
+    "epochs": 2000,
+    "loss_ae": 0.0,
+    "num_samples": 5000
+  },
+  "checkpoint_parameters": {
+    "beta": 54.0,
+    "ca1_active": 18,
+    "dim_ca1": 50,
+    "input_active": 5,
+    "input_dim": 50,
+    "output_active": 5
+  },
+  "configuration": {
+    "config": "/Users/doki/exit/KAMemory/src/configs/optimized_memory.json",
+    "deterministic": true,
+    "device": "cpu",
+    "num_patterns": 28,
+    "num_seeds": 20,
+    "output_dir": "/Users/doki/exit/KAMemory/src/experiments/plots",
+    "seed_start": 1100
+  },
+  "experiment": "E4_focused_robustness",
+  "interpretation": "one-factor-at-a-time robustness, not re-optimization",
+  "misalignment": {
+    "chance_corrected_decodability_mean": [
+      0.6250342130661011,
+      0.5471447706222534,
+      0.4401085376739502,
+      0.26325348019599915,
+      0.09069284051656723,
+      0.0028799239080399275
+    ],
+    "fraction_permuted": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "full_permutation_rescue_mean": 0.6250342130661011,
+    "full_permutation_rescue_minus_mismatch": 0.622154176235199,
+    "realized_code_alignment_mean": [
+      1.0,
+      0.9559015035629272,
+      0.8903465270996094,
+      0.7771550416946411,
+      0.656878650188446,
+      0.5542110800743103
+    ]
+  },
+  "optimizer_artifact": {
+    "path": "/Users/doki/exit/KAMemory/src/optim_wb/best_params.yaml",
+    "selection_note": "explicit best_params artifact; score is not stored locally",
+    "sha256": "a25717a4d888a95be722cd35879639e1aa33486c62d6b0e9517c0541d5d289d5"
+  },
+  "outputs": {
+    "figure_pdf": "/Users/doki/exit/KAMemory/src/experiments/plots/e4_sensitivity.pdf",
+    "figure_png": "/Users/doki/exit/KAMemory/src/experiments/plots/e4_sensitivity.png",
+    "raw_npz": "/Users/doki/exit/KAMemory/src/experiments/plots/e4_sensitivity.npz",
+    "summary_json": "/Users/doki/exit/KAMemory/src/experiments/plots/e4_sensitivity.json"
+  },
+  "protocol": {
+    "data": "same row-wise K-hot patterns for every setting within seed",
+    "endpoint_load_for_parameter_sweeps": 28,
+    "metrics": [
+      "chance_corrected_cosine",
+      "raw_cosine",
+      "top_k_f1"
+    ],
+    "model_rng": "separate from data RNG; identical CA3 sizes share projections within seed",
+    "paired_seeds": [
+      1100,
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110,
+      1111,
+      1112,
+      1113,
+      1114,
+      1115,
+      1116,
+      1117,
+      1118,
+      1119
+    ],
+    "pattern_sha256_by_seed": [
+      "ba0feb1acd2b0ba1a229762c4593a68218db45a9c2cac8c6d7e698edac246880",
+      "b61a7683ebab5b830ef528e1f18db7c62f1cbec8554358c1aa460c807f4169be",
+      "e57d4f99edce1b3fdcfb399bd1733b7e36651208874d3b1a55f270da857965ea",
+      "12e63bf87f92a7de048b0ce9c0b6f171d624315221d8aee408f1bb5788619788",
+      "bd05a0ce4b30c77563f775ba6bd637c6242fb469ef8b38406809d39d3f3bf5e7",
+      "d53fbea1a5b92f13afd584601e6dd3ca26def4c4fc86679b42cdba0911307898",
+      "cc4b0b52ad3276f23173930523e01bacc2ddc1fa2a7635150588e4c76ccd9f4e",
+      "5270e6b743dd22ec843f737aa3db6c0be9950c28054822e61a0785e3c726c5d3",
+      "a075bc55d020aa30b71ffd1ba65fe757262560b68f6f4487e910b13e6c54c19c",
+      "7b0333c2d6352d12696137a8a450f141360ec8eac256652d4589797c001a3ed2",
+      "5330b32de8afebee0f578f36a91adba366b8271e9049ca1db8ec79fcb1f7ad2d",
+      "adf514b8682d041a58b3d5be3dd13930aba001366be11f0ae45d1c7027be1032",
+      "5fd8ce7d2b1d6b1808007e8931d9c4d2cf611d45f0bd530802112ae1790b1c2c",
+      "988200ac2cfc37c76c5c59c13abb25ec30adf10a8a404bcc42b1231fa14961fa",
+      "ffffd99898cdd4fc645de0ba39d23649fa301ecf3dff9d2bc9ca12d2f98aa0d6",
+      "0b432f26e4955165af7bf4ba71e9bb5477760df3146ab4854427cd3de810e179",
+      "4f39a9bf0caaa49158cc1a43e8c62ec08964193e6b2ffef1e371213f5d72b11c",
+      "141f0e96edafbdead9080299eb0ccb080c2db4ee01c83a1cda68c608af0b2d99",
+      "8fdaed3ffb028c326a09c1190c3cff4857375359eab7c052b5534ca9492855ea",
+      "56d898b79c6afca3a16e02266945589170333e8f01ec210b73247370690d7c1e"
+    ],
+    "uncertainty": "95% normal-approximation CI across independent seeds"
+  },
+  "reference": {
+    "checkpoint": "ae_8",
+    "checkpoint_contract": {
+      "checkpoint_beta": 54.0,
+      "checkpoint_ca1_active": 18,
+      "dim_ca1": 50,
+      "input_active": 5,
+      "input_dim": 50,
+      "output_active": 5
+    },
+    "name": "optimized_memory_reference",
+    "optimization_objective": "capacity at a raw-cosine threshold of 0.8",
+    "parameters": {
+      "alpha": 0.2087942893137534,
+      "beta": 54.0,
+      "ca1_active": 18,
+      "ca3_active": 22,
+      "dim_ca3": 50
+    },
+    "schema_version": 1,
+    "scope_note": "Archived MTLev landscapes use separate beta values for IS, CA3, CA1, and output and therefore are not ranked together with this configuration.",
+    "selection_basis": "explicit repository artifact named best_params; values are compatible with the canonical single-beta BTSPMemory backend",
+    "source": "src/optim_wb/best_params.yaml"
+  },
+  "robustness_checks": {
+    "aligned_above_random_for_every_tested_sweep_mean": true,
+    "decodability_decreases_with_misalignment": true,
+    "full_permutation_decoder_rescue": true,
+    "rescue_within_0.05_of_aligned_for_every_tested_sweep_mean": true
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-14T20:06:39.949387+00:00"
+  },
+  "schema_version": 1,
+  "sweeps": {
+    "alpha": {
+      "grid": [
+        0.08,
+        0.12,
+        0.2087942893137534,
+        0.35,
+        0.55
+      ],
+      "summary": {
+        "aligned_mean_by_value": [
+          0.46113961935043335,
+          0.5386164784431458,
+          0.6250342130661011,
+          0.5065984129905701,
+          0.3465455174446106
+        ],
+        "aligned_minus_fixed_by_value": [
+          0.45187073945999146,
+          0.5340481996536255,
+          0.6281119585037231,
+          0.503535807132721,
+          0.34795713424682617
+        ],
+        "aligned_minus_random_by_value": [
+          0.39157310128211975,
+          0.4857966899871826,
+          0.5842212438583374,
+          0.49019855260849,
+          0.32615602016448975
+        ],
+        "fraction_of_seed_value_pairs_aligned_above_random": 1.0,
+        "fraction_of_seed_value_pairs_rescue_within_0.05_of_aligned": 1.0,
+        "rescue_minus_aligned_by_value": [
+          -7.450580596923828e-09,
+          5.9604645663569045e-09,
+          2.9802322831784522e-09,
+          2.9802322831784522e-09,
+          1.4901161415892261e-09
+        ]
+      }
+    },
+    "ca1_active": {
+      "grid": [
+        8,
+        13,
+        18,
+        23,
+        28
+      ],
+      "summary": {
+        "aligned_mean_by_value": [
+          0.48359084129333496,
+          0.5918512940406799,
+          0.6250342130661011,
+          0.6178367137908936,
+          0.5739339590072632
+        ],
+        "aligned_minus_fixed_by_value": [
+          0.47626370191574097,
+          0.5921050906181335,
+          0.6281119585037231,
+          0.6043843626976013,
+          0.5737742185592651
+        ],
+        "aligned_minus_random_by_value": [
+          0.4488874077796936,
+          0.5440331101417542,
+          0.5842212438583374,
+          0.5888280868530273,
+          0.5555273294448853
+        ],
+        "fraction_of_seed_value_pairs_aligned_above_random": 1.0,
+        "fraction_of_seed_value_pairs_rescue_within_0.05_of_aligned": 1.0,
+        "rescue_minus_aligned_by_value": [
+          0.0,
+          -2.9802322831784522e-09,
+          2.9802322831784522e-09,
+          -2.9802322831784522e-09,
+          2.9802322831784522e-09
+        ]
+      }
+    },
+    "ca3_active": {
+      "grid": [
+        6,
+        14,
+        22,
+        30,
+        38
+      ],
+      "summary": {
+        "aligned_mean_by_value": [
+          0.6588955521583557,
+          0.6653106808662415,
+          0.6250342130661011,
+          0.5219380855560303,
+          0.34393689036369324
+        ],
+        "aligned_minus_fixed_by_value": [
+          0.6538360118865967,
+          0.6652868390083313,
+          0.6281119585037231,
+          0.523853600025177,
+          0.34363341331481934
+        ],
+        "aligned_minus_random_by_value": [
+          0.6598192453384399,
+          0.6424180865287781,
+          0.5842212438583374,
+          0.47070902585983276,
+          0.27272874116897583
+        ],
+        "fraction_of_seed_value_pairs_aligned_above_random": 1.0,
+        "fraction_of_seed_value_pairs_rescue_within_0.05_of_aligned": 1.0,
+        "rescue_minus_aligned_by_value": [
+          -5.9604645663569045e-09,
+          -5.9604645663569045e-09,
+          2.9802322831784522e-09,
+          -1.0430812658057675e-08,
+          0.0
+        ]
+      }
+    },
+    "dim_ca3": {
+      "grid": [
+        25,
+        50,
+        100,
+        200
+      ],
+      "summary": {
+        "aligned_mean_by_value": [
+          0.17045077681541443,
+          0.6250342130661011,
+          0.7386471033096313,
+          0.8065141439437866
+        ],
+        "aligned_minus_fixed_by_value": [
+          0.16816018521785736,
+          0.6281119585037231,
+          0.7379699349403381,
+          0.8049524426460266
+        ],
+        "aligned_minus_random_by_value": [
+          0.09079693257808685,
+          0.5842212438583374,
+          0.7262398600578308,
+          0.8066609501838684
+        ],
+        "fraction_of_seed_value_pairs_aligned_above_random": 1.0,
+        "fraction_of_seed_value_pairs_rescue_within_0.05_of_aligned": 1.0,
+        "rescue_minus_aligned_by_value": [
+          2.2351742678949904e-09,
+          2.9802322831784522e-09,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "load": {
+      "grid": [
+        8,
+        16,
+        28,
+        40,
+        60
+      ],
+      "summary": {
+        "aligned_mean_by_value": [
+          0.7022013664245605,
+          0.6593632698059082,
+          0.6250342130661011,
+          0.5538655519485474,
+          0.4450090527534485
+        ],
+        "aligned_minus_fixed_by_value": [
+          0.7011243104934692,
+          0.6672452688217163,
+          0.6281119585037231,
+          0.553474485874176,
+          0.43692079186439514
+        ],
+        "aligned_minus_random_by_value": [
+          0.682923436164856,
+          0.6494598388671875,
+          0.6168559193611145,
+          0.5529425740242004,
+          0.4256078600883484
+        ],
+        "fraction_of_seed_value_pairs_aligned_above_random": 1.0,
+        "fraction_of_seed_value_pairs_rescue_within_0.05_of_aligned": 1.0,
+        "rescue_minus_aligned_by_value": [
+          5.9604645663569045e-09,
+          -5.9604645663569045e-09,
+          2.9802322831784522e-09,
+          2.9802322831784522e-09,
+          0.0
+        ]
+      }
+    }
+  }
+}

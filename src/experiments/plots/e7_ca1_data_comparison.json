@@ -1,0 +1,353 @@
+{
+  "configuration": {
+    "e6_data": "/Users/doki/exit/KAMemory/src/experiments/plots/e6_ca1_mixed_selectivity.npz",
+    "min_eta": 0.05,
+    "output_dir": "/Users/doki/exit/KAMemory/src/experiments/plots",
+    "reference": "/Users/doki/exit/KAMemory/src/experiments/reference_data/symanski_2022_ca1_profile.json"
+  },
+  "experiment": "E7_prespecified_published_ca1_comparison",
+  "hypothesis_checks": {
+    "aligned_model_does_not_quantitatively_match_empirical_magnitude": true,
+    "aligned_model_matches_association_direction_in_all_seeds": true,
+    "published_profile_has_positive_cue_spatial_association": true
+  },
+  "interpretation": {
+    "agreement": "Published CA1 and every aligned-model seed show more spatial coding among cue-responsive cells.",
+    "claim_limit": "The comparison supports the direction of cue-spatial coupling, not quantitative biological realism of the current activity model.",
+    "disagreement": "The model association is orders of magnitude stronger because its sparse deterministic units bind cue and position nearly categorically."
+  },
+  "model_seed_values": {
+    "aligned": {
+      "log_odds_ratio": [
+        8.362894279259237,
+        8.266404650806194,
+        8.369106695894848,
+        8.189037447273318,
+        8.369106695894848,
+        8.272709922997432,
+        8.369106695894848,
+        8.272709922997432,
+        8.272709922997432,
+        8.369106695894848,
+        8.266404650806194,
+        8.272709922997432
+      ],
+      "odds_ratio": [
+        4285.0790513834,
+        3890.93454545455,
+        4311.7826086956575,
+        3601.2541806020063,
+        4311.7826086956575,
+        3915.545454545451,
+        4311.7826086956575,
+        3915.545454545451,
+        3915.545454545451,
+        4311.7826086956575,
+        3890.93454545455,
+        3915.545454545451
+      ],
+      "risk_difference": [
+        0.9611528822055138,
+        0.9601801801801801,
+        0.9613646577562626,
+        0.9545739348370927,
+        0.9613646577562626,
+        0.9603974226268719,
+        0.9613646577562626,
+        0.9603974226268719,
+        0.9603974226268719,
+        0.9613646577562626,
+        0.9601801801801801,
+        0.9603974226268719
+      ],
+      "spatial_given_cue": [
+        0.9671052631578947,
+        0.9666666666666667,
+        0.9673202614379085,
+        0.9605263157894737,
+        0.9673202614379085,
+        0.9668874172185431,
+        0.9673202614379085,
+        0.9668874172185431,
+        0.9668874172185431,
+        0.9673202614379085,
+        0.9666666666666667,
+        0.9668874172185431
+      ],
+      "spatial_given_no_cue": [
+        0.005952380952380952,
+        0.006486486486486486,
+        0.005955603681645912,
+        0.005952380952380952,
+        0.005955603681645912,
+        0.006489994591671174,
+        0.005955603681645912,
+        0.006489994591671174,
+        0.006489994591671174,
+        0.005955603681645912,
+        0.006486486486486486,
+        0.006489994591671174
+      ]
+    },
+    "no_plasticity": {
+      "log_odds_ratio": [
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN
+      ],
+      "odds_ratio": [
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN
+      ],
+      "risk_difference": [
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN
+      ],
+      "spatial_given_cue": [
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN,
+        NaN
+      ],
+      "spatial_given_no_cue": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "random_matched": {
+      "log_odds_ratio": [
+        11.67430424474426,
+        11.434715243933667,
+        11.259609561389041,
+        10.866446268895226,
+        10.495364842261637,
+        10.538980650214032,
+        10.572522791169568,
+        11.201841157558965,
+        11.163236267866168,
+        10.987760860968335,
+        11.237894952778676,
+        11.167483116923776
+      ],
+      "odds_ratio": [
+        117513.00000000022,
+        92476.99999999994,
+        77622.26315789478,
+        52388.70370370372,
+        36147.56410256414,
+        37759.057142857164,
+        39047.057142857084,
+        73265.21052631576,
+        70490.71428571436,
+        59145.80000000006,
+        75954.89473684218,
+        70790.71428571439
+      ],
+      "risk_difference": [
+        0.9966405375139977,
+        0.9961283185840708,
+        0.9949832775919732,
+        0.992789794786467,
+        0.9894620077648364,
+        0.9906439185470556,
+        0.9906077348066298,
+        0.9950193691200886,
+        0.9944227551589515,
+        0.9933073061907418,
+        0.9949972206781545,
+        0.9944196428571429
+      ],
+      "spatial_given_cue": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "spatial_given_no_cue": [
+        0.0033594624860022394,
+        0.0038716814159292035,
+        0.005016722408026756,
+        0.007210205213533,
+        0.010537992235163616,
+        0.009356081452944413,
+        0.009392265193370166,
+        0.004980630879911455,
+        0.005577244841048522,
+        0.006692693809258227,
+        0.005002779321845469,
+        0.005580357142857143
+      ]
+    }
+  },
+  "outputs": {
+    "figure_pdf": "/Users/doki/exit/KAMemory/src/experiments/plots/e7_ca1_data_comparison.pdf",
+    "figure_png": "/Users/doki/exit/KAMemory/src/experiments/plots/e7_ca1_data_comparison.png",
+    "metrics_json": "/Users/doki/exit/KAMemory/src/experiments/plots/e7_ca1_data_comparison.json",
+    "raw_npz": "/Users/doki/exit/KAMemory/src/experiments/plots/e7_ca1_data_comparison.npz"
+  },
+  "protocol_checks": {
+    "layouts_pooled_only_within_seed": true,
+    "model_cue_selection_uses_training_laps": true,
+    "model_position_evaluation_uses_heldout_laps": true,
+    "primary_profile_and_metric_prespecified_in_reference_file": true,
+    "published_counts_are_exact_not_digitized": true,
+    "seed_is_model_inferential_unit": true,
+    "task_and_measurement_mismatch_reported": true
+  },
+  "reference": {
+    "citation": {
+      "authors": "Symanski, Bladon et al.",
+      "doi": "10.7554/eLife.79545",
+      "journal": "eLife",
+      "title": "Rhythmic coordination and ensemble dynamics in the hippocampal-prefrontal network during odor-place associative memory and decision making",
+      "url": "https://doi.org/10.7554/eLife.79545",
+      "year": 2022
+    },
+    "counts": {
+      "cue_active": {
+        "no_spatial_field": 37,
+        "spatial_field": 71,
+        "total": 108
+      },
+      "cue_inactive": {
+        "no_spatial_field": 204,
+        "spatial_field": 273,
+        "total": 477
+      }
+    },
+    "extraction": {
+      "digitized": false,
+      "location": "Figure 7\u2014figure supplement 1b caption",
+      "method": "Exact numerators and denominators transcribed from the published caption",
+      "reported_statement": "CA1 spatial-field prevalence in odor-period inactive and active cells"
+    },
+    "limitations": [
+      "The empirical task uses odors to guide choices on a T-maze, whereas the model uses two sensory patterns crossed with four positions on a linear track.",
+      "The empirical variables are spike-based significance and place-field criteria; the model uses sparse binary-like activity and factorial effect criteria.",
+      "The comparison tests the population association direction and magnitude, not neuron-by-neuron correspondence or an EC3 manipulation."
+    ],
+    "prespecification": {
+      "empirical_cue_measure": "Significant CA1 activity during the odor-sampling period",
+      "empirical_spatial_measure": "Presence of a spatial firing field during maze running",
+      "model_cue_measure": "Training-lap cue main effect passing BH-FDR and partial eta-squared >= 0.05",
+      "model_spatial_measure": "Held-out-lap position partial eta-squared >= 0.05",
+      "primary_metric": "Absolute difference between empirical and aligned-model log odds ratios",
+      "secondary_metrics": [
+        "Spatial prevalence conditional on cue status",
+        "Cue-associated spatial-prevalence risk difference"
+      ],
+      "selection_rationale": "The paper reports an exact CA1 population contingency between sensory-cue responsiveness and spatial coding, matching the two factors manipulated independently in E3/E6.",
+      "unit_of_model_inference": "Network/data seed after pooling the two prespecified cue layouts",
+      "zero_cell_rule": "Add 0.5 to all four contingency cells for odds-ratio estimation; report undefined when either cue group or spatial outcome is entirely absent"
+    },
+    "schema_version": 1
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-17T17:40:01.373408+00:00"
+  },
+  "schema_version": 1,
+  "source": {
+    "e6_data": "/Users/doki/exit/KAMemory/src/experiments/plots/e6_ca1_mixed_selectivity.npz",
+    "e6_sha256": "fb763f1883574205b7909b103d58385680857d3612aee390eb2fcada24e063a1"
+  },
+  "summary": {
+    "aligned_model": {
+      "ci95_half_width_log_odds_ratio": 0.034281841842067534,
+      "geometric_mean_odds_ratio": 4041.349535609668,
+      "mean_log_odds_ratio": 8.304333958642838,
+      "mean_risk_difference": 0.9602612915779588,
+      "mean_spatial_given_cue": 0.9664829689088755,
+      "mean_spatial_given_no_cue": 0.006221677330916935
+    },
+    "aligned_seed_direction_match_fraction": 1.0,
+    "odds_ratio_fold_excess": 2834.755838021897,
+    "primary_absolute_log_odds_ratio_error": 7.949711088298421,
+    "published": {
+      "log_odds_ratio": 0.354622870344417,
+      "log_odds_ratio_ci95": [
+        -0.08012158049828572,
+        0.7893673211871197
+      ],
+      "odds_ratio": 1.4256429006703224,
+      "risk_difference": 0.08508036338225022,
+      "spatial_given_cue": 0.6574074074074074,
+      "spatial_given_no_cue": 0.5723270440251572,
+      "table": [
+        [
+          71,
+          37
+        ],
+        [
+          273,
+          204
+        ]
+      ]
+    }
+  }
+}

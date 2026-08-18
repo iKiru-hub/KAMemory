@@ -1,0 +1,48 @@
+{
+  "citation": {
+    "authors": "Symanski, Bladon et al.",
+    "doi": "10.7554/eLife.79545",
+    "journal": "eLife",
+    "title": "Rhythmic coordination and ensemble dynamics in the hippocampal-prefrontal network during odor-place associative memory and decision making",
+    "url": "https://doi.org/10.7554/eLife.79545",
+    "year": 2022
+  },
+  "extraction": {
+    "digitized": false,
+    "location": "Figure 7—figure supplement 1b caption",
+    "method": "Exact numerators and denominators transcribed from the published caption",
+    "reported_statement": "CA1 spatial-field prevalence in odor-period inactive and active cells"
+  },
+  "counts": {
+    "cue_active": {
+      "no_spatial_field": 37,
+      "spatial_field": 71,
+      "total": 108
+    },
+    "cue_inactive": {
+      "no_spatial_field": 204,
+      "spatial_field": 273,
+      "total": 477
+    }
+  },
+  "prespecification": {
+    "empirical_cue_measure": "Significant CA1 activity during the odor-sampling period",
+    "empirical_spatial_measure": "Presence of a spatial firing field during maze running",
+    "model_cue_measure": "Training-lap cue main effect passing BH-FDR and partial eta-squared >= 0.05",
+    "model_spatial_measure": "Held-out-lap position partial eta-squared >= 0.05",
+    "primary_metric": "Absolute difference between empirical and aligned-model log odds ratios",
+    "secondary_metrics": [
+      "Spatial prevalence conditional on cue status",
+      "Cue-associated spatial-prevalence risk difference"
+    ],
+    "selection_rationale": "The paper reports an exact CA1 population contingency between sensory-cue responsiveness and spatial coding, matching the two factors manipulated independently in E3/E6.",
+    "unit_of_model_inference": "Network/data seed after pooling the two prespecified cue layouts",
+    "zero_cell_rule": "Add 0.5 to all four contingency cells for odds-ratio estimation; report undefined when either cue group or spatial outcome is entirely absent"
+  },
+  "limitations": [
+    "The empirical task uses odors to guide choices on a T-maze, whereas the model uses two sensory patterns crossed with four positions on a linear track.",
+    "The empirical variables are spike-based significance and place-field criteria; the model uses sparse binary-like activity and factorial effect criteria.",
+    "The comparison tests the population association direction and magnitude, not neuron-by-neuron correspondence or an EC3 manipulation."
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,407 @@
+figure,panel,series,seed,x,value,detail
+4,B,cell_971,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_971,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_971,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_971,1100,3,1.0,held-out response; class selected on training laps
+4,B,cell_971,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_971,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_971,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_971,1100,7,1.0,held-out response; class selected on training laps
+4,B,cell_691,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_691,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_691,1100,2,1.0,held-out response; class selected on training laps
+4,B,cell_691,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_691,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_691,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_691,1100,6,1.0,held-out response; class selected on training laps
+4,B,cell_691,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_683,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_683,1100,1,1.0,held-out response; class selected on training laps
+4,B,cell_683,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_683,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_683,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_683,1100,5,1.0,held-out response; class selected on training laps
+4,B,cell_683,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_683,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_679,1100,0,1.0,held-out response; class selected on training laps
+4,B,cell_679,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_679,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_679,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_679,1100,4,1.0,held-out response; class selected on training laps
+4,B,cell_679,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_679,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_679,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_869,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_869,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_869,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_869,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_869,1100,4,1.0,held-out response; class selected on training laps
+4,B,cell_869,1100,5,1.0,held-out response; class selected on training laps
+4,B,cell_869,1100,6,1.0,held-out response; class selected on training laps
+4,B,cell_869,1100,7,1.0,held-out response; class selected on training laps
+4,B,cell_110,1100,0,1.0,held-out response; class selected on training laps
+4,B,cell_110,1100,1,1.0,held-out response; class selected on training laps
+4,B,cell_110,1100,2,1.0,held-out response; class selected on training laps
+4,B,cell_110,1100,3,1.0,held-out response; class selected on training laps
+4,B,cell_110,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_110,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_110,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_110,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,5,1.0,held-out response; class selected on training laps
+4,B,cell_994,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_994,1100,7,1.0,held-out response; class selected on training laps
+4,B,cell_380,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_380,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_380,1100,2,1.0,held-out response; class selected on training laps
+4,B,cell_380,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_380,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_380,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_380,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_380,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,0,1.0,held-out response; class selected on training laps
+4,B,cell_295,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_295,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_297,1100,7,1.0,held-out response; class selected on training laps
+4,B,cell_303,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_303,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_303,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_303,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_303,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_303,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_303,1100,6,1.0,held-out response; class selected on training laps
+4,B,cell_303,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_317,1100,0,1.0,held-out response; class selected on training laps
+4,B,cell_317,1100,1,1.0,held-out response; class selected on training laps
+4,B,cell_317,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_317,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_317,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_317,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_317,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_317,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_339,1100,0,0.0,held-out response; class selected on training laps
+4,B,cell_339,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_339,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_339,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_339,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_339,1100,5,1.0,held-out response; class selected on training laps
+4,B,cell_339,1100,6,1.0,held-out response; class selected on training laps
+4,B,cell_339,1100,7,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,0,1.0,held-out response; class selected on training laps
+4,B,cell_341,1100,1,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,2,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,3,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,4,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,5,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,6,0.0,held-out response; class selected on training laps
+4,B,cell_341,1100,7,0.0,held-out response; class selected on training laps
+4,C,position,1100,,0.0055,mean across paired layouts
+4,C,cue,1100,,0.0025,mean across paired layouts
+4,C,additive_mixed,1100,,0.0,mean across paired layouts
+4,C,conjunctive,1100,,0.07350000000000001,mean across paired layouts
+4,C,unclassified,1100,,0.9185000000000001,mean across paired layouts
+4,D,aligned,1100,0,0.00020292207792207794,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1100,1,0.2975943458971576,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1100,2,0.407163320944227,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1100,3,0.5315325353294611,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1101,,0.006,mean across paired layouts
+4,C,cue,1101,,0.0025,mean across paired layouts
+4,C,additive_mixed,1101,,0.0,mean across paired layouts
+4,C,conjunctive,1101,,0.07250000000000001,mean across paired layouts
+4,C,unclassified,1101,,0.919,mean across paired layouts
+4,D,aligned,1101,0,0.0,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1101,1,0.30688320171265376,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1101,2,0.43405145817789537,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1101,3,0.5367540512233973,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1102,,0.0055,mean across paired layouts
+4,C,cue,1102,,0.0025,mean across paired layouts
+4,C,additive_mixed,1102,,0.0,mean across paired layouts
+4,C,conjunctive,1102,,0.07400000000000001,mean across paired layouts
+4,C,unclassified,1102,,0.918,mean across paired layouts
+4,D,aligned,1102,0,6.76773145641581e-05,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1102,1,0.2760374158899361,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1102,2,0.387706876732409,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1102,3,0.5038655272551945,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1103,,0.0055,mean across paired layouts
+4,C,cue,1103,,0.003,mean across paired layouts
+4,C,additive_mixed,1103,,0.0,mean across paired layouts
+4,C,conjunctive,1103,,0.07300000000000001,mean across paired layouts
+4,C,unclassified,1103,,0.9185000000000001,mean across paired layouts
+4,D,aligned,1103,0,0.0,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1103,1,0.30804165250787113,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1103,2,0.41287166674931847,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1103,3,0.5674643715222677,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1104,,0.0055,mean across paired layouts
+4,C,cue,1104,,0.0025,mean across paired layouts
+4,C,additive_mixed,1104,,0.0,mean across paired layouts
+4,C,conjunctive,1104,,0.07400000000000001,mean across paired layouts
+4,C,unclassified,1104,,0.918,mean across paired layouts
+4,D,aligned,1104,0,6.76773145641581e-05,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1104,1,0.2846208841160492,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1104,2,0.42130949596563977,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1104,3,0.5200381278991699,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1105,,0.006,mean across paired layouts
+4,C,cue,1105,,0.0025,mean across paired layouts
+4,C,additive_mixed,1105,,0.0,mean across paired layouts
+4,C,conjunctive,1105,,0.07300000000000001,mean across paired layouts
+4,C,unclassified,1105,,0.9185000000000001,mean across paired layouts
+4,D,aligned,1105,0,6.760411032990806e-05,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1105,1,0.2958090437470742,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1105,2,0.4074432651201884,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1105,3,0.5305851459503174,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1106,,0.0055,mean across paired layouts
+4,C,cue,1106,,0.0025,mean across paired layouts
+4,C,additive_mixed,1106,,0.0,mean across paired layouts
+4,C,conjunctive,1106,,0.07400000000000001,mean across paired layouts
+4,C,unclassified,1106,,0.918,mean across paired layouts
+4,D,aligned,1106,0,6.767729842862892e-05,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1106,1,0.2917053195360665,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1106,2,0.4139861222356558,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1106,3,0.5561998273645129,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1107,,0.006,mean across paired layouts
+4,C,cue,1107,,0.0025,mean across paired layouts
+4,C,additive_mixed,1107,,0.0,mean across paired layouts
+4,C,conjunctive,1107,,0.07300000000000001,mean across paired layouts
+4,C,unclassified,1107,,0.9185000000000001,mean across paired layouts
+4,D,aligned,1107,0,0.00020281233098972418,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1107,1,0.28208844335574024,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1107,2,0.4002588083346685,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1107,3,0.5000855425993601,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1108,,0.006,mean across paired layouts
+4,C,cue,1108,,0.0025,mean across paired layouts
+4,C,additive_mixed,1108,,0.0,mean across paired layouts
+4,C,conjunctive,1108,,0.07300000000000001,mean across paired layouts
+4,C,unclassified,1108,,0.9185000000000001,mean across paired layouts
+4,D,aligned,1108,0,0.0,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1108,1,0.2858434812921398,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1108,2,0.41287614504496256,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1108,3,0.5397901237010956,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1109,,0.0055,mean across paired layouts
+4,C,cue,1109,,0.0025,mean across paired layouts
+4,C,additive_mixed,1109,,0.0,mean across paired layouts
+4,C,conjunctive,1109,,0.07400000000000001,mean across paired layouts
+4,C,unclassified,1109,,0.918,mean across paired layouts
+4,D,aligned,1109,0,0.0,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1109,1,0.3032516246592557,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1109,2,0.4172043671210607,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1109,3,0.525495978196462,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1110,,0.006,mean across paired layouts
+4,C,cue,1110,,0.0025,mean across paired layouts
+4,C,additive_mixed,1110,,0.0,mean across paired layouts
+4,C,conjunctive,1110,,0.07250000000000001,mean across paired layouts
+4,C,unclassified,1110,,0.919,mean across paired layouts
+4,D,aligned,1110,0,0.0002702702702702703,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1110,1,0.29035291706140226,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1110,2,0.4041220238131861,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1110,3,0.49748761057853697,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,C,position,1111,,0.006,mean across paired layouts
+4,C,cue,1111,,0.0025,mean across paired layouts
+4,C,additive_mixed,1111,,0.0,mean across paired layouts
+4,C,conjunctive,1111,,0.07300000000000001,mean across paired layouts
+4,C,unclassified,1111,,0.9185000000000001,mean across paired layouts
+4,D,aligned,1111,0,0.00013520822065981613,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1111,1,0.2861652236502126,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1111,2,0.40081686874230704,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,D,aligned,1111,3,0.5135222613811493,cue-tuning group 0:none 1:weak 2:moderate 3:strong
+4,E,published_cue_inactive,published,0,0.5723270440251572,273/477
+4,E,published_cue_responsive,published,1,0.6574074074074074,71/108
+4,E,model_cue_inactive,1100,0,0.005952380952380952,pooled layouts within seed
+4,E,model_cue_responsive,1100,1,0.9671052631578947,pooled layouts within seed
+4,E,model_cue_inactive,1101,0,0.006486486486486486,pooled layouts within seed
+4,E,model_cue_responsive,1101,1,0.9666666666666667,pooled layouts within seed
+4,E,model_cue_inactive,1102,0,0.005955603681645912,pooled layouts within seed
+4,E,model_cue_responsive,1102,1,0.9673202614379085,pooled layouts within seed
+4,E,model_cue_inactive,1103,0,0.005952380952380952,pooled layouts within seed
+4,E,model_cue_responsive,1103,1,0.9605263157894737,pooled layouts within seed
+4,E,model_cue_inactive,1104,0,0.005955603681645912,pooled layouts within seed
+4,E,model_cue_responsive,1104,1,0.9673202614379085,pooled layouts within seed
+4,E,model_cue_inactive,1105,0,0.006489994591671174,pooled layouts within seed
+4,E,model_cue_responsive,1105,1,0.9668874172185431,pooled layouts within seed
+4,E,model_cue_inactive,1106,0,0.005955603681645912,pooled layouts within seed
+4,E,model_cue_responsive,1106,1,0.9673202614379085,pooled layouts within seed
+4,E,model_cue_inactive,1107,0,0.006489994591671174,pooled layouts within seed
+4,E,model_cue_responsive,1107,1,0.9668874172185431,pooled layouts within seed
+4,E,model_cue_inactive,1108,0,0.006489994591671174,pooled layouts within seed
+4,E,model_cue_responsive,1108,1,0.9668874172185431,pooled layouts within seed
+4,E,model_cue_inactive,1109,0,0.005955603681645912,pooled layouts within seed
+4,E,model_cue_responsive,1109,1,0.9673202614379085,pooled layouts within seed
+4,E,model_cue_inactive,1110,0,0.006486486486486486,pooled layouts within seed
+4,E,model_cue_responsive,1110,1,0.9666666666666667,pooled layouts within seed
+4,E,model_cue_inactive,1111,0,0.006489994591671174,pooled layouts within seed
+4,E,model_cue_responsive,1111,1,0.9668874172185431,pooled layouts within seed
+4,F,output_cosine,2300,0.0,0.8838339298963547,absolute_log_or_error=7.95927609
+4,F,output_cosine,2301,0.0,0.8835109062492847,absolute_log_or_error=7.95927609
+4,F,output_cosine,2302,0.0,0.8837138265371323,absolute_log_or_error=7.95927609
+4,F,output_cosine,2303,0.0,0.8839750923216343,absolute_log_or_error=7.95927609
+4,F,output_cosine,2304,0.0,0.8837748058140278,absolute_log_or_error=7.95927609
+4,F,output_cosine,2305,0.0,0.8835109062492847,absolute_log_or_error=7.95927609
+4,F,output_cosine,2306,0.0,0.8834991306066513,absolute_log_or_error=7.95927609
+4,F,output_cosine,2307,0.0,0.8837138265371323,absolute_log_or_error=7.95927609
+4,F,output_cosine,2308,0.0,0.8839750923216343,absolute_log_or_error=7.95927609
+4,F,output_cosine,2309,0.0,0.8838221542537212,absolute_log_or_error=7.95927609
+4,F,output_cosine,2310,0.0,0.8838221542537212,absolute_log_or_error=7.95927609
+4,F,output_cosine,2311,0.0,0.8836291171610355,absolute_log_or_error=7.95927609
+4,F,output_cosine,2312,0.0,0.8838339298963547,absolute_log_or_error=7.95927609
+4,F,output_cosine,2313,0.0,0.8836291171610355,absolute_log_or_error=7.95927609
+4,F,output_cosine,2314,0.0,0.8837138265371323,absolute_log_or_error=7.95927609
+4,F,output_cosine,2315,0.0,0.8835608884692192,absolute_log_or_error=7.95927609
+4,F,output_cosine,2316,0.0,0.8835726641118526,absolute_log_or_error=7.95927609
+4,F,output_cosine,2317,0.0,0.8832496404647827,absolute_log_or_error=7.95927609
+4,F,output_cosine,2318,0.0,0.8842345774173737,absolute_log_or_error=7.95927609
+4,F,output_cosine,2319,0.0,0.8835726641118526,absolute_log_or_error=7.95927609
+4,F,output_cosine,2300,0.01,0.8838339298963547,absolute_log_or_error=7.93673697
+4,F,output_cosine,2301,0.01,0.8835109062492847,absolute_log_or_error=7.93673697
+4,F,output_cosine,2302,0.01,0.8839750923216343,absolute_log_or_error=7.93673697
+4,F,output_cosine,2303,0.01,0.8839750923216343,absolute_log_or_error=7.93673697
+4,F,output_cosine,2304,0.01,0.8832496404647827,absolute_log_or_error=7.93673697
+4,F,output_cosine,2305,0.01,0.8835109062492847,absolute_log_or_error=7.93673697
+4,F,output_cosine,2306,0.01,0.8834991306066513,absolute_log_or_error=7.93673697
+4,F,output_cosine,2307,0.01,0.8837138265371323,absolute_log_or_error=7.93673697
+4,F,output_cosine,2308,0.01,0.8839750923216343,absolute_log_or_error=7.93673697
+4,F,output_cosine,2309,0.01,0.8838221542537212,absolute_log_or_error=7.93673697
+4,F,output_cosine,2310,0.01,0.8838221542537212,absolute_log_or_error=7.93673697
+4,F,output_cosine,2311,0.01,0.8836360722780228,absolute_log_or_error=7.93673697
+4,F,output_cosine,2312,0.01,0.8838339298963547,absolute_log_or_error=7.93673697
+4,F,output_cosine,2313,0.01,0.8840315453708172,absolute_log_or_error=7.93673697
+4,F,output_cosine,2314,0.01,0.8837007842957973,absolute_log_or_error=7.93673697
+4,F,output_cosine,2315,0.01,0.8835608884692192,absolute_log_or_error=7.93673697
+4,F,output_cosine,2316,0.01,0.883832149207592,absolute_log_or_error=7.93673697
+4,F,output_cosine,2317,0.01,0.8835726641118526,absolute_log_or_error=7.93673697
+4,F,output_cosine,2318,0.01,0.8840802982449532,absolute_log_or_error=7.93673697
+4,F,output_cosine,2319,0.01,0.8835726641118526,absolute_log_or_error=7.93673697
+4,F,output_cosine,2300,0.02,0.8838305026292801,absolute_log_or_error=7.93192177
+4,F,output_cosine,2301,0.02,0.8838339298963547,absolute_log_or_error=7.93192177
+4,F,output_cosine,2302,0.02,0.8839750923216343,absolute_log_or_error=7.93192177
+4,F,output_cosine,2303,0.02,0.8839750923216343,absolute_log_or_error=7.93192177
+4,F,output_cosine,2304,0.02,0.8832496404647827,absolute_log_or_error=7.93192177
+4,F,output_cosine,2305,0.02,0.8835109062492847,absolute_log_or_error=7.93192177
+4,F,output_cosine,2306,0.02,0.8834991306066513,absolute_log_or_error=7.93192177
+4,F,output_cosine,2307,0.02,0.8837702795863152,absolute_log_or_error=7.93192177
+4,F,output_cosine,2308,0.02,0.8839750923216343,absolute_log_or_error=7.93192177
+4,F,output_cosine,2309,0.02,0.8838221542537212,absolute_log_or_error=7.93192177
+4,F,output_cosine,2310,0.02,0.8838221542537212,absolute_log_or_error=7.93192177
+4,F,output_cosine,2311,0.02,0.8836360722780228,absolute_log_or_error=7.93192177
+4,F,output_cosine,2312,0.02,0.8838339298963547,absolute_log_or_error=7.93192177
+4,F,output_cosine,2313,0.02,0.8840197697281837,absolute_log_or_error=7.93192177
+4,F,output_cosine,2314,0.02,0.8837007842957973,absolute_log_or_error=7.93192177
+4,F,output_cosine,2315,0.02,0.8835608884692192,absolute_log_or_error=7.93192177
+4,F,output_cosine,2316,0.02,0.883832149207592,absolute_log_or_error=7.93192177
+4,F,output_cosine,2317,0.02,0.8838339298963547,absolute_log_or_error=7.93192177
+4,F,output_cosine,2318,0.02,0.8840802982449532,absolute_log_or_error=7.93192177
+4,F,output_cosine,2319,0.02,0.8835726641118526,absolute_log_or_error=7.93192177
+4,F,output_cosine,2300,0.05,0.883853979408741,absolute_log_or_error=7.92170360
+4,F,output_cosine,2301,0.05,0.8838903829455376,absolute_log_or_error=7.92170360
+4,F,output_cosine,2302,0.05,0.8835727833211422,absolute_log_or_error=7.92170360
+4,F,output_cosine,2303,0.05,0.8839679546654224,absolute_log_or_error=7.92170360
+4,F,output_cosine,2304,0.05,0.8832496590912342,absolute_log_or_error=7.92170360
+4,F,output_cosine,2305,0.05,0.8838339298963547,absolute_log_or_error=7.92170360
+4,F,output_cosine,2306,0.05,0.8834991306066513,absolute_log_or_error=7.92170360
+4,F,output_cosine,2307,0.05,0.8834472559392452,absolute_log_or_error=7.92170360
+4,F,output_cosine,2308,0.05,0.8839633166790009,absolute_log_or_error=7.92170360
+4,F,output_cosine,2309,0.05,0.8835460655391216,absolute_log_or_error=7.92170360
+4,F,output_cosine,2310,0.05,0.8840816393494606,absolute_log_or_error=7.92170360
+4,F,output_cosine,2311,0.05,0.8842156752943993,absolute_log_or_error=7.92170360
+4,F,output_cosine,2312,0.05,0.8839552886784077,absolute_log_or_error=7.92170360
+4,F,output_cosine,2313,0.05,0.8819042704999447,absolute_log_or_error=7.92170360
+4,F,output_cosine,2314,0.05,0.8834551498293877,absolute_log_or_error=7.92170360
+4,F,output_cosine,2315,0.05,0.8827399462461472,absolute_log_or_error=7.92170360
+4,F,output_cosine,2316,0.05,0.8825828284025192,absolute_log_or_error=7.92170360
+4,F,output_cosine,2317,0.05,0.88385796174407,absolute_log_or_error=7.92170360
+4,F,output_cosine,2318,0.05,0.8813805878162384,absolute_log_or_error=7.92170360
+4,F,output_cosine,2319,0.05,0.8835726641118526,absolute_log_or_error=7.92170360
+4,F,output_cosine,2300,0.1,0.8844785206019878,absolute_log_or_error=7.95758329
+4,F,output_cosine,2301,0.1,0.8829147107899189,absolute_log_or_error=7.95758329
+4,F,output_cosine,2302,0.1,0.8837021701037884,absolute_log_or_error=7.95758329
+4,F,output_cosine,2303,0.1,0.883021917194128,absolute_log_or_error=7.95758329
+4,F,output_cosine,2304,0.1,0.8813905753195286,absolute_log_or_error=7.95758329
+4,F,output_cosine,2305,0.1,0.884093414992094,absolute_log_or_error=7.95758329
+4,F,output_cosine,2306,0.1,0.8831508867442608,absolute_log_or_error=7.95758329
+4,F,output_cosine,2307,0.1,0.8834473267197609,absolute_log_or_error=7.95758329
+4,F,output_cosine,2308,0.1,0.8862308524549007,absolute_log_or_error=7.95758329
+4,F,output_cosine,2309,0.1,0.8835176937282085,absolute_log_or_error=7.95758329
+4,F,output_cosine,2310,0.1,0.8839482851326466,absolute_log_or_error=7.95758329
+4,F,output_cosine,2311,0.1,0.8860576935112476,absolute_log_or_error=7.95758329
+4,F,output_cosine,2312,0.1,0.8856694661080837,absolute_log_or_error=7.95758329
+4,F,output_cosine,2313,0.1,0.8805047087371349,absolute_log_or_error=7.95758329
+4,F,output_cosine,2314,0.1,0.8822468779981136,absolute_log_or_error=7.95758329
+4,F,output_cosine,2315,0.1,0.8827077820897102,absolute_log_or_error=7.95758329
+4,F,output_cosine,2316,0.1,0.8808067664504051,absolute_log_or_error=7.95758329
+4,F,output_cosine,2317,0.1,0.8812917843461037,absolute_log_or_error=7.95758329
+4,F,output_cosine,2318,0.1,0.8813677318394184,absolute_log_or_error=7.95758329
+4,F,output_cosine,2319,0.1,0.8843183778226376,absolute_log_or_error=7.95758329
+4,F,output_cosine,2300,0.2,0.8859761878848076,absolute_log_or_error=8.25242148
+4,F,output_cosine,2301,0.2,0.8785972781479359,absolute_log_or_error=8.25242148
+4,F,output_cosine,2302,0.2,0.8818174935877323,absolute_log_or_error=8.25242148
+4,F,output_cosine,2303,0.2,0.8735446892678738,absolute_log_or_error=8.25242148
+4,F,output_cosine,2304,0.2,0.8813191652297974,absolute_log_or_error=8.25242148
+4,F,output_cosine,2305,0.2,0.8794247880578041,absolute_log_or_error=8.25242148
+4,F,output_cosine,2306,0.2,0.8686262704432011,absolute_log_or_error=8.25242148
+4,F,output_cosine,2307,0.2,0.8842731043696404,absolute_log_or_error=8.25242148
+4,F,output_cosine,2308,0.2,0.8821899704635143,absolute_log_or_error=8.25242148
+4,F,output_cosine,2309,0.2,0.8842497654259205,absolute_log_or_error=8.25242148
+4,F,output_cosine,2310,0.2,0.8778020776808262,absolute_log_or_error=8.25242148
+4,F,output_cosine,2311,0.2,0.8781537227332592,absolute_log_or_error=8.25242148
+4,F,output_cosine,2312,0.2,0.8770484551787376,absolute_log_or_error=8.25242148
+4,F,output_cosine,2313,0.2,0.8743487410247326,absolute_log_or_error=8.25242148
+4,F,output_cosine,2314,0.2,0.881734374910593,absolute_log_or_error=8.25242148
+4,F,output_cosine,2315,0.2,0.8731192350387573,absolute_log_or_error=8.25242148
+4,F,output_cosine,2316,0.2,0.8677631951868534,absolute_log_or_error=8.25242148
+4,F,output_cosine,2317,0.2,0.8794128783047199,absolute_log_or_error=8.25242148
+4,F,output_cosine,2318,0.2,0.8740404881536961,absolute_log_or_error=8.25242148
+4,F,output_cosine,2319,0.2,0.8842069283127785,absolute_log_or_error=8.25242148
+4,F,output_cosine,2300,0.4,0.872021995484829,absolute_log_or_error=8.92130501
+4,F,output_cosine,2301,0.4,0.8278345912694931,absolute_log_or_error=8.92130501
+4,F,output_cosine,2302,0.4,0.8202097695320845,absolute_log_or_error=8.92130501
+4,F,output_cosine,2303,0.4,0.843299251049757,absolute_log_or_error=8.92130501
+4,F,output_cosine,2304,0.4,0.8431721143424511,absolute_log_or_error=8.92130501
+4,F,output_cosine,2305,0.4,0.8373524211347103,absolute_log_or_error=8.92130501
+4,F,output_cosine,2306,0.4,0.8122516497969627,absolute_log_or_error=8.92130501
+4,F,output_cosine,2307,0.4,0.8448772951960564,absolute_log_or_error=8.92130501
+4,F,output_cosine,2308,0.4,0.8252435345202684,absolute_log_or_error=8.92130501
+4,F,output_cosine,2309,0.4,0.8666211329400539,absolute_log_or_error=8.92130501
+4,F,output_cosine,2310,0.4,0.8192239552736282,absolute_log_or_error=8.92130501
+4,F,output_cosine,2311,0.4,0.8594352938234806,absolute_log_or_error=8.92130501
+4,F,output_cosine,2312,0.4,0.7793218856677413,absolute_log_or_error=8.92130501
+4,F,output_cosine,2313,0.4,0.8153023049235344,absolute_log_or_error=8.92130501
+4,F,output_cosine,2314,0.4,0.8349923826754093,absolute_log_or_error=8.92130501
+4,F,output_cosine,2315,0.4,0.8520540148019791,absolute_log_or_error=8.92130501
+4,F,output_cosine,2316,0.4,0.8209129329770803,absolute_log_or_error=8.92130501
+4,F,output_cosine,2317,0.4,0.8609622679650784,absolute_log_or_error=8.92130501
+4,F,output_cosine,2318,0.4,0.8384283818304539,absolute_log_or_error=8.92130501
+4,F,output_cosine,2319,0.4,0.8675118461251259,absolute_log_or_error=8.92130501
+4,F,output_cosine,2300,0.8,0.6679615760222077,absolute_log_or_error=9.36236672
+4,F,output_cosine,2301,0.8,0.6600560741499066,absolute_log_or_error=9.36236672
+4,F,output_cosine,2302,0.8,0.6906099310144782,absolute_log_or_error=9.36236672
+4,F,output_cosine,2303,0.8,0.6568571892566979,absolute_log_or_error=9.36236672
+4,F,output_cosine,2304,0.8,0.7469033040106297,absolute_log_or_error=9.36236672
+4,F,output_cosine,2305,0.8,0.6217220329563133,absolute_log_or_error=9.36236672
+4,F,output_cosine,2306,0.8,0.6748423231765628,absolute_log_or_error=9.36236672
+4,F,output_cosine,2307,0.8,0.615769593976438,absolute_log_or_error=9.36236672
+4,F,output_cosine,2308,0.8,0.6742030964232981,absolute_log_or_error=9.36236672
+4,F,output_cosine,2309,0.8,0.7144396873190999,absolute_log_or_error=9.36236672
+4,F,output_cosine,2310,0.8,0.5632273334852513,absolute_log_or_error=9.36236672
+4,F,output_cosine,2311,0.8,0.682123645208776,absolute_log_or_error=9.36236672
+4,F,output_cosine,2312,0.8,0.5348913638903809,absolute_log_or_error=9.36236672
+4,F,output_cosine,2313,0.8,0.6715972870588303,absolute_log_or_error=9.36236672
+4,F,output_cosine,2314,0.8,0.7055354760959744,absolute_log_or_error=9.36236672
+4,F,output_cosine,2315,0.8,0.7511073416098952,absolute_log_or_error=9.36236672
+4,F,output_cosine,2316,0.8,0.6748443758115172,absolute_log_or_error=9.36236672
+4,F,output_cosine,2317,0.8,0.6888910720208514,absolute_log_or_error=9.36236672
+4,F,output_cosine,2318,0.8,0.6566780568100512,absolute_log_or_error=9.36236672
+4,F,output_cosine,2319,0.8,0.7229003179818392,absolute_log_or_error=9.36236672

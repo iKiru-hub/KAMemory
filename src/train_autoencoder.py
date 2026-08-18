@@ -1,141 +1,108 @@
-import numpy as np
-import torch
-from models import Autoencoder, logger
-import os, sys, json
-from pprint import pprint
+"""Train the paper's spatial+sensory autoencoder from one settings object.
+
+Examples, from the repository root:
+
+    python src/train_autoencoder.py
+    python src/train_autoencoder.py --epochs 400 --lr 0.0005 --name ae_factorial_01
+    python src/train_autoencoder.py --config my_settings.json
+    python src/train_autoencoder.py --settings-json '{"seed": 9, "epochs": 20}' --no-save
+
+The reusable Python API is ``run_autoencoder_experiment(settings_dict)`` in
+``kamemory.autoencoder_experiment``.
+"""
+
+from __future__ import annotations
+
 import argparse
+from copy import deepcopy
+import json
+from pathlib import Path
 
-sys.path.append(os.path.abspath(__file__).split("src")[0] + "src")
-import utils
-import training
-
-
-# ==============================================================================
-
-
-def main(save: bool, configs: dict, config_key: int):
-
-    """
-    train and test an autoencoder from scratch
-
-    Parameters
-    ----------
-    save : bool
-        flag for saving the results
-    configs : dict
-        loaded settings
-    config_key : bool
-        type of loaded settings
-    """
-
-    # -- make stimuli
-    if config_key == 0:
-        training_samples = utils.sparse_stimulus_generator(N=configs['ae_configs']['num_stimuli'],
-                                                           K=configs['hyperparameters']['K'],
-                                                           size=configs['hyperparameters']['dim_ei'],
-                                                           plot=False)
-        test_samples = utils.sparse_stimulus_generator(N=configs['ae_configs']['num_stimuli'],
-                                                       K=configs['hyperparameters']['K'],
-                                                       size=configs['hyperparameters']['dim_ei'],
-                                                       plot=False)
-    elif config_key == 1:
-        training_samples, _, _ = utils.sparse_stimulus_generator_sensory(
-                                        num_stimuli=configs['ae_configs']['num_stimuli'],
-                                        K = configs['hyperparameters']["K_lec"],
-                                        mec_size=configs['hyperparameters']["dim_mec"],
-                                        lec_size=configs['hyperparameters']["dim_lec"],
-                                        N_x=configs['hyperparameters']["mec_N_x"],
-                                        N_y=configs['hyperparameters']["mec_N_y"],
-                                        pf_sigma=configs['hyperparameters']["mec_sigma"],
-                                        lap_length=configs['hyperparameters']["mec_N_x"],
-                                        num_laps=None,
-                                        num_cues=None,
-                                        position_list=None,
-                                        cue_positions=None,
-                                        sen_list=None,
-                                        plot=False)
-
-        test_samples, _, _ = utils.sparse_stimulus_generator_sensory(
-                                        num_stimuli=configs['ae_configs']['num_stimuli'],
-                                        K = configs['hyperparameters']["K_lec"],
-                                        mec_size=configs['hyperparameters']["dim_mec"],
-                                        lec_size=configs['hyperparameters']["dim_lec"],
-                                        N_x=configs['hyperparameters']["mec_N_x"],
-                                        N_y=configs['hyperparameters']["mec_N_y"],
-                                        pf_sigma=configs['hyperparameters']["mec_sigma"],
-                                        lap_length=configs['hyperparameters']["mec_N_x"],
-                                        num_laps=None,
-                                        num_cues=None,
-                                        position_list=None,
-                                        cue_positions=None,
-                                        sen_list=None,
-                                        plot=False)
-
-    logger(f"Training data generated: {training_samples.shape}")
+from kamemory.autoencoder_experiment import (
+    load_settings_json,
+    run_autoencoder_experiment,
+)
+from kamemory.io import PATHS
 
 
-    # -- declare autoencoder
-    beta = configs['hyperparameters']['beta'] if CONFIG_KEY == 0 else configs['hyperparameters']['beta_ca1']
-    K_lat = configs['hyperparameters']['K_lat'] if CONFIG_KEY == 0 else configs['hyperparameters']['dim_ca1']
-    autoencoder = Autoencoder(input_dim=configs['hyperparameters']['dim_ei'],
-                              encoding_dim=configs['hyperparameters']['dim_ca1'],
-                              K=K_lat,
-                              beta=beta)
-    logger(f"%Autoencoder: {autoencoder}")
-
-    # -- train autoencoder
-    logger("training..")
-    loss_ae, autoencoder = training.train_autoencoder(
-                                            training_data=training_samples,
-                                            test_data=test_samples,
-                                            model=autoencoder,
-                                            epochs=int(configs['ae_configs']['epochs']),
-                                            batch_size=configs['ae_configs']['batch_size'],
-                                            learning_rate=configs['ae_configs']['learning_rate'])
-
-    # --
-    print()
-    logger(f"Autoencoder trained [loss={loss_ae:.4f}]")
-
-    if save: save_model()
-
-    logger("[done]")
+DEFAULT_CONFIG = PATHS.configs / "autoencoder_factorial.json"
 
 
-# ==============================================================================
+def _merge(base: dict, update: dict) -> dict:
+    result = deepcopy(base)
+    for key, value in update.items():
+        if isinstance(value, dict) and isinstance(result.get(key), dict):
+            result[key] = _merge(result[key], value)
+        else:
+            result[key] = deepcopy(value)
+    return result
 
 
-if __name__ == '__main__':
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument(
+        "--settings-json",
+        default=None,
+        help="inline JSON object merged over --config",
+    )
+    parser.add_argument("--seed", type=int)
+    parser.add_argument("--epochs", type=int)
+    parser.add_argument("--lr", type=float)
+    parser.add_argument("--batch-size", type=int)
+    parser.add_argument("--device")
+    parser.add_argument("--name", help="checkpoint directory name")
+    parser.add_argument("--output-directory", type=Path)
+    parser.add_argument("--no-save", action="store_true")
+    return parser.parse_args()
 
-    # -- fetch user arguments
-    parser = argparse.ArgumentParser(description="training Autoencoder")
-    parser.add_argument('--key', type=int,
-                        help='0: normal, 1: lap data',
-                        default=0)
-    parser.add_argument('--save', action='store_true',
-                        help='verbose', default=False)
-    args = parser.parse_args()
 
-    # --
-    logger(f"-- @{__file__} --")
+def settings_from_args(args: argparse.Namespace) -> dict:
+    settings = load_settings_json(args.config)
+    if args.settings_json:
+        inline = json.loads(args.settings_json)
+        if not isinstance(inline, dict):
+            raise TypeError("--settings-json must decode to an object")
+        settings = _merge(settings, inline)
+    overrides: dict = {"training": {}, "save": {}}
+    if args.seed is not None:
+        overrides["seed"] = args.seed
+    if args.epochs is not None:
+        overrides["training"]["epochs"] = args.epochs
+    if args.lr is not None:
+        overrides["training"]["learning_rate"] = args.lr
+    if args.batch_size is not None:
+        overrides["training"]["batch_size"] = args.batch_size
+    if args.device is not None:
+        overrides["device"] = args.device
+    if args.name is not None:
+        overrides["save"]["name"] = args.name
+    if args.output_directory is not None:
+        overrides["save"]["directory"] = str(args.output_directory)
+    if args.no_save:
+        overrides["save"]["enabled"] = False
+    return _merge(settings, overrides)
 
-    logger("training an Autoencoder from scratch")
-    CONFIG_KEY = args.key
 
-    if CONFIG_KEY == 0:
-        with open(utils.CONFIGS_PATH + "base_configs.json", "r") as f:
-            configs = json.load(f)
-        logger("%base configs")
+def main() -> int:
+    settings = settings_from_args(parse_args())
+    result = run_autoencoder_experiment(settings)
+    report = result["report"]
+    test = report["metrics"]["trained"]["test"]
+    reference = report["metrics"].get("reference_checkpoint_test")
+    print("\nfinal held-out metrics")
+    print(json.dumps(test, indent=2, sort_keys=True))
+    if reference is not None:
+        print("\nreference checkpoint held-out metrics")
+        print(json.dumps(reference, indent=2, sort_keys=True))
+    if result["session_path"] is not None:
+        print(f"\nsaved checkpoint: {result['session_path']}")
+        print(
+            "reload with: "
+            f"load_autoencoder_session({str(result['session_path'])!r})"
+        )
+    return 0
 
-    elif CONFIG_KEY == 1:
-        with open(utils.CONFIGS_PATH + "lap_configs.json", "r") as f:
-            configs = json.load(f)
-        logger("%lap configs")
 
-    logger("configs:")
-    pprint(configs)
-    logger(f"SAVE={args.save}")
-
-    # --
-    main(save=args.save, configs=configs, config_key=CONFIG_KEY)
-
+if __name__ == "__main__":
+    raise SystemExit(main())

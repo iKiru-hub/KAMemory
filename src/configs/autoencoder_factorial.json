@@ -1,0 +1,64 @@
+{
+  "seed": 2026,
+  "deterministic": true,
+  "device": "cpu",
+  "verbose": true,
+  "network_params": {
+    "mec_N_x": 50,
+    "mec_N_y": 1,
+    "dim_mec": 50,
+    "mec_sigma": 4.0,
+    "dim_lec": 50,
+    "num_cues": 2,
+    "bias": false,
+    "dim_ei": 100,
+    "dim_ca3": 1000,
+    "dim_ca1": 1000,
+    "dim_eo": 100,
+    "K_lec": 5,
+    "K_ei": 10,
+    "K_ca3": 15,
+    "K_ca1": 15,
+    "K_eo": 10,
+    "beta_ei": 150.0,
+    "beta_ca3": 150.0,
+    "beta_ca1": 150.0,
+    "beta_eo": 150.0,
+    "alpha": 0.5
+  },
+  "dataset": {
+    "kind": "factorial_track",
+    "layouts": [[7, 19, 31, 43], [3, 15, 27, 39]],
+    "train_sessions_per_layout": 4,
+    "validation_sessions_per_layout": 1,
+    "test_sessions_per_layout": 2,
+    "train_repeats_per_combination": 4,
+    "validation_repeats_per_combination": 2,
+    "test_repeats_per_combination": 2,
+    "train_cue_free_laps": 8,
+    "validation_cue_free_laps": 4,
+    "test_cue_free_laps": 4
+  },
+  "training": {
+    "epochs": 250,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "spatial_loss_weight": 1.0,
+    "sensory_loss_weight": 1.0,
+    "max_grad_norm": 5.0,
+    "early_stopping_patience": 30,
+    "early_stopping_min_delta": 1e-6,
+    "num_workers": 0,
+    "log_every": 10
+  },
+  "evaluation": {
+    "batch_size": 512,
+    "reference_checkpoint": "ae_6"
+  },
+  "save": {
+    "enabled": true,
+    "name": null,
+    "directory": null
+  }
+}

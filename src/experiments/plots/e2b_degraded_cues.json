@@ -1,0 +1,292 @@
+{
+  "checkpoint_info": {
+    "K": 5,
+    "K_lat": 18,
+    "beta": 54,
+    "date": "01/04/2025 23:56:04",
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "dim_ei": 50,
+    "dim_eo": 50,
+    "epochs": 2000,
+    "loss_ae": 0.0,
+    "num_samples": 5000
+  },
+  "configuration": {
+    "alpha": 0.35,
+    "ca3_active": 22,
+    "checkpoint": "ae_8",
+    "deterministic": true,
+    "device": "cpu",
+    "lure_threshold": 0.8,
+    "num_cue_replicates": 20,
+    "num_lures": 40,
+    "num_patterns": 8,
+    "num_seeds": 20,
+    "output_dir": "/Users/doki/exit/KAMemory/src/experiments/plots",
+    "seed_start": 900
+  },
+  "experiment": "E2b_degraded_cue_retrieval",
+  "hypothesis_checks": {
+    "aligned_exceeds_fixed_under_masking": true,
+    "aligned_exceeds_no_plasticity_under_masking": true,
+    "aligned_identity_declines_with_memory_overlap": true,
+    "aligned_identity_exceeds_chance_at_50_percent_masking": true,
+    "aligned_reconstructs_clean_cues": true,
+    "decoder_rescues_masked_cues": true,
+    "rescue_approaches_aligned_under_masking": true
+  },
+  "interpretation_gate": "Call the model associative memory only if aligned clean-target reconstruction and identity remain above controls/chance for degraded cues.",
+  "nearest_neighbor_baseline": {
+    "flip_content_cosine_mean_by_level": [
+      1.0,
+      0.9993749260902405,
+      0.9884374737739563,
+      0.8935000896453857
+    ],
+    "flip_identity_mean_by_level": [
+      1.0,
+      0.9990624785423279,
+      0.9850000143051147,
+      0.8715624809265137
+    ],
+    "mask_content_cosine_mean_by_level": [
+      1.0,
+      0.9943749308586121,
+      0.944312572479248,
+      0.7141250371932983
+    ],
+    "mask_identity_mean_by_level": [
+      1.0,
+      0.9918749928474426,
+      0.9259374737739563,
+      0.6546875238418579
+    ]
+  },
+  "network_parameters": {
+    "beta": 54.0,
+    "ca1_active": 18,
+    "ca3_active": 22,
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "input_active": 5,
+    "input_dim": 50,
+    "output_active": 5
+  },
+  "outputs": {
+    "figure_pdf": "/Users/doki/exit/KAMemory/src/experiments/plots/e2b_degraded_cues.pdf",
+    "figure_png": "/Users/doki/exit/KAMemory/src/experiments/plots/e2b_degraded_cues.png",
+    "metrics_json": "/Users/doki/exit/KAMemory/src/experiments/plots/e2b_degraded_cues.json",
+    "raw_npz": "/Users/doki/exit/KAMemory/src/experiments/plots/e2b_degraded_cues.npz"
+  },
+  "protocol": {
+    "bit_flips": "each input bit independently inverted at the nominal probability",
+    "dataset": "validated_notebook_rowwise_numpy_choice",
+    "identity_rule": "argmax cosine between model output and all clean stored targets",
+    "lure_rule": "false retrieval if any stored target has output cosine >= 0.8",
+    "masking": "each active input bit independently removed at the nominal probability",
+    "operation_order": "seed -> initialize EC-CA3 -> draw clean patterns -> store -> generate/retrieve degraded cues",
+    "pattern_sha256_by_seed": [
+      "52155c47edd95b9e76593b42e14ec0e8a13cfac77e3054e83b85e23bdafc1e18",
+      "94006abd39ceef55c9cc9a6fbdb8681aac3f007f2257cd5505d9feed67ebf6f3",
+      "493992016b282ac931a02c31a61e91448d5141c2e8e06187f1551dd526e25b76",
+      "8757f63557bafa0a8c7ea3e78bce97406370216048fd6598a1e33b92f67dd141",
+      "6d80fee7a26f18a61c30068f6bf04c7b764f6554203fc7c6443fc0dee5102c5a",
+      "bed7c0719300dc0329bfe4acc98246959f0da2516f7cde9da17578367d807366",
+      "1c757fddf81f7b6068069fcf455747ddd56793b6f2b7b361ff91729f30149b2c",
+      "59009a20bc2b7bf0f7fa6434e4c45f936aae15f802ad4eaab2bff8ecf6685061",
+      "3a7066afc09a0df69e0578d7ca06cd510a1eb6f32c9c7c5e04ae6c2390d0ee9c",
+      "841222c856e61968538c665a28013193295fc26fb732477cd8bf0f434f35b6bf",
+      "ef98b6448f5e8c9de8733c49df7277afa84eecf01da5457e1ef90411a6a62f13",
+      "d48b5a8754bebdd80e3b5bb55bfecf4001dd23f7996995a9cb50ecb73970dd4e",
+      "1a1417becae94586b4e79f5dcdd7fa5c1ecef67f4c9434f3eba9bf6c37bc0df0",
+      "263f254ad2e0724a78e23d2d544e6c664de7584062e46f5547ceefaa75fd8cc7",
+      "02eac673ab5c1d71d8aa81e5486b20342e9f17dfa6d6d569f1fb752665a52bb1",
+      "4239c4612b92837756af01d7be86066f7e9f96b4c855d17679103c9f0ca77f87",
+      "6c0f41ad6e75b9e3b3dfed8767e82cf5acde9b578c6d03d27e6be77815e4a21c",
+      "8a372d2a0c6d3ebb24d66f7acf568d7b80228eab724bdf6e2de7b4748cdff93f",
+      "02673fe62e9368a38d0531774987b3e2dadf624018bfb49624b7d2aeb6227877",
+      "b53903298104e7db3ac476d4b167dd729924bbf8579aea7ae64ec33417540073"
+    ]
+  },
+  "protocol_checks": {
+    "clean_targets_used_for_all_corruptions": true,
+    "controlled_overlap_matches_requested_levels": true,
+    "encoding_inputs_and_retrieval_cues_are_separate": true,
+    "fixed_and_rescue_learning_identical": true,
+    "nearest_neighbor_baseline_evaluated_on_identical_cues": true
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-14T17:56:22.708631+00:00"
+  },
+  "schema_version": 1,
+  "summary": {
+    "aligned": {
+      "flip_chance_corrected_mean_by_level": [
+        0.7936160564422607,
+        0.6018136739730835,
+        0.5053252577781677,
+        0.3837386667728424
+      ],
+      "flip_identity_mean_by_level": [
+        0.94375,
+        0.705625,
+        0.5659375,
+        0.366875
+      ],
+      "lure_false_retrieval_rate": 0.11375,
+      "mask_chance_corrected_mean_by_level": [
+        0.7936160564422607,
+        0.6525007486343384,
+        0.5297357439994812,
+        0.38763701915740967
+      ],
+      "mask_identity_mean_by_level": [
+        0.94375,
+        0.769375,
+        0.594375,
+        0.376875
+      ],
+      "overlap_cosine_mean_by_level": [
+        0.8854373693466187,
+        0.7356959581375122,
+        0.6609646081924438,
+        0.7011218070983887
+      ],
+      "overlap_identity_mean_by_level": [
+        1.0,
+        0.9375,
+        0.6312500238418579,
+        0.3375000059604645
+      ]
+    },
+    "decoder_rescue": {
+      "flip_chance_corrected_mean_by_level": [
+        0.7936161160469055,
+        0.6018136739730835,
+        0.5053252577781677,
+        0.3837386667728424
+      ],
+      "flip_identity_mean_by_level": [
+        0.94375,
+        0.704375,
+        0.56625,
+        0.3671875
+      ],
+      "lure_false_retrieval_rate": 0.11375,
+      "mask_chance_corrected_mean_by_level": [
+        0.7936161160469055,
+        0.6525007486343384,
+        0.5297357439994812,
+        0.3876369893550873
+      ],
+      "mask_identity_mean_by_level": [
+        0.94375,
+        0.769375,
+        0.594375,
+        0.3775
+      ],
+      "overlap_cosine_mean_by_level": [
+        0.8854373693466187,
+        0.7356959581375122,
+        0.6609646081924438,
+        0.7011218070983887
+      ],
+      "overlap_identity_mean_by_level": [
+        1.0,
+        0.9375,
+        0.6312500238418579,
+        0.3375000059604645
+      ]
+    },
+    "fixed_permutation": {
+      "flip_chance_corrected_mean_by_level": [
+        0.0054820384830236435,
+        -0.002058598445728421,
+        0.005023928824812174,
+        0.0024005945306271315
+      ],
+      "flip_identity_mean_by_level": [
+        0.15,
+        0.1084375,
+        0.1178125,
+        0.1165625
+      ],
+      "lure_false_retrieval_rate": 0.0025,
+      "mask_chance_corrected_mean_by_level": [
+        0.0054820384830236435,
+        0.0018655711319297552,
+        0.006394162308424711,
+        0.008868038654327393
+      ],
+      "mask_identity_mean_by_level": [
+        0.15,
+        0.119375,
+        0.1221875,
+        0.1178125
+      ],
+      "overlap_cosine_mean_by_level": [
+        0.10214585065841675,
+        0.10592477023601532,
+        0.08124051988124847,
+        0.10480844974517822
+      ],
+      "overlap_identity_mean_by_level": [
+        0.10625000298023224,
+        0.10000000149011612,
+        0.13124999403953552,
+        0.13124999403953552
+      ]
+    },
+    "no_plasticity": {
+      "flip_chance_corrected_mean_by_level": [
+        -0.0007541729719378054,
+        -0.0007541729719378054,
+        -0.0007541729719378054,
+        -0.0007541729719378054
+      ],
+      "flip_identity_mean_by_level": [
+        0.125,
+        0.125,
+        0.125,
+        0.125
+      ],
+      "lure_false_retrieval_rate": 0.0,
+      "mask_chance_corrected_mean_by_level": [
+        -0.0007541729719378054,
+        -0.0007541729719378054,
+        -0.0007541729719378054,
+        -0.0007541729719378054
+      ],
+      "mask_identity_mean_by_level": [
+        0.125,
+        0.125,
+        0.125,
+        0.125
+      ],
+      "overlap_cosine_mean_by_level": [
+        0.11502401530742645,
+        0.15305399894714355,
+        0.1168505921959877,
+        0.12743066251277924
+      ],
+      "overlap_identity_mean_by_level": [
+        0.125,
+        0.125,
+        0.125,
+        0.125
+      ]
+    }
+  }
+}

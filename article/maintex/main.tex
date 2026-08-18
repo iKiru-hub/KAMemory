@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage[round,authoryear]{natbib}
+
+\title{Decoder-aligned instructive signals support rapid associative memory in a BTSP-inspired hippocampal network}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The hippocampus must encode individual experiences rapidly while preserving knowledge acquired over much longer timescales. This tension motivates theories in which hippocampal circuits learn quickly and interact with more slowly changing cortical representations \citep{marr1971,mcclelland1995,schapiro2017}. Yet rapid storage poses an additional readout problem: a newly formed population pattern is useful only if downstream circuits can interpret it. Information may therefore be present in a neural population while being expressed in coordinates incompatible with a decoder whose synapses remain stable during learning. How rapid plasticity creates new representations without making their content unreadable is consequently distinct from asking whether the representations are separable or information-rich.
+
+Behavioral-timescale synaptic plasticity (BTSP) provides a biological starting point for this problem. Dendritic plateau potentials can form CA1 place fields in one trial by modifying inputs active seconds before and after the plateau \citep{bittner2017}, and subsequent work showed that BTSP can bidirectionally reshape existing fields through timing- and weight-dependent changes \citep{milstein2021}. Entorhinal layer 3 activity can direct learning-related changes in CA1 toward behaviorally relevant locations \citep{grienberger2022}, while plateau-like events can also precede and causally induce non-spatial odor representations \citep{dorian2026a}. More generally, neuron-specific dendritic teaching signals have now been observed experimentally in cortex \citep{francioni2026}. Together these findings motivate content-bearing instruction as a plausible organizing principle, but they do not establish how the coordinates of an instructed hippocampal representation relate to those expected by a downstream readout.
+
+Existing models address complementary parts of this question. BTSP-inspired learning can support one-shot, content-addressable memory and robust recall \citep{wu2025}; presynaptic-only learning can store episodes as paths through a pre-existing representational space \citep{pang2025}; and spatial scaffolds can factor episodic content from error-correcting memory dynamics \citep{chandra2025}. Separately, analyses of cortical representational drift show that task information can remain decodable by newly fitted readouts even as a fixed decoder degrades, and that adaptive decoder plasticity can compensate for this mismatch \citep{rule2020}. What remains unresolved is whether the coordinate relationship between a content-bearing instructive signal and an already learned decoder is itself sufficient to determine whether rapidly stored content can be read out. This gap requires a causal control that changes coordinate compatibility while preserving the stored information and the learning process.
+
+Here we test this principle in a BTSP-inspired entorhinal--CA3--CA1--entorhinal network containing a pretrained encoder--decoder and rapid local plasticity at CA3-to-CA1 synapses. Aligned instructive signals place newly learned CA1 states in coordinates readable by the frozen decoder, supporting sequential memory and retrieval from degraded cues. A fixed permutation of the instructive-signal coordinates preserves signal statistics and learned information but abolishes content decoding; applying the matched permutation to the decoder restores performance without changing the plastic weights. The same alignment dependence is observed across three local update rules, although the rules differ in their stability--plasticity regimes. We therefore identify decoder compatibility as a causal determinant of decodability in this model, while treating the update as BTSP-inspired rather than a biophysical model of BTSP and the stable decoder as an explicit computational assumption.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

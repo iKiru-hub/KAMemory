@@ -1,0 +1,20 @@
+{
+  "checkpoint": "ae_8",
+  "ca3_active": 22,
+  "capacity_threshold": 0.7777777777777778,
+  "development": {
+    "seed_start": 1700,
+    "num_seeds": 8,
+    "num_patterns": 40,
+    "learning_rates": [0.02, 0.05, 0.1, 0.2, 0.35, 0.5, 0.75, 1.0],
+    "reference_rule": "target_gated",
+    "reference_learning_rate": 0.35,
+    "immediate_recall_tolerance": 0.02
+  },
+  "evaluation": {
+    "seed_start": 1900,
+    "num_seeds": 20,
+    "num_patterns": 60,
+    "alignment_endpoint_patterns": 28
+  }
+}

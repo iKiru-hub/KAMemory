@@ -1,0 +1,262 @@
+{
+  "checkpoint_info": {
+    "K": 5,
+    "K_lat": 18,
+    "beta": 54,
+    "date": "01/04/2025 23:56:04",
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "dim_ei": 50,
+    "dim_eo": 50,
+    "epochs": 2000,
+    "loss_ae": 0.0,
+    "num_samples": 5000
+  },
+  "configuration": {
+    "alphas": [
+      0.12,
+      0.2087942893137534,
+      0.35,
+      0.55
+    ],
+    "checkpoint": "ae_8",
+    "deterministic": true,
+    "e2_alpha": 0.35,
+    "e2_data": "/Users/doki/exit/KAMemory/src/experiments/plots/e2a_retention.npz",
+    "output_dir": "/Users/doki/exit/KAMemory/src/experiments/plots"
+  },
+  "derivation": {
+    "crosstalk_ratio": "norm of all non-self contribution to the queried CA3 code divided by norm of its surviving self contribution",
+    "memory_contribution_at_T": "[alpha s_m product_(u=m+1..T)(1-alpha s_u)] c_m^T",
+    "trace_survival": "Frobenius norm of surviving memory contribution divided by its norm immediately after storage",
+    "update": "W_t = (1 - alpha s_t) elementwise W_(t-1) + alpha s_t c_t^T"
+  },
+  "exact_reconstruction": {
+    "ca1_similarity_max_abs_error": 2.384185791015625e-07,
+    "final_weight_max_abs_error": 0.0,
+    "passed": true,
+    "recall_max_abs_error": 1.7881393432617188e-07
+  },
+  "experiment": "E5_synaptic_trace_survival_and_forgetting",
+  "hypothesis_checks": {
+    "crosstalk_correlates_negatively_with_recall": true,
+    "exactly_reconstructs_e2": true,
+    "higher_alpha_shortens_trace_half_life": true,
+    "trace_and_crosstalk_explain_variance_beyond_age": true,
+    "trace_survival_correlates_with_recall": true
+  },
+  "network_parameters": {
+    "beta": 54.0,
+    "ca1_active": 18,
+    "ca3_active": 22,
+    "dim_ca1": 50,
+    "dim_ca3": 50,
+    "input_active": 5,
+    "input_dim": 50,
+    "output_active": 5
+  },
+  "outputs": {
+    "figure_pdf": "/Users/doki/exit/KAMemory/src/experiments/plots/e5_interference_analysis.pdf",
+    "figure_png": "/Users/doki/exit/KAMemory/src/experiments/plots/e5_interference_analysis.png",
+    "raw_npz": "/Users/doki/exit/KAMemory/src/experiments/plots/e5_interference_analysis.npz",
+    "summary_json": "/Users/doki/exit/KAMemory/src/experiments/plots/e5_interference_analysis.json"
+  },
+  "protocol": {
+    "capacity_threshold": 0.7777777777777778,
+    "independent_unit": "network/data seed",
+    "learning_rate_values": [
+      0.12,
+      0.2087942893137534,
+      0.35,
+      0.55
+    ],
+    "memory_level_points": "descriptive and nested within seed",
+    "regression": "within-seed OLS; age+age^2 compared with age+age^2+log(trace survival)+log1p(crosstalk ratio)",
+    "seeds": [
+      700,
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708,
+      709,
+      710,
+      711,
+      712,
+      713,
+      714,
+      715,
+      716,
+      717,
+      718,
+      719
+    ],
+    "source_e2_data": "/Users/doki/exit/KAMemory/src/experiments/plots/e2a_retention.npz",
+    "source_e2_sha256": "8cbada10870f27491b47a4f09945d85b7d76c0ca3e28504b122ed5f9c3525f01"
+  },
+  "runtime": {
+    "executable": "/Users/doki/exit/KAMemory/.venv/kamvenv/bin/python",
+    "git_commit": "e7d52f63e4006fd96b0918b84f28f3fb1853d425",
+    "git_dirty": true,
+    "packages": {
+      "kamemory": "0.1.0",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "torch": "2.13.0"
+    },
+    "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6 (v3.14.6:c63aec69bd5, Jun 10 2026, 08:07:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "timestamp_utc": "2026-08-14T21:21:36.533722+00:00"
+  },
+  "schema_version": 1,
+  "seed_level_statistics": {
+    "age_only_r2": [
+      0.6901074355201575,
+      0.6895487972343495,
+      0.6824573815534394,
+      0.6666724075739519,
+      0.6880945190730376,
+      0.6503966329632627,
+      0.6619757365482035,
+      0.6747165096242398,
+      0.6809229613765648,
+      0.6781569937578245,
+      0.7072154721246371,
+      0.6508701857889313,
+      0.6589360389476253,
+      0.6682303860225807,
+      0.650708915202527,
+      0.6798560431034995,
+      0.6480449106520326,
+      0.6959055982039273,
+      0.682577854810847,
+      0.7062671052769551
+    ],
+    "crosstalk_recall_correlation": [
+      -0.7051322608639287,
+      -0.741227615003293,
+      -0.7181465277066219,
+      -0.7084290390963857,
+      -0.7167738825203783,
+      -0.701980432931846,
+      -0.7042925324455812,
+      -0.7027243001265301,
+      -0.723280417748782,
+      -0.6897142535487872,
+      -0.7658943018844783,
+      -0.7151381071555205,
+      -0.7000063967337834,
+      -0.6964943812292035,
+      -0.6969639276506391,
+      -0.7166630202912584,
+      -0.6851136145125317,
+      -0.7078503846040622,
+      -0.7131347287902108,
+      -0.7108840967669166
+    ],
+    "full_r2": [
+      0.693502533481245,
+      0.6917667093977904,
+      0.6825704117708951,
+      0.6672802670074014,
+      0.6911660784312939,
+      0.6514149710412744,
+      0.6641206791372445,
+      0.676360963638636,
+      0.6892068751968241,
+      0.6835926518931855,
+      0.7088596227602891,
+      0.6550207879517661,
+      0.6595312978699843,
+      0.6695882526162034,
+      0.6567001825493421,
+      0.6842834374435838,
+      0.6517261371942775,
+      0.6990077329882062,
+      0.6875029550098444,
+      0.7081927005831563
+    ],
+    "incremental_r2": [
+      0.003395097961087501,
+      0.002217912163440916,
+      0.00011303021745567854,
+      0.0006078594334495424,
+      0.003071559358256204,
+      0.0010183380780117712,
+      0.0021449425890409657,
+      0.0016444540143961683,
+      0.008283913820259281,
+      0.005435658135361066,
+      0.001644150635652042,
+      0.004150602162834804,
+      0.0005952589223590099,
+      0.001357866593622692,
+      0.005991267346815099,
+      0.004427394340084323,
+      0.0036812265422448975,
+      0.003102134784278898,
+      0.00492510019899739,
+      0.0019255953062011777
+    ],
+    "trace_recall_correlation": [
+      0.7151494296176247,
+      0.7445397422907469,
+      0.7219736369604964,
+      0.7136807342685567,
+      0.723732682341962,
+      0.7085443428139767,
+      0.7098456782353746,
+      0.7101250780739512,
+      0.7295122695672769,
+      0.6991489014166056,
+      0.7723921165207893,
+      0.7215700462706427,
+      0.7074111618209573,
+      0.7041025943806358,
+      0.7037672392093659,
+      0.7263067297096277,
+      0.6917258545712183,
+      0.7151244980725625,
+      0.722346451515318,
+      0.7176092244875814
+    ]
+  },
+  "summary": {
+    "crosstalk_recall_correlation_ci95": 0.007861464282727791,
+    "crosstalk_recall_correlation_mean": -0.7109922110805369,
+    "e2_recall_half_life_mean": 12.8,
+    "half_life_by_alpha": {
+      "0.12": {
+        "recall_censored_fraction": 0.0,
+        "recall_mean": 34.85,
+        "trace_censored_fraction": 0.0,
+        "trace_mean": 15.25
+      },
+      "0.2087942893137534": {
+        "recall_censored_fraction": 0.0,
+        "recall_mean": 22.05,
+        "trace_censored_fraction": 0.0,
+        "trace_mean": 9.0
+      },
+      "0.35": {
+        "recall_censored_fraction": 0.0,
+        "recall_mean": 12.8,
+        "trace_censored_fraction": 0.0,
+        "trace_mean": 5.95
+      },
+      "0.55": {
+        "recall_censored_fraction": 0.0,
+        "recall_mean": 8.25,
+        "trace_censored_fraction": 0.0,
+        "trace_mean": 4.0
+      }
+    },
+    "incremental_r2_ci95": 0.0009167647024615963,
+    "incremental_r2_mean": 0.0029866681301924714,
+    "trace_recall_correlation_ci95": 0.007625087587459527,
+    "trace_recall_correlation_mean": 0.7179304206072635
+  }
+}
