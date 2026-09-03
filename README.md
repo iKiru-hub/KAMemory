@@ -1,5 +1,7 @@
 # KAMemory
 
+new project repository at git@github.com:iKiru-hub/kam.git
+
 ## Backend
 
 The reusable simulation backend lives in `src/kamemory`. Models, data
